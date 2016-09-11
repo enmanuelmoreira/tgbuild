@@ -13,7 +13,7 @@ Launch installed VM. Install guest additions if needed.
 
 Step 3
 ========
-Download Git repository this build scripts:
+Download Git repository with build scripts:
 ```bash
 git clone https://github.com/xvitaly/tgbuild.git tgbuild
 ```
