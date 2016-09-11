@@ -9,7 +9,7 @@ Install clean Fedora from official ISO's into VirtualBox or other VM.
 
 Step 2
 ========
-Launch installed VM. Install guest additions if needed.
+Create snapshot and launch installed VM. Install guest additions if needed.
 
 Step 3
 ========
@@ -33,3 +33,7 @@ Wait and enter sudo password when prompted.
 Step 6
 ========
 Extract result binary *tdesktop/Linux/Release/Telegram* from virtual machine.
+
+Step 7
+========
+Restore created on step 2 snapshot.
