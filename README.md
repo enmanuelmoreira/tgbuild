@@ -1,39 +1,39 @@
 # Build Telegram Desktop from sources
 This script will download sources of Telegram Desktop and all required libraries.
 
-*DO NOT RUN THIS SCRIPT OUTSIDE VIRTUAL MACHINE!*
+**DO NOT RUN THIS SCRIPT OUTSIDE VIRTUAL MACHINE!**
 
-Step 1
-========
+# Step 1
+
 Install clean Fedora from official ISO's into VirtualBox or other VM.
 
-Step 2
-========
+# Step 2
+
 Create snapshot and launch installed VM. Install guest additions if needed.
 
-Step 3
-========
+# Step 3
+
 Download Git repository with build scripts:
 ```bash
 git clone https://github.com/xvitaly/tgbuild.git tgbuild
 ```
 
-Step 4
-========
+# Step 4
+
 Change current directory and execute build script:
 ```bash
 cd tgbuild
 ./build_tg.sh
 ```
 
-Step 5
-========
+# Step 5
+
 Wait and enter sudo password when prompted.
 
-Step 6
-========
+# Step 6
+
 Extract result binary *tdesktop/Linux/Release/Telegram* from virtual machine.
 
-Step 7
-========
+# Step 7
+
 Restore created on step 2 snapshot.
