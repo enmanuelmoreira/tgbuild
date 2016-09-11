@@ -87,6 +87,7 @@ sed -i 's/CUSTOM_API_ID//g' "$SRCDIR/tdesktop/Telegram/Telegram.pro"
   echo "LIBS += /usr/local/lib/libxkbcommon-x11.a"
   echo "DEFINES += TDESKTOP_DISABLE_AUTOUPDATE"
   echo "DEFINES += TDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME"
+  echo "DEFINES += TDESKTOP_DISABLE_DESKTOP_FILE_GENERATION"
   echo "DEFINES += TDESKTOP_DISABLE_CRASH_REPORTS"
 ) >> "$SRCDIR/tdesktop/Telegram/Telegram.pro"
 
