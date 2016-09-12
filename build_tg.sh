@@ -81,8 +81,7 @@ mv -f src1/* "$SRCDIR/Libraries/breakpad/"
 
 # Downloading GYP...
 mkdir -p "$SRCDIR/Libraries/gyp"
-cd "$SRCDIR/Libraries"
-"$SRCDIR/Libraries/depot_tools/fetch" gyp
+git clone https://chromium.googlesource.com/external/gyp "$SRCDIR/Libraries/gyp"
 cd "$SRCDIR/Libraries/gyp"
 git apply "$SRCDIR/tdesktop/Telegram/Patches/gyp.diff"
 
