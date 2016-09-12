@@ -79,6 +79,13 @@ cd "$SRCDIR/Libraries/breakpad"
 mv -f src src1
 mv -f src1/* "$SRCDIR/Libraries/breakpad/"
 
+# Downloading GYP...
+mkdir -p "$SRCDIR/Libraries/gyp"
+cd "$SRCDIR/Libraries"
+"$SRCDIR/Libraries/depot_tools/fetch" gyp
+cd "$SRCDIR/Libraries/gyp"
+git apply "$SRCDIR/tdesktop/Telegram/Patches/gyp.diff"
+
 # Patching .PRO file...
 sed -i 's/CUSTOM_API_ID//g' "$SRCDIR/tdesktop/Telegram/Telegram.pro"
 
