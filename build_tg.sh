@@ -3,7 +3,7 @@ set -e
 
 # Version variables. Edit it if you want.
 _QTVERSION="5.6.0"
-_TGVERSION="0.10.1"
+_TGVERSION="0.10.5"
 
 # Setting additional variables...
 SRCDIR=$(pwd)
@@ -22,7 +22,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # Installing compilers and prerequirements...
-$SUDO dnf -y install git gcc gcc-c++ automake autoconf libtool freetype-devel libwayland-server-devel libjpeg-devel libxcb-devel yasm openal-devel libogg-devel opus-devel openssl-devel lzma-devel xz-devel libappindicator-devel libunity-devel libstdc++-devel libstdc++-static libwebp-devel libpng-devel xorg-x11-util-macros gettext-devel bison doxygen
+$SUDO dnf -y install git gcc gcc-c++ automake autoconf libtool freetype-devel libwayland-server-devel libjpeg-devel libxcb-devel yasm openal-devel libogg-devel opus-devel openssl-devel lzma-devel xz-devel libappindicator-devel libunity-devel libstdc++-devel libstdc++-static libwebp-devel libpng-devel xorg-x11-util-macros gettext-devel bison doxygen portaudio-devel
 
 # Downloading Telegram Desktop sources...
 git clone --recursive https://github.com/telegramdesktop/tdesktop.git "$SRCDIR/tdesktop"
