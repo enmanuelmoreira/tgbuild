@@ -85,6 +85,14 @@ git clone https://chromium.googlesource.com/external/gyp "$SRCDIR/Libraries/gyp"
 cd "$SRCDIR/Libraries/gyp"
 git apply "$SRCDIR/tdesktop/Telegram/Patches/gyp.diff"
 
+# Downloading cmake...
+cd "$SRCDIR/Libraries"
+wget https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz
+tar -xf cmake-3.6.2.tar.gz
+cd "$SRCDIR/Libraries/cmake-3.6.2"
+./configure
+make $ARGS
+
 # Patching .PRO file...
 sed -i 's/CUSTOM_API_ID//g' "$SRCDIR/tdesktop/Telegram/Telegram.pro"
 
