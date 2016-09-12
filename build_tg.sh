@@ -114,29 +114,8 @@ cd "$SRCDIR/Libraries/breakpad"
 ./configure
 make $ARGS
 
-# Building codegen_style...
-mkdir -p "$SRCDIR/tdesktop/Linux/obj/codegen_style/Release"
-cd "$SRCDIR/tdesktop/Linux/obj/codegen_style/Release"
-qmake CONFIG+=release ../../../../Telegram/build/qmake/codegen_style/codegen_style.pro
-make $ARGS
-
-# Building codegen_numbers...
-mkdir -p "$SRCDIR/tdesktop/Linux/obj/codegen_numbers/Release"
-cd "$SRCDIR/tdesktop/Linux/obj/codegen_numbers/Release"
-qmake CONFIG+=release ../../../../Telegram/build/qmake/codegen_numbers/codegen_numbers.pro
-make $ARGS
-
-# Building MetaLang...
-mkdir -p "$SRCDIR/tdesktop/Linux/ReleaseIntermediateLang"
-cd "$SRCDIR/tdesktop/Linux/ReleaseIntermediateLang"
-qmake CONFIG+=release "../../Telegram/MetaLang.pro"
-make $ARGS
-
 # Building Telegram Desktop...
-mkdir -p "$SRCDIR/tdesktop/Linux/ReleaseIntermediate"
-cd "$SRCDIR/tdesktop/Linux/ReleaseIntermediate"
-./../codegen/Release/codegen_style "-I./../../Telegram/Resources" "-I./../../Telegram/SourceFiles" "-o./GeneratedFiles/styles" all_files.style --rebuild
-./../codegen/Release/codegen_numbers "-o./GeneratedFiles" "./../../Telegram/Resources/numbers.txt"
-./../ReleaseLang/MetaLang -lang_in ./../../Telegram/Resources/langs/lang.strings -lang_out ./GeneratedFiles/lang_auto
-qmake CONFIG+=release QT_TDESKTOP_PATH="/usr/local/Qt-${_QTVERSION}" QT_TDESKTOP_VERSION=$_QTVERSION "../../Telegram/Telegram.pro"
-make $ARGS 
+cd "$SRCDIR/tdesktop/Telegram"
+gyp/refresh.sh
+cd "$SRCDIR/tdesktop/tdesktop/out/Release"
+make $ARGS
