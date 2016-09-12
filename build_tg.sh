@@ -12,8 +12,8 @@ QT_PATCH="$SRCDIR/tdesktop/Telegram/Patches/qtbase_${_QTVERSION//./_}.diff"
 QTDIR="$SRCDIR/Libraries/qt${_QTVERSION//./_}"
 
 # Exporting some paths required for build...
-export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:/usr/local/Qt-${_QTVERSION}/lib/pkgconfig:/usr/lib64/pkgconfig"
-export PATH="/usr/local/Qt-${_QTVERSION}/bin:$PATH"
+export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:/usr/local/tdesktop/Qt-${_QTVERSION}/lib/pkgconfig:/usr/lib64/pkgconfig"
+export PATH="/usr/local/tdesktop/Qt-${_QTVERSION}/bin:$PATH"
 
 # Checking for root rights...
 SUDO=''
@@ -93,20 +93,9 @@ cd "$SRCDIR/Libraries/cmake-3.6.2"
 ./configure
 make $ARGS
 
-# Patching .PRO file...
-sed -i 's/CUSTOM_API_ID//g' "$SRCDIR/tdesktop/Telegram/Telegram.pro"
-
-# Setting additional build options...
-(
-  echo "DEFINES += TDESKTOP_DISABLE_AUTOUPDATE"
-  echo "DEFINES += TDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME"
-  echo "DEFINES += TDESKTOP_DISABLE_DESKTOP_FILE_GENERATION"
-  echo "DEFINES += TDESKTOP_DISABLE_CRASH_REPORTS"
-) >> "$SRCDIR/tdesktop/Telegram/Telegram.pro"
-
 # Building and installing patched Qt...
 cd "$QTDIR"
-./configure -release -opensource -confirm-license -system-zlib -system-libpng -system-libjpeg -system-freetype -system-harfbuzz -system-pcre -qt-xcb -qt-xkbcommon-x11 -no-opengl -no-gtkstyle -static -nomake examples -nomake tests
+./configure -prefix "/usr/local/tdesktop/Qt-${_QTVERSION}" -release -opensource -confirm-license -system-zlib -system-libpng -system-libjpeg -system-freetype -system-harfbuzz -system-pcre -qt-xcb -qt-xkbcommon-x11 -no-opengl -no-gtkstyle -static -nomake examples -nomake tests
 make $ARGS
 $SUDO make install
 
