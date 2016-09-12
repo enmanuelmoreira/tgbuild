@@ -56,6 +56,14 @@ cd "$SRCDIR/Libraries/libxkbcommon"
 make $ARGS
 $SUDO make install
 
+# Downloading and installing breakpad...
+git clone https://chromium.googlesource.com/breakpad/breakpad "$SRCDIR/Libraries/breakpad"
+git clone https://chromium.googlesource.com/linux-syscall-support "$SRCDIR/Libraries/breakpad/src/third_party/lss"
+cd "$SRCDIR/Libraries/breakpad"
+./configure
+make $ARGS
+$SUDO make install
+
 # Downloading Qt sources and applying Telegram patches onto it...
 if [ "$QT_PATCH" -nt "$QTDIR" ]; then
   rm -rf "$QTDIR"
@@ -70,14 +78,6 @@ if [ "$QT_PATCH" -nt "$QTDIR" ]; then
   git checkout v$_QTVERSION
   git apply "$QT_PATCH"
 fi
-
-# Downloading breakpad sources...
-git clone --recursive https://chromium.googlesource.com/chromium/tools/depot_tools.git "$SRCDIR/Libraries/depot_tools"
-mkdir -p "$SRCDIR/Libraries/breakpad"
-cd "$SRCDIR/Libraries/breakpad"
-"$SRCDIR/Libraries/depot_tools/fetch" breakpad
-mv -f src src1
-mv -f src1/* "$SRCDIR/Libraries/breakpad/"
 
 # Downloading GYP...
 mkdir -p "$SRCDIR/Libraries/gyp"
@@ -104,11 +104,6 @@ cd "$QTDIR/qtimageformats"
 qmake .
 make $ARGS
 $SUDO make install
-
-# Building breakpad...
-cd "$SRCDIR/Libraries/breakpad"
-./configure
-make $ARGS
 
 # Building Telegram Desktop...
 cd "$SRCDIR/tdesktop/Telegram"
