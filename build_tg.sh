@@ -124,5 +124,5 @@ make $ARGS
 # Building Telegram Desktop...
 cd "$SRCDIR/tdesktop/Telegram"
 gyp/refresh.sh
-cd "$SRCDIR/tdesktop/tdesktop/out/Release"
+cd "$SRCDIR/tdesktop/out/Release"
 make $ARGS
