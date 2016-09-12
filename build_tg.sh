@@ -84,7 +84,6 @@ sed -i 's/CUSTOM_API_ID//g' "$SRCDIR/tdesktop/Telegram/Telegram.pro"
 
 # Setting additional build options...
 (
-  echo "LIBS += /usr/local/lib/libxkbcommon-x11.a"
   echo "DEFINES += TDESKTOP_DISABLE_AUTOUPDATE"
   echo "DEFINES += TDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME"
   echo "DEFINES += TDESKTOP_DISABLE_DESKTOP_FILE_GENERATION"
