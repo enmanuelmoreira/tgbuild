@@ -3,7 +3,7 @@ set -e
 
 # Version variables. Edit it if you want.
 _QTVERSION="5.6.0"
-_TGVERSION="0.10.1"
+_TGVERSION="0.10.5"
 
 # Setting additional variables...
 SRCDIR=$(pwd)
