@@ -22,7 +22,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # Installing compilers and prerequirements...
-$SUDO dnf -y install git gcc gcc-c++ automake autoconf libtool freetype-devel libwayland-server-devel libjpeg-devel libxcb-devel yasm openal-devel libogg-devel opus-devel openssl-devel lzma-devel xz-devel libappindicator-devel libunity-devel libstdc++-devel libstdc++-static libwebp-devel libpng-devel xorg-x11-util-macros gettext-devel bison doxygen portaudio-devel
+$SUDO dnf -y install git gcc gcc-c++ cmake automake autoconf libtool freetype-devel libwayland-server-devel libjpeg-devel libxcb-devel yasm openal-devel libogg-devel opus-devel openssl-devel lzma-devel xz-devel libappindicator-devel libunity-devel libstdc++-devel libstdc++-static libwebp-devel libpng-devel xorg-x11-util-macros gettext-devel bison doxygen portaudio-devel
 
 # Downloading Telegram Desktop sources...
 git clone --recursive https://github.com/telegramdesktop/tdesktop.git "$SRCDIR/tdesktop"
