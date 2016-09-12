@@ -52,7 +52,7 @@ $SUDO make install
 # Downloading and installing libxkbcommon...
 git clone https://github.com/xkbcommon/libxkbcommon.git "$SRCDIR/Libraries/libxkbcommon"
 cd "$SRCDIR/Libraries/libxkbcommon"
-./autogen.sh --prefix=/usr/local
+./autogen.sh --prefix=/usr/local --disable-x11
 make $ARGS
 $SUDO make install
 
