@@ -46,7 +46,7 @@ $SUDO make install
 # Downloading and installing Opus Codec...
 cd "$SRCDIR/Libraries"
 wget http://downloads.xiph.org/releases/opus/opus-1.1.tar.gz -O "$SRCDIR/Libraries/opus-1.1.tar.gz"
-unzip "$SRCDIR/Libraries/opus-1.1.tar.gz"
+tar -xf "$SRCDIR/Libraries/opus-1.1.tar.gz"
 cd "$SRCDIR/Libraries/opus-1.1"
 ./configure
 make $ARGS
