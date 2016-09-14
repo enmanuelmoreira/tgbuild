@@ -35,8 +35,9 @@ git checkout v$_TGVERSION
 mkdir -p "$SRCDIR/Libraries"
 
 # Downloading and installing zlib...
+cd "$SRCDIR/Libraries"
 wget http://zlib.net/zlib128.zip -O "$SRCDIR/Libraries/zlib128.zip"
-unzip zlib128.zip
+unzip "$SRCDIR/Libraries/zlib128.zip"
 cd "$SRCDIR/Libraries/zlib-1.2.8"
 ./configure
 make $ARGS
