@@ -31,6 +31,9 @@ git clone --recursive https://github.com/telegramdesktop/tdesktop.git "$SRCDIR/t
 cd "$SRCDIR/tdesktop"
 git checkout v$_TGVERSION
 
+# Applying patch with build fixes...
+git apply "$SRCDIR/fix_gyp.patch"
+
 # Creating dir for shared 3rd-party libraries...
 mkdir -p "$SRCDIR/Libraries"
 
