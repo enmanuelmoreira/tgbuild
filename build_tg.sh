@@ -34,6 +34,14 @@ git checkout v$_TGVERSION
 # Creating dir for shared 3rd-party libraries...
 mkdir -p "$SRCDIR/Libraries"
 
+# Downloading and installing zlib...
+wget http://zlib.net/zlib128.zip -O "$SRCDIR/Libraries/zlib128.zip"
+unzip zlib128.zip
+cd "$SRCDIR/Libraries/zlib-1.2.8"
+./configure
+make $ARGS
+$SUDO make install
+
 # Downloading and installing libva...
 git clone git://anongit.freedesktop.org/git/libva "$SRCDIR/Libraries/libva"
 cd "$SRCDIR/Libraries/libva"
