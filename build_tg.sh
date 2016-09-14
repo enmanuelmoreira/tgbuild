@@ -68,6 +68,14 @@ cmake -D LIBTYPE:STRING=STATIC ..
 make $ARGS
 $SUDO make install
 
+# Downloading and installing OpenSSL...
+git clone https://github.com/openssl/openssl "$SRCDIR/Libraries/openssl"
+cd "$SRCDIR/Libraries/openssl"
+git checkout OpenSSL_1_0_1-stable
+./config
+make $ARGS
+$SUDO make install
+
 # Downloading and installing libva...
 git clone git://anongit.freedesktop.org/git/libva "$SRCDIR/Libraries/libva"
 cd "$SRCDIR/Libraries/libva"
