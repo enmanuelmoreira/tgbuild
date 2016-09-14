@@ -61,6 +61,13 @@ cd "$SRCDIR/Libraries/portaudio"
 make $ARGS
 $SUDO make install
 
+# Downloading and installing OpenAL...
+git clone git://repo.or.cz/openal-soft.git "$SRCDIR/Libraries/openal-soft"
+cd "$SRCDIR/Libraries/openal-soft/build"
+cmake -D LIBTYPE:STRING=STATIC ..
+make $ARGS
+$SUDO make install
+
 # Downloading and installing libva...
 git clone git://anongit.freedesktop.org/git/libva "$SRCDIR/Libraries/libva"
 cd "$SRCDIR/Libraries/libva"
