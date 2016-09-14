@@ -52,6 +52,15 @@ cd "$SRCDIR/Libraries/opus-1.1"
 make $ARGS
 $SUDO make install
 
+# Downloading and installing PortAudio...
+cd "$SRCDIR/Libraries"
+wget http://www.portaudio.com/archives/pa_stable_v19_20140130.tgz -O "$SRCDIR/Libraries/pa_stable_v19_20140130.tgz"
+tar -xf "$SRCDIR/Libraries/pa_stable_v19_20140130.tgz"
+cd "$SRCDIR/Libraries/portaudio"
+./configure
+make $ARGS
+$SUDO make install
+
 # Downloading and installing libva...
 git clone git://anongit.freedesktop.org/git/libva "$SRCDIR/Libraries/libva"
 cd "$SRCDIR/Libraries/libva"
