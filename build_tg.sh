@@ -137,7 +137,7 @@ make $ARGS
 
 # Building and installing patched Qt...
 cd "$QTDIR"
-./configure -prefix "/usr/local/Qt-${_QTVERSION}" -release -opensource -confirm-license -system-zlib -system-libpng -system-libjpeg -system-freetype -system-harfbuzz -system-pcre -qt-xcb -qt-xkbcommon-x11 -no-opengl -no-gtkstyle -static -nomake examples -nomake tests
+OPENSSL_LIBS='-L/usr/local/ssl/lib -lssl -lcrypto' ./configure -prefix "/usr/local/Qt-${_QTVERSION}" -release -opensource -confirm-license -qt-zlib -qt-libpng -qt-libjpeg -qt-freetype -qt-harfbuzz -qt-pcre -qt-xcb -qt-xkbcommon-x11 -no-opengl -no-gtkstyle -static -openssl-linked -nomake examples -nomake tests
 make $ARGS
 $SUDO make install
 
