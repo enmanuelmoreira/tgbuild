@@ -42,6 +42,15 @@ cd "$SRCDIR/Libraries/zlib-1.2.8"
 make $ARGS
 $SUDO make install
 
+# Downloading and installing Opus Codec...
+cd "$SRCDIR/Libraries"
+wget http://downloads.xiph.org/releases/opus/opus-1.1.tar.gz -O "$SRCDIR/Libraries/opus-1.1.tar.gz"
+unzip "$SRCDIR/Libraries/opus-1.1.tar.gz"
+cd "$SRCDIR/Libraries/opus-1.1"
+./configure
+make $ARGS
+$SUDO make install
+
 # Downloading and installing libva...
 git clone git://anongit.freedesktop.org/git/libva "$SRCDIR/Libraries/libva"
 cd "$SRCDIR/Libraries/libva"
