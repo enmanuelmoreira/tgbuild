@@ -1,14 +1,14 @@
-From 51fb5a2ebc0d43879487a56c780bcdf990c5aa86 Mon Sep 17 00:00:00 2001
+From ac64ed2eb67d20366df02b29d63786aacb58916e Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
-Date: Thu, 15 Sep 2016 19:37:36 +0300
+Date: Thu, 15 Sep 2016 22:21:35 +0300
 Subject: [PATCH] Fixed build under Fedora 24+.
 
 ---
  Telegram/gyp/Telegram.gyp        |  4 ++++
  Telegram/gyp/qt.gypi             | 31 +++++++++++++++++--------------
- Telegram/gyp/telegram_linux.gypi |  5 +++++
- Telegram/gyp/utils.gyp           |  4 ++++
- 4 files changed, 30 insertions(+), 14 deletions(-)
+ Telegram/gyp/telegram_linux.gypi |  7 +++++++
+ Telegram/gyp/utils.gyp           |  8 ++++++++
+ 4 files changed, 36 insertions(+), 14 deletions(-)
 
 diff --git a/Telegram/gyp/Telegram.gyp b/Telegram/gyp/Telegram.gyp
 index 0e8db70..d9808fd 100644
@@ -97,24 +97,27 @@ index b82f833..00f320a 100644
        'include_dirs': [
          '<(qt_loc)/mkspecs/linux-g++',
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index 15bfbb6..8ccf2c2 100644
+index 15bfbb6..60c849c 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
-@@ -31,11 +31,13 @@
+@@ -30,12 +30,16 @@
+     },
      'include_dirs': [
        '/usr/local/include',
++      '/usr/local/ssl/include',
        '<(libs_loc)/openssl-xcode/include'
 +      '/usr/include',
      ],
      'library_dirs': [
        '/usr/local/lib',
++      '/usr/local/ssl/lib',
        '<(libs_loc)/libexif-0.6.20/libexif/.libs',
        '<(libs_loc)/breakpad/src/client/linux',
 +      '/usr/lib',
      ],
      'libraries': [
        'breakpad_client',
-@@ -54,6 +56,9 @@
+@@ -54,6 +58,9 @@
        'libva-drm.a',
        'libva.a',
        'libz.a',
@@ -125,29 +128,35 @@ index 15bfbb6..8ccf2c2 100644
      ],
      'cflags_cc': [
 diff --git a/Telegram/gyp/utils.gyp b/Telegram/gyp/utils.gyp
-index 117c87a..0b25eb8 100644
+index 117c87a..160a4c3 100644
 --- a/Telegram/gyp/utils.gyp
 +++ b/Telegram/gyp/utils.gyp
-@@ -124,9 +124,11 @@
+@@ -123,10 +123,14 @@
+           }, {
              'include_dirs': [
                '/usr/local/include',
++              '/usr/local/ssl/include',
                '<(libs_loc)/openssl-xcode/include'
 +              '/usr/include',
              ],
              'library_dirs': [
                '/usr/local/lib',
++              '/usr/local/ssl/lib',
 +              '/usr/lib',
              ],
            }]
          ],
-@@ -146,9 +148,11 @@
+@@ -145,10 +149,14 @@
+           }, {
              'include_dirs': [
                '/usr/local/include',
++              '/usr/local/ssl/include',
                '<(libs_loc)/openssl-xcode/include'
 +              '/usr/include',
              ],
              'library_dirs': [
                '/usr/local/lib',
++              '/usr/local/ssl/lib',
 +              '/usr/lib',
              ],
            }]
