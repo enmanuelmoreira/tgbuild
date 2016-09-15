@@ -46,6 +46,15 @@ cd "$SRCDIR/Libraries/zlib-1.2.8"
 make $ARGS
 $SUDO make install
 
+# Downloading and installing LibEXIF...
+cd "$SRCDIR/Libraries"
+wget https://sourceforge.net/projects/libexif/files/libexif/0.6.20/libexif-0.6.20.tar.gz -O "$SRCDIR/Libraries/libexif-0.6.20.tar.gz"
+tar -xf "$SRCDIR/Libraries/libexif-0.6.20.tar.gz"
+cd "$SRCDIR/Libraries/libexif-0.6.20"
+./configure
+make $ARGS
+$SUDO make install
+
 # Downloading and installing Opus Codec...
 cd "$SRCDIR/Libraries"
 wget http://downloads.xiph.org/releases/opus/opus-1.1.tar.gz -O "$SRCDIR/Libraries/opus-1.1.tar.gz"
