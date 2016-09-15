@@ -73,9 +73,9 @@ cd "$SRCDIR/Libraries/portaudio"
 make $ARGS
 $SUDO make install
 
-# Downloading and installing lzma...
-git clone http://git.tukaani.org/lzma.git "$SRCDIR/Libraries/lzma"
-cd "$SRCDIR/Libraries/lzma"
+# Downloading and installing XZ (former LZMA)...
+git clone http://git.tukaani.org/xz.git "$SRCDIR/Libraries/xz"
+cd "$SRCDIR/Libraries/xz"
 ./autogen.sh --enable-static
 ./configure
 make $ARGS
