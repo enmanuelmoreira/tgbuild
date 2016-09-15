@@ -100,7 +100,6 @@ $SUDO make install
 git clone git://anongit.freedesktop.org/git/libva "$SRCDIR/Libraries/libva"
 cd "$SRCDIR/Libraries/libva"
 ./autogen.sh --enable-static
-./configure
 make $ARGS
 $SUDO make install
 
