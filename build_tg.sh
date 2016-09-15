@@ -65,7 +65,7 @@ make $ARGS
 $SUDO make install
 
 # Downloading and installing lzma...
-git clone git://git.tukaani.org/lzma.git "$SRCDIR/Libraries/lzma"
+git clone http://git.tukaani.org/lzma.git "$SRCDIR/Libraries/lzma"
 cd "$SRCDIR/Libraries/lzma"
 ./configure
 make $ARGS
