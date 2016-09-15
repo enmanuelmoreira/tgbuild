@@ -1,47 +1,36 @@
-From 3bec909b789bc9a47d5f990ac23efba74c7edec3 Mon Sep 17 00:00:00 2001
+From 51fb5a2ebc0d43879487a56c780bcdf990c5aa86 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
-Date: Wed, 14 Sep 2016 20:52:18 +0300
-Subject: [PATCH] Fixed build under Fedora.
+Date: Thu, 15 Sep 2016 19:37:36 +0300
+Subject: [PATCH] Fixed build under Fedora 24+.
 
 ---
- Telegram/gyp/Telegram.gyp        |  3 +++
- Telegram/gyp/qt.gypi             | 41 ++++++++++++++++++++++------------------
- Telegram/gyp/telegram_linux.gypi |  3 +++
+ Telegram/gyp/Telegram.gyp        |  4 ++++
+ Telegram/gyp/qt.gypi             | 31 +++++++++++++++++--------------
+ Telegram/gyp/telegram_linux.gypi |  5 +++++
  Telegram/gyp/utils.gyp           |  4 ++++
- 4 files changed, 33 insertions(+), 18 deletions(-)
+ 4 files changed, 30 insertions(+), 14 deletions(-)
 
 diff --git a/Telegram/gyp/Telegram.gyp b/Telegram/gyp/Telegram.gyp
-index 0e8db70..e3516c1 100644
+index 0e8db70..d9808fd 100644
 --- a/Telegram/gyp/Telegram.gyp
 +++ b/Telegram/gyp/Telegram.gyp
-@@ -70,6 +70,9 @@
+@@ -70,6 +70,10 @@
  
      'defines': [
        'AL_LIBTYPE_STATIC',
 +      '__STDC_FORMAT_MACROS',
-+      'TDESKTOP_DISABLE_AUTOUPDATE',
 +      'TDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME',
++      'TDESKTOP_DISABLE_DESKTOP_FILE_GENERATION',
++      'TDESKTOP_DISABLE_CRASH_REPORTS',
      ],
  
      'include_dirs': [
 diff --git a/Telegram/gyp/qt.gypi b/Telegram/gyp/qt.gypi
-index b82f833..b1415c9 100644
+index b82f833..00f320a 100644
 --- a/Telegram/gyp/qt.gypi
 +++ b/Telegram/gyp/qt.gypi
-@@ -29,7 +29,6 @@
-             'Qt5Network',
-             'Qt5Widgets',
-             'Qt5Gui',
--            'qtharfbuzzng',
-           ],
-           'conditions': [
-             [ 'build_macold', {
-@@ -66,10 +65,10 @@
-             ],
-           }],
-           [ 'build_macold', {
--            'qt_loc_unix': '/usr/local/Qt-<(qt_version)'
-+            'qt_loc_unix': '/usr/Qt-<(qt_version)'
+@@ -69,7 +69,7 @@
+             'qt_loc_unix': '/usr/local/Qt-<(qt_version)'
            }],
            [ 'build_mac and not build_macold', {
 -            'qt_loc_unix': '/usr/local/tdesktop/Qt-<(qt_version)',
@@ -49,7 +38,7 @@ index b82f833..b1415c9 100644
              'qt_libs': [
                '<@(qt_libs)',
                'Qt5Core',
-@@ -78,7 +77,7 @@
+@@ -78,7 +78,7 @@
              ],
            }],
            [ 'build_linux', {
@@ -58,11 +47,10 @@ index b82f833..b1415c9 100644
              'qt_lib_prefix': 'lib',
              'qt_lib_debug_postfix': '.a',
              'qt_lib_release_postfix': '.a',
-@@ -91,20 +90,6 @@
-               '<@(qt_libs)',
+@@ -92,18 +92,6 @@
                'Qt5DBus',
                'Qt5Core',
--              'qtpcre',
+               'qtpcre',
 -              'ssl',
 -              'crypto',
 -              'Xi',
@@ -75,22 +63,16 @@ index b82f833..b1415c9 100644
 -              'xcb-shm',
 -              'xcb-xfixes',
 -              'xcb-render',
--              'xcb-static',
+               'xcb-static',
              ],
            }],
-         ],
-@@ -204,7 +189,18 @@
+@@ -204,7 +192,13 @@
        'libraries': [
          '/usr/local/lib/libxkbcommon.a',
          '<@(qt_libs_release)',
-+        'z',
-+        'pcre16',
-+        'harfbuzz',
 +        'icuuc',
 +        'icutu',
 +        'icui18n',
-+        'png16',
-+        'jpeg',
          'xcb',
 +        'xcb-shm',
 +        'xcb-xfixes',
@@ -98,7 +80,7 @@ index b82f833..b1415c9 100644
          'X11',
          'X11-xcb',
          'dbus-1',
-@@ -212,6 +208,15 @@
+@@ -212,6 +206,15 @@
          'gthread-2.0',
          'glib-2.0',
          'pthread',
@@ -115,47 +97,61 @@ index b82f833..b1415c9 100644
        'include_dirs': [
          '<(qt_loc)/mkspecs/linux-g++',
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index 15bfbb6..cfbdc69 100644
+index 15bfbb6..8ccf2c2 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
-@@ -30,12 +30,15 @@
-     },
+@@ -31,11 +31,13 @@
      'include_dirs': [
        '/usr/local/include',
-+      '/usr/local/ssl/include/openssl',
        '<(libs_loc)/openssl-xcode/include'
++      '/usr/include',
      ],
      'library_dirs': [
        '/usr/local/lib',
        '<(libs_loc)/libexif-0.6.20/libexif/.libs',
        '<(libs_loc)/breakpad/src/client/linux',
-+      '/usr/local/ssl/lib',
 +      '/usr/lib',
      ],
      'libraries': [
        'breakpad_client',
+@@ -54,6 +56,9 @@
+       'libva-drm.a',
+       'libva.a',
+       'libz.a',
++      'webp',
++      'fontconfig',
++      'freetype',
+ #      '<!(pkg-config 2> /dev/null --libs <@(pkgconfig_libs))',
+     ],
+     'cflags_cc': [
 diff --git a/Telegram/gyp/utils.gyp b/Telegram/gyp/utils.gyp
-index 117c87a..ae2ccda 100644
+index 117c87a..0b25eb8 100644
 --- a/Telegram/gyp/utils.gyp
 +++ b/Telegram/gyp/utils.gyp
-@@ -123,6 +123,8 @@
-           }, {
+@@ -124,9 +124,11 @@
              'include_dirs': [
                '/usr/local/include',
-+              '/usr/include',
-+              '/usr/local/ssl/include',
                '<(libs_loc)/openssl-xcode/include'
++              '/usr/include',
              ],
              'library_dirs': [
-@@ -145,6 +147,8 @@
-           }, {
+               '/usr/local/lib',
++              '/usr/lib',
+             ],
+           }]
+         ],
+@@ -146,9 +148,11 @@
              'include_dirs': [
                '/usr/local/include',
-+              '/usr/include',
-+              '/usr/local/ssl/include',
                '<(libs_loc)/openssl-xcode/include'
++              '/usr/include',
              ],
              'library_dirs': [
+               '/usr/local/lib',
++              '/usr/lib',
+             ],
+           }]
+         ],
 -- 
 2.7.4
 
