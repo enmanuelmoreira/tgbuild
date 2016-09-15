@@ -1,24 +1,25 @@
-From ac64ed2eb67d20366df02b29d63786aacb58916e Mon Sep 17 00:00:00 2001
+From 6e0f3bd08130cb20d1726bd5e9306c5a1e8ab656 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Thu, 15 Sep 2016 22:21:35 +0300
 Subject: [PATCH] Fixed build under Fedora 24+.
 
 ---
- Telegram/gyp/Telegram.gyp        |  4 ++++
+ Telegram/gyp/Telegram.gyp        |  5 +++++
  Telegram/gyp/qt.gypi             | 31 +++++++++++++++++--------------
  Telegram/gyp/telegram_linux.gypi |  7 +++++++
  Telegram/gyp/utils.gyp           |  8 ++++++++
- 4 files changed, 36 insertions(+), 14 deletions(-)
+ 4 files changed, 37 insertions(+), 14 deletions(-)
 
 diff --git a/Telegram/gyp/Telegram.gyp b/Telegram/gyp/Telegram.gyp
-index 0e8db70..d9808fd 100644
+index 0e8db70..38139b0 100644
 --- a/Telegram/gyp/Telegram.gyp
 +++ b/Telegram/gyp/Telegram.gyp
-@@ -70,6 +70,10 @@
+@@ -70,6 +70,11 @@
  
      'defines': [
        'AL_LIBTYPE_STATIC',
 +      '__STDC_FORMAT_MACROS',
++      'TDESKTOP_DISABLE_AUTOUPDATE',
 +      'TDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME',
 +      'TDESKTOP_DISABLE_DESKTOP_FILE_GENERATION',
 +      'TDESKTOP_DISABLE_CRASH_REPORTS',
