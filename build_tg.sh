@@ -12,7 +12,7 @@ QT_PATCH="$SRCDIR/tdesktop/Telegram/Patches/qtbase_${_QTVERSION//./_}.diff"
 QTDIR="$SRCDIR/Libraries/qt${_QTVERSION//./_}"
 
 # Exporting some paths required for build...
-export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:/usr/local/Qt-${_QTVERSION}/lib/pkgconfig:/usr/lib64/pkgconfig"
+export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:/usr/local/Qt-${_QTVERSION}/lib/pkgconfig:/usr/local/ssl/lib/pkgconfig:/usr/lib64/pkgconfig"
 export PATH="/usr/local/Qt-${_QTVERSION}/bin:$PATH"
 
 # Checking for root rights...
@@ -158,7 +158,7 @@ make $ARGS
 
 # Building and installing patched Qt...
 cd "$QTDIR"
-OPENSSL_LIBS='-L/usr/local/ssl/lib -lssl -lcrypto' ./configure -prefix "/usr/local/Qt-${_QTVERSION}" -release -opensource -confirm-license -qt-zlib -qt-libpng -qt-libjpeg -system-freetype -qt-harfbuzz -qt-pcre -qt-xcb -qt-xkbcommon-x11 -no-opengl -no-gtkstyle -static -openssl-linked -nomake examples -nomake tests -continue
+OPENSSL_LIBS='-L/usr/local/ssl/lib -lssl -lcrypto' ./configure -prefix "/usr/local/Qt-${_QTVERSION}" -release -opensource -confirm-license -qt-zlib -qt-libpng -qt-libjpeg -system-freetype -qt-harfbuzz -qt-pcre -qt-xcb -qt-xkbcommon-x11 -no-opengl -no-gtkstyle -static -openssl-linked -nomake examples -nomake tests
 make $ARGS
 $SUDO make install
 
