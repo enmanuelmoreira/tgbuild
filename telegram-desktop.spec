@@ -43,7 +43,6 @@ BuildRequires: libwebp-devel
 BuildRequires: libpng-devel
 BuildRequires: xorg-x11-util-macros
 BuildRequires: gettext-devel
-BuildRequires: cmake
 BuildRequires: libICE-devel
 BuildRequires: libSM-devel
 BuildRequires: libXi-devel
@@ -184,7 +183,7 @@ cd "%_builddir/%{_APPNAME}-%{version}/out/Release"
 %install
 # Installing executables...
 cd "%_builddir/%{_APPNAME}-%{version}/out/Release"
-mkdir -p "%{buildroot}/%{_bindir}"
+mkdir -p "%{buildroot}%{_bindir}"
 install -m 755 Telegram "%{buildroot}{_bindir}/%{name}"
 
 # Installing desktop shortcut...
