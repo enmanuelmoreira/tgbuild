@@ -12,6 +12,8 @@ Source0: %{url}/tdesktop/archive/v%{version}.tar.gz
 Source1: https://download.qt.io/official_releases/qt/5.6/5.6.0/submodules/qtbase-opensource-src-5.6.0.tar.xz
 Source2: https://download.qt.io/official_releases/qt/5.6/5.6.0/submodules/qtimageformats-opensource-src-5.6.0.tar.xz
 
+Patch0: fix_gyp.patch
+
 Requires: hicolor-icon-theme
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
