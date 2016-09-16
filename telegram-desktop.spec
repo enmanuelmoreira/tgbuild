@@ -9,6 +9,8 @@ Group: Applications/Internet
 License: GPLv3
 URL: https://github.com/telegramdesktop
 Source0: %{url}/tdesktop/archive/v%{version}.tar.gz
+Source1: https://download.qt.io/official_releases/qt/5.6/5.6.0/submodules/qtbase-opensource-src-5.6.0.tar.xz
+Source2: https://download.qt.io/official_releases/qt/5.6/5.6.0/submodules/qtimageformats-opensource-src-5.6.0.tar.xz
 
 Requires: hicolor-icon-theme
 BuildRequires: desktop-file-utils
