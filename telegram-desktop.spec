@@ -60,22 +60,27 @@ Telegram is like SMS and email combined — and can take care of all your
 personal or business messaging needs.
 
 %prep
+# Setting some constants...
+qtv=%{_QTVERSION}
+qtdir="%_builddir/Libraries/qt${qtv//./_}"
+qtpatch="%_builddir/%{_APPNAME}-%{version}/Telegram/Patches/qtbase_${qtv//./_}.diff"
+
 # Creating directory for libraries...
-mkdir -p "Libraries/qt"
+mkdir -p "$qtdir"
 
 # Unpacking Telegram Desktop source archive...
 tar -xf %{SOURCE0}
 
 # Unpacking Qt...
-cd "%_builddir/Libraries/qt"
+cd "$qtdir"
 tar -xf %{SOURCE1}
 mv -f "qtbase-opensource-src-%{_QTVERSION}" "qtbase"
 tar -xf %{SOURCE2}
 mv -f "qtimageformats-opensource-src-%{_QTVERSION}" "qtimageformats"
 
 # Applying Qt patch...
-cd "%_builddir/Libraries/qt/qtbase"
-patch -p1 -i "%_builddir/%{_APPNAME}-%{version}/Telegram/Patches/qtbase_5_6_0.diff"
+cd "$qtdir/qtbase"
+patch -p1 -i "$qtpatch"
 
 %build
 
