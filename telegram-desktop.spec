@@ -17,6 +17,10 @@ Source4: https://chromium.googlesource.com/breakpad/breakpad/+archive/master.tar
 Source5: https://chromium.googlesource.com/linux-syscall-support/+archive/master.tar.gz#/breakpad-lss.tar.gz
 Source6: https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz
 
+Source101: telegram.desktop
+Source102: telegram-desktop.appdata.xml
+Source103: tg.protocol
+
 Patch0: fix_build_under_fedora.patch
 
 Requires: hicolor-icon-theme
@@ -178,11 +182,53 @@ cd "%_builddir/%{_APPNAME}-%{version}/out/Release"
 %make_build
 
 %install
+# Installing executables...
+cd "%_builddir/%{_APPNAME}-%{version}/out/Release"
+mkdir -p %{buildroot}/%{_bindir}
+install -m 755 Telegram %{buildroot}/%{_bindir}/%{name}
+
+# Installing desktop shortcut...
+desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE101}
+
+# Installing icons...
+for size in 16 32 48 64 128 256 512; do
+	dir="%{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps"
+	install -d "$dir"
+	install -m 644 "%_builddir/%{_APPNAME}-%{version}/Telegram/Resources/art/icon${size}.png" "$dir/%{name}.png"
+done
+
+# Installing tg protocol handler...
+install -d "%{buildroot}%{_datadir}/kde4/services"
+install -m 644 %{SOURCE103} "%{buildroot}%{_datadir}/kde4/services/tg.protocol"
+
+# Installing appdata for Gnome Software...
+install -d "%{buildroot}%{_datadir}/appdata"
+install -m 644 %{SOURCE102} "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
+
+%check
+appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
+
+%post
+/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+/usr/bin/update-desktop-database &> /dev/null || :
+
+%postun
+if [ $1 -eq 0 ] ; then
+    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+fi
+/usr/bin/update-desktop-database &> /dev/null || :
+
+%posttrans
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
-%{_bindir}/telegram
-%{_datadir}/applications/telegram-desktop.desktop
-%{_datadir}/pixmaps/telegram.png
+%{_bindir}/telegram-desktop
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/kde4/services/tg.protocol
+%{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Sat Sep 17 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.6-1
+- Created new SPEC.

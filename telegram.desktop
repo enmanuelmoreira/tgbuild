@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Telegram
+GenericName=Telegram Messenger
+Exec=telegram-desktop
+Terminal=false
+Icon=telegram
+Type=Application
+Categories=Network; 
