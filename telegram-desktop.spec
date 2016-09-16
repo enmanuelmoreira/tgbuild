@@ -132,6 +132,7 @@ cd "$qtdir/qtbase"
     -system-pcre \
     -system-xcb \
     -system-xkbcommon-x11 \
+    -no-opengl \
     -no-gtkstyle \
     -static \
     -openssl-linked \
