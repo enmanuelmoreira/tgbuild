@@ -41,6 +41,7 @@ BuildRequires: libICE-devel
 BuildRequires: libSM-devel
 BuildRequires: libXi-devel
 BuildRequires: openjpeg-devel
+BuildRequires: libjpeg-turbo-devel
 BuildRequires: openssl-devel
 BuildRequires: zlib-devel
 BuildRequires: libexif-devel
