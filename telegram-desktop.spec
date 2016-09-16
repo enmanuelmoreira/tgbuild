@@ -50,6 +50,8 @@ BuildRequires: portaudio-devel
 BuildRequires: openal-soft-devel
 BuildRequires: libva-devel
 BuildRequires: libxkbcommon-devel
+BuildRequires: harfbuzz-devel
+BuildRequires: pcre-devel
 
 %description
 Telegram is a messaging app with a focus on speed and security, it’s super
@@ -107,6 +109,41 @@ cd "%_builddir/Libraries"
 tar -xf %{SOURCE6}
 
 %build
+# Setting some constants...
+qtv=%{_QTVERSION}
+qtdir="%_builddir/Libraries/qt${qtv//./_}"
+
+# Building patched Qt...
+cd "$qtdir/qtbase"
+./configure \
+    -prefix "%_builddir/qt" \
+    -release \
+    -opensource \
+    -confirm-license \
+    -system-zlib \
+    -system-libpng \
+    -system-libjpeg \
+    -system-freetype \
+    -system-harfbuzz \
+    -system-pcre \
+    -system-xcb \
+    -system-xkbcommon-x11 \
+    -no-gtkstyle \
+    -static \
+    -openssl-linked \
+    -nomake examples \
+    -nomake tests
+%make_build
+make install
+
+# Exporting new PATH...
+export PATH="%_builddir/qt/bin:$PATH"
+
+# Building Qt image plugins...
+cd "$qtdir/qtimageformats"
+qmake .
+%make_build
+make install
 
 %install
 
