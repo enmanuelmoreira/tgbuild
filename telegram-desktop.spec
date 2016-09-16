@@ -25,6 +25,8 @@ BuildRequires: libappstream-glib
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: libwayland-server-devel
+BuildRequires: libwayland-cursor-devel
+BuildRequires: libproxy-devel
 BuildRequires: libxcb-devel
 BuildRequires: libogg-devel
 BuildRequires: xz-devel
