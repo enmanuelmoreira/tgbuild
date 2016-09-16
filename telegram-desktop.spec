@@ -83,6 +83,14 @@ mv -f "qtimageformats-opensource-src-%{_QTVERSION}" "qtimageformats"
 cd "$qtdir/qtbase"
 patch -p1 -i "$qtpatch"
 
+# Unpacking GYP...
+mkdir -p "%_builddir/Libraries/gyp"
+cd "%_builddir/Libraries/gyp"
+tar -xf %{SOURCE3}
+
+# Applying GYP patch...
+patch -p1 -i "%_builddir/%{_APPNAME}-%{version}/Telegram/Patches/gyp.diff"
+
 %build
 
 %install
