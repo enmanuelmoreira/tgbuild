@@ -154,6 +154,11 @@ cd "%_builddir/Libraries/breakpad"
 ./configure
 %make_build
 
+# Building custom cmake...
+cd "%_builddir/Libraries/cmake-3.6.2"
+./configure
+%make_build
+
 # Building Telegram Desktop...
 cd "%_builddir/%{_APPNAME}-%{version}/Telegram"
 gyp/refresh.sh
