@@ -1,4 +1,5 @@
 %global _QTVERSION 5.6.0
+%global _APPNAME tdesktop
 
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
@@ -59,6 +60,22 @@ Telegram is like SMS and email combined — and can take care of all your
 personal or business messaging needs.
 
 %prep
+# Creating directory for libraries...
+mkdir -p "Libraries/qt"
+
+# Unpacking Telegram Desktop source archive...
+tar -xf %{SOURCE0}
+
+# Unpacking Qt...
+cd "%_builddir/Libraries/qt"
+tar -xf %{SOURCE1}
+mv -f "qtbase-opensource-src-%{_QTVERSION}" "qtbase"
+tar -xf %{SOURCE2}
+mv -f "qtimageformats-opensource-src-%{_QTVERSION}" "qtimageformats"
+
+# Applying Qt patch...
+cd "%_builddir/Libraries/qt/qtbase"
+patch -p1 -i "%_builddir/%{_APPNAME}-%{version}/Telegram/Patches/qtbase_5_6_0.diff"
 
 %build
 
