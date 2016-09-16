@@ -1,39 +1,50 @@
 # Build Telegram Desktop from sources
-This script will download sources of Telegram Desktop and all required libraries.
-
-**DO NOT RUN THIS SCRIPT OUTSIDE VIRTUAL MACHINE!**
+This will build telegram-desktop RPM package from sources. Just follow instructions.
 
 # Step 1
 
-Install clean Fedora from official ISO's into VirtualBox or other VM.
+Install Git, spectool and rpmbuild:
+```bash
+sudo dnf install git rpmbuild spectool
+```
 
 # Step 2
 
-Create snapshot and launch installed VM. Install guest additions if needed.
-
-# Step 3
-
-Download Git repository with build scripts:
+Download this Git repository:
 ```bash
 git clone https://github.com/xvitaly/tgbuild.git tgbuild
 ```
 
+# Step 3
+
+Create RPM build base directories:
+```bash
+mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+```
+
 # Step 4
 
-Change current directory and execute build script:
+Download sources:
 ```bash
 cd tgbuild
-./build_tg.sh
+spectool spectool --all --get-files --directory ~/rpmbuild/SOURCES/ telegram-desktop.spec
 ```
 
 # Step 5
 
-Wait and enter sudo password when prompted.
+Install build-requirements:
+```bash
+cd tgbuild
+sudo dnf builddep telegram-desktop.spec
+```
 
 # Step 6
 
-Extract result binary *tdesktop/Linux/Release/Telegram* from virtual machine.
+Build RPM package:
+```
+rpmbuild -ba telegram-desktop.spec
+```
 
 # Step 7
 
-Restore created on step 2 snapshot.
+Wait and get result in **~/rpmbuild/RPMS/$(uname -m)/** directory. Just install it.
