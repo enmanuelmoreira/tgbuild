@@ -29,6 +29,15 @@ BuildRequires: libICE-devel
 BuildRequires: libSM-devel
 BuildRequires: libXi-devel
 BuildRequires: openjpeg-devel
+BuildRequires: openssl-devel
+BuildRequires: zlib-devel
+BuildRequires: libexif-devel
+BuildRequires: opus-devel
+BuildRequires: ffmpeg-devel
+BuildRequires: portaudio-devel
+BuildRequires: openal-soft-devel
+BuildRequires: libva-devel
+BuildRequires: libxkbcommon-devel
 
 %description
 Telegram is a messaging app with a focus on speed and security, it’s super
