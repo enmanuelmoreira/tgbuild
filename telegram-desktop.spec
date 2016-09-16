@@ -17,7 +17,7 @@ Source4: https://chromium.googlesource.com/breakpad/breakpad/+archive/master.tar
 Source5: https://chromium.googlesource.com/linux-syscall-support/+archive/master.tar.gz#/breakpad-lss.tar.gz
 Source6: https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz
 
-Patch0: fix_gyp.patch
+Patch0: fix_build_under_fedora.patch
 
 Requires: hicolor-icon-theme
 BuildRequires: desktop-file-utils
