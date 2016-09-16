@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Telegram
 GenericName=Telegram Messenger
-Exec=telegram-desktop
+Exec=/usr/bin/telegram-desktop
 Terminal=false
 Icon=telegram
 Type=Application

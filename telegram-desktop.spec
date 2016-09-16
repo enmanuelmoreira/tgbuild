@@ -184,11 +184,11 @@ cd "%_builddir/%{_APPNAME}-%{version}/out/Release"
 %install
 # Installing executables...
 cd "%_builddir/%{_APPNAME}-%{version}/out/Release"
-mkdir -p %{buildroot}/%{_bindir}
-install -m 755 Telegram %{buildroot}/%{_bindir}/%{name}
+mkdir -p "%{buildroot}/%{_bindir}"
+install -m 755 Telegram "%{buildroot}/%{_bindir}/%{name}"
 
 # Installing desktop shortcut...
-desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE101}
+desktop-file-install --dir="%{buildroot}%{_datadir}/applications" "%{SOURCE101}"
 
 # Installing icons...
 for size in 16 32 48 64 128 256 512; do
@@ -199,14 +199,14 @@ done
 
 # Installing tg protocol handler...
 install -d "%{buildroot}%{_datadir}/kde4/services"
-install -m 644 %{SOURCE103} "%{buildroot}%{_datadir}/kde4/services/tg.protocol"
+install -m 644 "%{SOURCE103}" "%{buildroot}%{_datadir}/kde4/services/tg.protocol"
 
 # Installing appdata for Gnome Software...
 install -d "%{buildroot}%{_datadir}/appdata"
-install -m 644 %{SOURCE102} "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
+install -m 644 "%{SOURCE102}" "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
 
 %check
-appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
+appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
 
 %post
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
@@ -223,7 +223,7 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
-%{_bindir}/telegram-desktop
+%{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/kde4/services/tg.protocol
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
