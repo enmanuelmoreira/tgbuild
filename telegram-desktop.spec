@@ -15,6 +15,7 @@ Source2: https://download.qt.io/official_releases/qt/5.6/5.6.0/submodules/qtimag
 Source3: https://chromium.googlesource.com/external/gyp/+archive/master.tar.gz#/gyp.tar.gz
 Source4: https://chromium.googlesource.com/breakpad/breakpad/+archive/master.tar.gz#/breakpad.tar.gz
 Source5: https://chromium.googlesource.com/linux-syscall-support/+archive/master.tar.gz#/breakpad-lss.tar.gz
+Source6: https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz
 
 Patch0: fix_gyp.patch
 
@@ -100,6 +101,10 @@ tar -xf %{SOURCE4}
 mkdir -p "%_builddir/Libraries/breakpad/src/third_party/lss"
 cd "%_builddir/Libraries/breakpad/src/third_party/lss"
 tar -xf %{SOURCE5}
+
+# Unpacking CMake...
+cd "%_builddir/Libraries"
+tar -xf %{SOURCE6}
 
 %build
 
