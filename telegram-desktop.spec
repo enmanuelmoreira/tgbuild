@@ -29,6 +29,7 @@ BuildRequires: libappstream-glib
 BuildRequires: ffmpeg-devel >= 3.1
 BuildRequires: gcc
 BuildRequires: gcc-c++
+BuildRequires: libwayland-client-devel
 BuildRequires: libwayland-server-devel
 BuildRequires: libwayland-cursor-devel
 BuildRequires: libproxy-devel
