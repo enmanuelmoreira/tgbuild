@@ -22,6 +22,7 @@ Patch0: fix_build_under_fedora.patch
 Requires: hicolor-icon-theme
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
+BuildRequires: ffmpeg-devel >= 3.1
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: libwayland-server-devel
@@ -48,7 +49,6 @@ BuildRequires: openssl-devel
 BuildRequires: zlib-devel
 BuildRequires: libexif-devel
 BuildRequires: opus-devel
-BuildRequires: ffmpeg-devel
 BuildRequires: portaudio-devel
 BuildRequires: openal-soft-devel
 BuildRequires: xcb-util-devel
