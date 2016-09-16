@@ -5,4 +5,4 @@ Exec=/usr/bin/telegram-desktop
 Terminal=false
 Icon=telegram
 Type=Application
-Categories=Network; 
+Categories=Network;
