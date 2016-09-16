@@ -93,6 +93,14 @@ tar -xf %{SOURCE3}
 # Applying GYP patch...
 patch -p1 -i "%_builddir/%{_APPNAME}-%{version}/Telegram/Patches/gyp.diff"
 
+# Unpacking breakpad with lss support...
+mkdir -p "%_builddir/Libraries/breakpad"
+cd "%_builddir/Libraries/breakpad"
+tar -xf %{SOURCE4}
+mkdir -p "%_builddir/Libraries/breakpad/src/third_party/lss"
+cd "%_builddir/Libraries/breakpad/src/third_party/lss"
+tar -xf %{SOURCE5}
+
 %build
 
 %install
