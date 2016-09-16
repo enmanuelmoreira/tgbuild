@@ -1,3 +1,5 @@
+%global _QTVERSION 5.6.0
+
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 0.10.6
