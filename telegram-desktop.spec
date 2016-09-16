@@ -48,8 +48,16 @@ BuildRequires: opus-devel
 BuildRequires: ffmpeg-devel
 BuildRequires: portaudio-devel
 BuildRequires: openal-soft-devel
+BuildRequires: xcb-util-devel
+BuildRequires: xcb-util-wm-devel
+BuildRequires: xcb-util-xrm-devel
+BuildRequires: xcb-util-image-devel
+BuildRequires: xcb-util-cursor-devel
+BuildRequires: xcb-util-keysyms-devel
+BuildRequires: xcb-util-renderutil-devel
 BuildRequires: libva-devel
 BuildRequires: libxkbcommon-devel
+BuildRequires: libxkbcommon-x11-devel
 BuildRequires: harfbuzz-devel
 BuildRequires: pcre-devel
 
