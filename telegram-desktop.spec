@@ -145,6 +145,11 @@ qmake .
 %make_build
 make install
 
+# Building breakpad...
+cd "%_builddir/Libraries/breakpad"
+./configure
+%make_build
+
 %install
 
 %files
