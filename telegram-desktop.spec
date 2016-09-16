@@ -77,6 +77,10 @@ mkdir -p "$qtdir"
 # Unpacking Telegram Desktop source archive...
 tar -xf %{SOURCE0}
 
+# Patching Telegram Desktop...
+cd "%_builddir/%{_APPNAME}-%{version}"
+patch -p1 -i %{PATCH0}
+
 # Unpacking Qt...
 cd "$qtdir"
 tar -xf %{SOURCE1}
