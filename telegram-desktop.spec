@@ -8,6 +8,7 @@ License: GPLv3
 URL: https://github.com/telegramdesktop
 Source0: %{url}/tdesktop/archive/v%{version}.tar.gz
 
+Requires: hicolor-icon-theme
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
 BuildRequires: gcc
