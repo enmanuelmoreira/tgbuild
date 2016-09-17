@@ -150,7 +150,6 @@ cd "$qtdir/qtbase"
     -no-opengl \
     -no-gtkstyle \
     -static \
-    -openssl-linked \
     -nomake examples \
     -nomake tests
 %make_build
