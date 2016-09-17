@@ -3,6 +3,6 @@ Name=Telegram
 GenericName=Telegram Messenger
 Exec=/usr/bin/telegram-desktop
 Terminal=false
-Icon=telegram
+Icon=telegram-desktop
 Type=Application
 Categories=Network;
