@@ -5,7 +5,7 @@ This will build telegram-desktop RPM package from sources. Just follow instructi
 
 Install Git, spectool and rpmbuild:
 ```bash
-sudo dnf install git rpm-build spectool
+sudo dnf install git rpm-build rpmdevtools
 ```
 
 # Step 2
