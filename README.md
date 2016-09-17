@@ -27,7 +27,7 @@ mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
 Download sources:
 ```bash
 cd tgbuild
-spectool spectool --all --get-files --directory ~/rpmbuild/SOURCES/ telegram-desktop.spec
+spectool --all --get-files --directory ~/rpmbuild/SOURCES/ telegram-desktop.spec
 ```
 
 # Step 5
