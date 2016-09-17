@@ -29,6 +29,7 @@ BuildRequires: libappstream-glib
 BuildRequires: ffmpeg-devel >= 3.1
 BuildRequires: gcc
 BuildRequires: gcc-c++
+BuildRequires: chrpath
 BuildRequires: libwayland-client-devel
 BuildRequires: libwayland-server-devel
 BuildRequires: libwayland-cursor-devel
@@ -184,8 +185,8 @@ cd "%_builddir/%{_APPNAME}-%{version}/out/Release"
 # Installing executables...
 cd "%_builddir/%{_APPNAME}-%{version}/out/Release"
 mkdir -p "%{buildroot}%{_bindir}"
+chrpath -d Telegram
 install -m 755 Telegram "%{buildroot}%{_bindir}/%{name}"
-chmod 755 "%{buildroot}%{_bindir}/%{name}"
 
 # Installing desktop shortcut...
 desktop-file-install --dir="%{buildroot}%{_datadir}/applications" "%{SOURCE101}"
@@ -226,6 +227,8 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
+%doc %{_APPNAME}-%{version}/README.md
+%license %{_APPNAME}-%{version}/LICENSE
 %{_bindir}/%{name}
 %{_datadir}/applications/telegram.desktop
 %{_datadir}/kde4/services/tg.protocol
