@@ -185,6 +185,7 @@ cd "%_builddir/%{_APPNAME}-%{version}/out/Release"
 cd "%_builddir/%{_APPNAME}-%{version}/out/Release"
 mkdir -p "%{buildroot}%{_bindir}"
 install -m 755 Telegram "%{buildroot}%{_bindir}/%{name}"
+chmod 755 "%{buildroot}%{_bindir}/%{name}"
 
 # Installing desktop shortcut...
 desktop-file-install --dir="%{buildroot}%{_datadir}/applications" "%{SOURCE101}"
