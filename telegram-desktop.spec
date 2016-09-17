@@ -4,7 +4,7 @@
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 0.10.6
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 Group: Applications/Internet
 License: GPLv3
@@ -209,17 +209,20 @@ install -m 644 "%{SOURCE102}" "%{buildroot}%{_datadir}/appdata/%{name}.appdata.x
 appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
 
 %post
+/bin/touch --no-create %{_datadir}/mime/packages &>/dev/null || :
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 /usr/bin/update-desktop-database &> /dev/null || :
 
 %postun
 if [ $1 -eq 0 ] ; then
+    /usr/bin/update-mime-database %{_datadir}/mime &> /dev/null || :
     /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
     /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 fi
 /usr/bin/update-desktop-database &> /dev/null || :
 
 %posttrans
+/usr/bin/update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
@@ -230,5 +233,8 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
-* Sat Sep 17 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.6-1
+* Sat Sep 17 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.6-2
+- Added installation of tg protocol and mime-handler.
+
+* Fri Sep 16 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.6-1
 - Created new SPEC.
