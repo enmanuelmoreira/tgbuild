@@ -126,10 +126,6 @@ mkdir -p "%_builddir/Libraries/breakpad/src/third_party/lss"
 cd "%_builddir/Libraries/breakpad/src/third_party/lss"
 tar -xf %{SOURCE5}
 
-# Unpacking CMake...
-cd "%_builddir/Libraries"
-tar -xf %{SOURCE6}
-
 %build
 # Setting some constants...
 qtv=%{_QTVERSION}
