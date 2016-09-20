@@ -30,6 +30,7 @@ BuildRequires: ffmpeg-devel >= 3.1
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: chrpath
+BuildRequires: cmake
 BuildRequires: libwayland-client-devel
 BuildRequires: libwayland-server-devel
 BuildRequires: libwayland-cursor-devel
