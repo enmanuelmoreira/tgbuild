@@ -4,7 +4,7 @@
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 0.10.6
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 Group: Applications/Internet
 License: GPLv3
@@ -231,6 +231,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Tue Sep 20 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.6-3
+- Added new patch to build project using systemwide cmake.
+
 * Sat Sep 17 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.6-2
 - Added installation of tg protocol and mime-handler.
 
