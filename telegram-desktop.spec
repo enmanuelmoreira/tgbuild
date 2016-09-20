@@ -21,6 +21,7 @@ Source102: telegram-desktop.appdata.xml
 Source103: tg.protocol
 
 Patch0: fix_build_under_fedora.patch
+Patch1: fix_cmake.patch
 
 Requires: hicolor-icon-theme
 BuildRequires: desktop-file-utils
@@ -96,6 +97,7 @@ tar -xf %{SOURCE0}
 # Patching Telegram Desktop...
 cd "%_builddir/%{_APPNAME}-%{version}"
 patch -p1 -i %{PATCH0}
+patch -p1 -i %{PATCH1}
 
 # Unpacking Qt...
 cd "$qtdir"
