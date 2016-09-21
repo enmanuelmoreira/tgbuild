@@ -235,7 +235,103 @@ fi
 - Added new patch to build project using systemwide cmake.
 
 * Sat Sep 17 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.6-2
+- Created new SPEC.
 - Added installation of tg protocol and mime-handler.
 
-* Fri Sep 16 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.6-1
-- Created new SPEC.
+* Wed Sep 14 2016 rkady L. Shane <ashejn@russianfedora.pro> 0.10.6-1
+- update to 0.10.6
+
+* Mon Aug  8 2016 rkady L. Shane <ashejn@russianfedora.pro> 0.10.1-2
+- added appdata file
+
+* Mon Aug  8 2016 rkady L. Shane <ashejn@russianfedora.pro> 0.10.1-1
+- update to 0.10.1
+
+* Thu Aug  4 2016 rkady L. Shane <ashejn@russianfedora.pro> 0.10.0-1
+- update to 0.10.0
+
+* Mon Jun 27 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.56-1.R
+- update to 0.9.56
+
+* Thu Jun 16 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.51-1.R
+- update to 0.9.51
+
+* Wed May 25 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.49-1.R
+- update to 0.9.49
+
+* Wed May 11 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.48-1.R
+- update to 0.9.48
+
+* Thu Apr 14 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.42-1.R
+- update to 0.9.42
+
+* Wed Apr 13 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.41-1.R
+- update to 0.9.41
+
+* Tue Apr  5 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.40-1.R
+- update to 0.9.40
+
+* Wed Mar 16 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.33-1.R
+- update to 0.9.33
+
+* Tue Mar 15 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.32-1.R
+- update to 0.9.32
+
+* Mon Feb 29 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.28-1.R
+- update to 0.9.28
+
+* Tue Feb 23 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.26-1.R
+- update to 0.9.26
+
+* Wed Feb 17 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.24-1.R
+- update to 0.9.18
+
+* Sun Jan 10 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.18-1.R
+- update to 0.9.18
+
+* Thu Dec 10 2015 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.15-1.R
+- update to 0.9.15
+
+* Thu Nov 26 2015 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.13-1.R
+- update to 0.9.13
+
+* Fri Nov 13 2015 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.10-1.R
+- update to 0.9.10
+
+* Tue Oct 27 2015 Arkady L. Shane <ashejn@russianfedora.pro> - 0.9.6-1.R
+- clean up spec
+- update to 0.9.6
+
+* Mon Aug 03 2015 rommon <rommon@t-online.de> - 0.8.45-1
+- update to new version
+
+* Sat Jul 18 2015 rommon <rommon@t-online.de> - 0.8.38-1
+- update to new version
+
+* Fri Jun 26 2015 rommon <rommon@t-online.de> - 0.8.32-1
+- update to new version
+- rename from telegram to telegram-desktop
+
+* Tue Jun 9 2015 rommon <rommon@t-online.de> - 0.8.24-1
+- update to new version
+
+* Fri May 1 2015 rommon <rommon@t-online.de> - 0.8.11-1
+- update to new version
+
+* Mon Apr 27 2015 rommon <rommon@t-online.de> - 0.8.7-1
+- update to new version
+
+* Mon Apr 27 2015 rommon <rommon@t-online.de> - 0.8.4-5
+- fix icon permissions
+
+* Fri Apr 24 2015 rommon <rommon@t-online.de> - 0.8.4-4
+- fix desktop file
+
+* Tue Apr 21 2015 rommon <rommon@t-online.de> - 0.8.4-3
+- changed desktop file
+
+* Tue Apr 21 2015 rommon <rommon@t-online.de> - 0.8.4-2
+- adaption for 32/64 bit builds
+
+* Tue Apr 21 2015 rommon <rommon@t-online.de> - 0.8.4-1
+- initial package
