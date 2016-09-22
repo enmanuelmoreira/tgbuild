@@ -9,7 +9,7 @@ Release: 1%{?dist}
 Group: Applications/Internet
 License: GPLv3
 URL: https://github.com/telegramdesktop/%{_APPNAME}
-Source0: %{url}/archive/v%{version}.tar.gz
+Source0: %{url}/archive/v%{version}.tar.gz#/%{_APPNAME}-%{version}.tar.gz
 Source1: https://download.qt.io/official_releases/qt/5.6/%{_QTVERSION}/submodules/qtbase-opensource-src-%{_QTVERSION}.tar.xz
 Source2: https://download.qt.io/official_releases/qt/5.6/%{_QTVERSION}/submodules/qtimageformats-opensource-src-%{_QTVERSION}.tar.xz
 Source3: https://chromium.googlesource.com/external/gyp/+archive/master.tar.gz#/gyp.tar.gz
