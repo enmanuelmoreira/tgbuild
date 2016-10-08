@@ -1,0 +1,38 @@
+From d3fb43e81029473746b20b465b89b3023623b79a Mon Sep 17 00:00:00 2001
+From: Vitaly Zaitsev <vitaly@easycoding.org>
+Date: Sat, 8 Oct 2016 15:12:43 +0200
+Subject: [PATCH] Use correct build flags for Fedora.
+
+---
+ Telegram/gyp/telegram_linux.gypi | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
+
+diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
+index 15bfbb6..ff1a003 100644
+--- a/Telegram/gyp/telegram_linux.gypi
++++ b/Telegram/gyp/telegram_linux.gypi
+@@ -65,18 +65,13 @@
+     'configurations': {
+       'Release': {
+         'cflags': [
+-          '-Ofast',
+-          '-flto',
+-          '-fno-strict-aliasing',
++          '$(CFLAGS)',
+         ],
+         'cflags_cc': [
+-          '-Ofast',
+-          '-flto',
+-          '-fno-strict-aliasing',
++          '$(CXXFLAGS)',
+         ],
+         'ldflags': [
+-          '-Ofast',
+-          '-flto',
++          '$(LDFLAGS)',
+         ],
+       },
+     },
+-- 
+2.7.4
+
