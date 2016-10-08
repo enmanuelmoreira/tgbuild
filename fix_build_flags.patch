@@ -1,14 +1,58 @@
-From d3fb43e81029473746b20b465b89b3023623b79a Mon Sep 17 00:00:00 2001
+From 97cdc99b7b9bb5a2978f5a8a7b1fc02a4d401d09 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
-Date: Sat, 8 Oct 2016 15:12:43 +0200
+Date: Sat, 8 Oct 2016 20:33:50 +0200
 Subject: [PATCH] Use correct build flags for Fedora.
 
 ---
+ Telegram/gyp/settings_linux.gypi | 23 +++++------------------
  Telegram/gyp/telegram_linux.gypi | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ 2 files changed, 8 insertions(+), 26 deletions(-)
 
+diff --git a/Telegram/gyp/settings_linux.gypi b/Telegram/gyp/settings_linux.gypi
+index 3356b97..1766434 100644
+--- a/Telegram/gyp/settings_linux.gypi
++++ b/Telegram/gyp/settings_linux.gypi
+@@ -21,21 +21,6 @@
+   'conditions': [
+     [ 'build_linux', {
+       'variables': {
+-        'linux_common_flags': [
+-          '-pipe',
+-          '-g',
+-          '-Wall',
+-          '-W',
+-          '-fPIC',
+-          '-Wno-unused-result',
+-          '-Wno-unused-variable',
+-          '-Wno-unused-parameter',
+-          '-Wno-unused-function',
+-          '-Wno-switch',
+-          '-Wno-comment',
+-          '-Wno-unused-but-set-variable',
+-          '-Wno-missing-field-initializers',
+-        ],
+       },
+       'conditions': [
+         [ '"<!(uname -p)" == "x86_64"', {
+@@ -64,11 +49,13 @@
+         'QT_PLUGIN',
+       ],
+       'cflags': [
+-        '<@(linux_common_flags)',
++        '<!(echo $CFLAGS)',
+       ],
+       'cflags_cc': [
+-        '<@(linux_common_flags)',
+-        '-std=gnu++1y',
++        '<!(echo $CXXFLAGS)',
++      ],
++      'ldflags': [
++        '<!(echo $LDFLAGS)',
+       ],
+       'configurations': {
+         'Debug': {
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index 15bfbb6..ff1a003 100644
+index 15bfbb6..ed960b5 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
 @@ -65,18 +65,13 @@
@@ -18,18 +62,18 @@ index 15bfbb6..ff1a003 100644
 -          '-Ofast',
 -          '-flto',
 -          '-fno-strict-aliasing',
-+          '<!@(echo $CFLAGS)',
++          '<!(echo $CFLAGS)',
          ],
          'cflags_cc': [
 -          '-Ofast',
 -          '-flto',
 -          '-fno-strict-aliasing',
-+          '<!@(echo $CXXFLAGS)',
++          '<!(echo $CXXFLAGS)',
          ],
          'ldflags': [
 -          '-Ofast',
 -          '-flto',
-+          '<!@(echo $LDFLAGS)',
++          '<!(echo $LDFLAGS)',
          ],
        },
      },
