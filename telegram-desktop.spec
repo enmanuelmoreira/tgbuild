@@ -4,7 +4,7 @@
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 0.10.11
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 Group: Applications/Internet
 License: GPLv3
@@ -23,6 +23,7 @@ Source103: tg.protocol
 
 Patch0: fix_build_under_fedora.patch
 Patch1: fix_cmake.patch
+Patch2: fix_build_flags.patch
 
 Requires: hicolor-icon-theme
 BuildRequires: desktop-file-utils
@@ -98,6 +99,7 @@ tar -xf %{SOURCE0}
 cd "%_builddir/%{appname}-%{version}"
 patch -p1 -i %{PATCH0}
 patch -p1 -i %{PATCH1}
+patch -p1 -i %{PATCH2}
 
 # Unpacking Qt...
 cd "$qtdir"
@@ -229,6 +231,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Sat Oct 08 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.11-3
+- GYP will now export correct build flags for project.
+
 * Sat Oct 08 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.11-2
 - Will use configure macro to export correct build flags.
 
