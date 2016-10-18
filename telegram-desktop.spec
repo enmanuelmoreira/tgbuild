@@ -179,6 +179,7 @@ cd "%_builddir/%{appname}-%{version}/out/Release"
 cd "%_builddir/%{appname}-%{version}/out/Release"
 mkdir -p "%{buildroot}%{_bindir}"
 chrpath -d Telegram
+strip Telegram
 install -m 755 Telegram "%{buildroot}%{_bindir}/%{name}"
 
 # Installing desktop shortcut...
