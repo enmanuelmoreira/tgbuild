@@ -2,18 +2,18 @@
 %global appname tdesktop
 
 %global commit3 920ee58c3d3109dea3cd37d88054014891a93db7
-%global shortcommit3 %(c=%{commit0}; echo ${c:0:7})
+%global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
 
 %global commit4 e6d1c032baa222d8a8dc87813e9067199ec0266d
-%global shortcommit4 %(c=%{commit0}; echo ${c:0:7})
+%global shortcommit4 %(c=%{commit4}; echo ${c:0:7})
 
 %global commit5 1549d20f6d3e7d66bb4e687c0ab9da42c2bff2ac
-%global shortcommit5 %(c=%{commit0}; echo ${c:0:7})
+%global shortcommit5 %(c=%{commit5}; echo ${c:0:7})
 
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 0.10.16
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 Group: Applications/Internet
 License: GPLv3
@@ -239,6 +239,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Fri Oct 21 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.16-2
+- Use specified revisions of 3rd-party libraries.
+
 * Thu Oct 20 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.16-1
 - Updated to 0.10.16.
 
