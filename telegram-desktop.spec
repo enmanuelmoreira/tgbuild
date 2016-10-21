@@ -1,6 +1,15 @@
 %global qtversion 5.6.2
 %global appname tdesktop
 
+%global commit3 920ee58c3d3109dea3cd37d88054014891a93db7
+%global shortcommit3 %(c=%{commit0}; echo ${c:0:7})
+
+%global commit4 e6d1c032baa222d8a8dc87813e9067199ec0266d
+%global shortcommit4 %(c=%{commit0}; echo ${c:0:7})
+
+%global commit5 1549d20f6d3e7d66bb4e687c0ab9da42c2bff2ac
+%global shortcommit5 %(c=%{commit0}; echo ${c:0:7})
+
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 0.10.16
@@ -13,9 +22,9 @@ URL: https://github.com/telegramdesktop/%{appname}
 Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
 Source1: https://download.qt.io/official_releases/qt/5.6/%{qtversion}/submodules/qtbase-opensource-src-%{qtversion}.tar.xz
 Source2: https://download.qt.io/official_releases/qt/5.6/%{qtversion}/submodules/qtimageformats-opensource-src-%{qtversion}.tar.xz
-Source3: https://chromium.googlesource.com/external/gyp/+archive/master.tar.gz#/gyp.tar.gz
-Source4: https://chromium.googlesource.com/breakpad/breakpad/+archive/master.tar.gz#/breakpad.tar.gz
-Source5: https://chromium.googlesource.com/linux-syscall-support/+archive/master.tar.gz#/breakpad-lss.tar.gz
+Source3: https://chromium.googlesource.com/external/gyp/+archive/%{commit3}.tar.gz#/gyp-%{shortcommit3}.tar.gz
+Source4: https://chromium.googlesource.com/breakpad/breakpad/+archive/%{commit4}.tar.gz#/breakpad-%{shortcommit4}.tar.gz
+Source5: https://chromium.googlesource.com/linux-syscall-support/+archive/%{commit5}.tar.gz#/breakpad-lss-%{shortcommit5}.tar.gz
 
 Source101: telegram.desktop
 Source102: telegram-desktop.appdata.xml
