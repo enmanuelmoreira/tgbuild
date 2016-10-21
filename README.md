@@ -19,7 +19,7 @@ git clone https://github.com/xvitaly/tgbuild.git tgbuild
 
 Create RPM build base directories:
 ```bash
-mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+rpmdev-setuptree
 ```
 
 # Step 4
