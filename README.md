@@ -41,10 +41,13 @@ sudo dnf builddep telegram-desktop.spec
 # Step 6
 
 Build RPM package:
-```
+```bash
 rpmbuild -ba telegram-desktop.spec
 ```
 
 # Step 7
 
-Wait and get result in **~/rpmbuild/RPMS/$(uname -m)/** directory. Just install it.
+Wait for a while and then install result:
+```bash
+sudo dnf install ~/rpmbuild/RPMS/$(uname -m)/telegram-desktop*.rpm
+```
