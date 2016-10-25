@@ -1,12 +1,16 @@
+# Telegram Desktop's constants...
 %global qtversion 5.6.2
 %global appname tdesktop
 
+# Git revision of GYP...
 %global commit3 920ee58c3d3109dea3cd37d88054014891a93db7
 %global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
 
+# Git revision of Breakpad...
 %global commit4 e6d1c032baa222d8a8dc87813e9067199ec0266d
 %global shortcommit4 %(c=%{commit4}; echo ${c:0:7})
 
+# Git revision of Breakpad-lss...
 %global commit5 1549d20f6d3e7d66bb4e687c0ab9da42c2bff2ac
 %global shortcommit5 %(c=%{commit5}; echo ${c:0:7})
 
