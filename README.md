@@ -27,7 +27,7 @@ rpmdev-setuptree
 Download sources:
 ```bash
 cd tgbuild
-spectool --all --get-files --directory ~/rpmbuild/SOURCES/ telegram-desktop.spec
+spectool -g -R telegram-desktop.spec
 ```
 
 # Step 5
