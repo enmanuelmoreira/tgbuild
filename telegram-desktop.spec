@@ -64,7 +64,6 @@ BuildRequires: libSM-devel
 BuildRequires: libXi-devel
 BuildRequires: openjpeg-devel
 BuildRequires: libjpeg-turbo-devel
-BuildRequires: openssl-devel
 BuildRequires: zlib-devel
 BuildRequires: libexif-devel
 BuildRequires: opus-devel
@@ -82,6 +81,11 @@ BuildRequires: libxkbcommon-devel
 BuildRequires: libxkbcommon-x11-devel
 BuildRequires: harfbuzz-devel
 BuildRequires: pcre-devel
+%if 0%{?fedora} >= 26
+BuildRequires: compat-openssl10
+%else
+BuildRequires: openssl-devel
+%endif
 
 %description
 Telegram is a messaging app with a focus on speed and security, it’s super
