@@ -17,7 +17,7 @@
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 0.10.19
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 Group: Applications/Internet
 License: GPLv3
@@ -247,6 +247,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Sun Oct 30 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.19-2
+- Fixed build under Fedora Rawhide (26).
+
 * Tue Oct 25 2016 Vitaly Zaitsev <vitaly@easycoding.org> - 0.10.19-1
 - Updated to 0.10.19.
 
