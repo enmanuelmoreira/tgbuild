@@ -113,8 +113,8 @@ tar -xf %{SOURCE0}
 
 # Patching Telegram Desktop...
 cd "%_builddir/%{appname}-%{version}"
-patch -p1 -i %{PATCH0}
-patch -p1 -i %{PATCH1}
+%patch0 -p1
+%patch1 -p1
 
 # Unpacking Qt...
 cd "$qtdir"
