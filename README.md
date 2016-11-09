@@ -32,20 +32,28 @@ spectool -g -R telegram-desktop.spec
 
 # Step 5
 
+Copy other files to sources directory:
+```bash
+cd tgbuild
+cp -f {*.patch,telegram*,tg.protocol} $(rpm --eval %{_sourcedir})
+```
+
+# Step 6
+
 Install build-requirements:
 ```bash
 cd tgbuild
 sudo dnf builddep telegram-desktop.spec
 ```
 
-# Step 6
+# Step 7
 
 Build RPM package:
 ```bash
 rpmbuild -ba telegram-desktop.spec
 ```
 
-# Step 7
+# Step 8
 
 Wait for a while and then install result:
 ```bash
