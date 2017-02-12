@@ -3,7 +3,7 @@
 %global appname tdesktop
 
 # Git revision of GYP...
-%global commit3 940a15ee3f1c89f193cb4c19373b3f6e9ad15b95
+%global commit3 a7055b3989c1074adca03b4b4829e7f0e57f6efd
 %global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
 
 # Git revision of Breakpad...
