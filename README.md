@@ -7,7 +7,7 @@ First you need to clone this repository with SPECs and patches to any directory:
 git clone https://github.com/xvitaly/tgbuild.git tgbuild
 ```
 
-Now you can change branch:
+You can also switch branch:
  * **master** - SPEC and patches for current stable branch of Telegram Desktop;
  * **dev** - SPEC and patches for latest unstable development (alpha) branch of Telegram Desktop.
 
@@ -15,10 +15,6 @@ Now you can change branch:
 cd tgbuild
 git checkout master
 ```
-
-# Build using mock (recommended)
-New recommended way - is to build RPM package via mock. It is very simple and you will don't need to install lots of development packages (such as compilers, headers, etc.) into your system.
-
 
 # Build using rpmbuild
 ## Step 1
@@ -79,3 +75,60 @@ Wait for a while and then install result:
 ```bash
 sudo dnf install ~/rpmbuild/RPMS/$(uname -m)/telegram-desktop*.rpm
 ```
+
+# Build using mock
+New way - is to build RPM package via mock. It is very simple and you will don't need to install lots of development packages (such as compilers, headers, etc.) into your system.
+
+## Step 1
+
+Install mock, spectool and rpmbuild:
+```bash
+sudo dnf install rpm-build rpmdevtools mock mock-rpmfusion-free
+```
+
+Add yourself to `mock` group (you must run this only for the first time after installing mock):
+```bash
+sudo usermod -a -G mock $(whoami)
+```
+You need to relogin to your system after doing this.
+
+## Step 2
+
+Download Telegram Desktop sources:
+```bash
+cd tgbuild
+spectool -g -R telegram-desktop.spec
+```
+
+## Step 3
+
+Copy other files to sources directory:
+```bash
+cd tgbuild
+cp -f {*.patch,telegram*,tg.protocol} $(rpm --eval %{_sourcedir})
+```
+
+## Step 4
+
+Generate SRPM package for mock:
+```bash
+rpmbuild -bs telegram-desktop.spec
+```
+
+## Step 5
+
+Start mock build sequence:
+```bash
+mock -r fedora-$(rpm -E %fedora)-$(uname -m)-rpmfusion_free --rebuild ~/rpmbuild/SRPMS/telegram-desktop*.src.rpm
+```
+
+## Step 6
+
+Wait for a while and then install result:
+```bash
+sudo dnf install /var/lib/mock/results/telegram-desktop*.rpm
+```
+
+## Step 6
+
+Remove temporary files from `~/rpmbuild`, `/var/cache/mock`, `/var/lib/mock`.
