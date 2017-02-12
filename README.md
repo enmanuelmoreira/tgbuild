@@ -4,17 +4,12 @@ This will build telegram-desktop RPM package from sources. Just follow instructi
 # Clone this repository
 First you need to clone this repository with SPECs and patches to any directory:
 ```bash
-git clone https://github.com/xvitaly/tgbuild.git tgbuild
+git clone -b master https://github.com/xvitaly/tgbuild.git tgbuild
 ```
 
 You can also select branch:
  * **master** (default) - SPEC and patches for current stable branch of Telegram Desktop;
  * **dev** - SPEC and patches for latest unstable development (alpha) branch of Telegram Desktop.
-
-```bash
-cd tgbuild
-git checkout master
-```
 
 # Build using rpmbuild
 ## Step 1
