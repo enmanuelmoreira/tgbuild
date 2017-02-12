@@ -94,13 +94,20 @@ You need to relogin to your system after doing this.
 
 ## Step 2
 
+Create RPM build base directories:
+```bash
+rpmdev-setuptree
+```
+
+## Step 3
+
 Download Telegram Desktop sources:
 ```bash
 cd tgbuild
 spectool -g -R telegram-desktop.spec
 ```
 
-## Step 3
+## Step 4
 
 Copy other files to sources directory:
 ```bash
@@ -108,27 +115,27 @@ cd tgbuild
 cp -f {*.patch,telegram*,tg.protocol} $(rpm --eval %{_sourcedir})
 ```
 
-## Step 4
+## Step 5
 
 Generate SRPM package for mock:
 ```bash
 rpmbuild -bs telegram-desktop.spec
 ```
 
-## Step 5
+## Step 6
 
 Start mock build sequence:
 ```bash
 mock -r fedora-$(rpm -E %fedora)-$(uname -m)-rpmfusion_free --rebuild ~/rpmbuild/SRPMS/telegram-desktop*.src.rpm
 ```
 
-## Step 6
+## Step 7
 
 Wait for a while and then install result:
 ```bash
 sudo dnf install /var/lib/mock/results/telegram-desktop*.rpm
 ```
 
-## Step 6
+## Step 8
 
 Remove temporary files from `~/rpmbuild`, `/var/cache/mock`, `/var/lib/mock`.
