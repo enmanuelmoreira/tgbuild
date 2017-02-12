@@ -258,6 +258,7 @@ fi
 %changelog
 * Sun Feb 12 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.9-1
 - Updated to 1.0.9 (alpha).
+- Updated GYP, Breakpad and LSS to latest commits.
 
 * Thu Feb 02 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.6-2
 - Backported QTBUG-56514 patch to fix building under GCC 7.0.
