@@ -7,8 +7,8 @@ First you need to clone this repository with SPECs and patches to any directory:
 git clone https://github.com/xvitaly/tgbuild.git tgbuild
 ```
 
-You can also switch branch:
- * **master** - SPEC and patches for current stable branch of Telegram Desktop;
+You can also select branch:
+ * **master** (default) - SPEC and patches for current stable branch of Telegram Desktop;
  * **dev** - SPEC and patches for latest unstable development (alpha) branch of Telegram Desktop.
 
 ```bash
@@ -19,26 +19,19 @@ git checkout master
 # Build using rpmbuild
 ## Step 1
 
-Install Git, spectool and rpmbuild:
+Install spectool and rpmbuild:
 ```bash
-sudo dnf install git rpm-build rpmdevtools
+sudo dnf install rpm-build rpmdevtools
 ```
 
 ## Step 2
-
-Download this Git repository:
-```bash
-git clone https://github.com/xvitaly/tgbuild.git tgbuild
-```
-
-## Step 3
 
 Create RPM build base directories:
 ```bash
 rpmdev-setuptree
 ```
 
-## Step 4
+## Step 3
 
 Download sources:
 ```bash
@@ -46,7 +39,7 @@ cd tgbuild
 spectool -g -R telegram-desktop.spec
 ```
 
-## Step 5
+## Step 4
 
 Copy other files to sources directory:
 ```bash
@@ -54,7 +47,7 @@ cd tgbuild
 cp -f {*.patch,telegram*,tg.protocol} $(rpm --eval %{_sourcedir})
 ```
 
-## Step 6
+## Step 5
 
 Install build-requirements:
 ```bash
@@ -62,14 +55,14 @@ cd tgbuild
 sudo dnf builddep telegram-desktop.spec
 ```
 
-## Step 7
+## Step 6
 
 Build RPM package:
 ```bash
 rpmbuild -ba telegram-desktop.spec
 ```
 
-## Step 8
+## Step 7
 
 Wait for a while and then install result:
 ```bash
@@ -77,8 +70,6 @@ sudo dnf install ~/rpmbuild/RPMS/$(uname -m)/telegram-desktop*.rpm
 ```
 
 # Build using mock
-New way - is to build RPM package via mock. It is very simple and you will don't need to install lots of development packages (such as compilers, headers, etc.) into your system.
-
 ## Step 1
 
 Install mock, spectool and rpmbuild:
