@@ -130,3 +130,21 @@ sudo dnf install /var/lib/mock/results/telegram-desktop*.rpm
 ## Step 8
 
 Remove temporary files from `~/rpmbuild`, `/var/cache/mock`, `/var/lib/mock`.
+
+# Install pre-built from this sources packages
+You can also install pre-built from this sources package from russianfedora-free repository (maybe it will be added to RPMFusion later; package is still waiting for [package review](https://bugzilla.rpmfusion.org/show_bug.cgi?id=4285)).
+
+Add RPMFusion repository:
+```bash
+sudo dnf install --nogpgcheck https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+```
+
+Add RussianFedora repository:
+```bash
+sudo dnf install --nogpgcheck https://mirror.yandex.ru/fedora/russianfedora/russianfedora/free/fedora/russianfedora-free-release-stable.noarch.rpm https://mirror.yandex.ru/fedora/russianfedora/russianfedora/nonfree/fedora/russianfedora-nonfree-release-stable.noarch.rpm
+```
+
+Now install Telegram Desktop:
+```bash
+sudo dnf install telegram-desktop
+```
