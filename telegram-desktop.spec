@@ -16,8 +16,8 @@
 
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
-Version: 1.0.6
-Release: 2%{?dist}
+Version: 1.0.9
+Release: 1%{?dist}
 
 Group: Applications/Internet
 License: GPLv3
@@ -256,6 +256,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Sun Feb 12 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.9-1
+- Updated to 1.0.9 (alpha).
+
 * Thu Feb 02 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.6-2
 - Backported QTBUG-56514 patch to fix building under GCC 7.0.
 
