@@ -69,6 +69,10 @@ Wait for a while and then install result:
 sudo dnf install ~/rpmbuild/RPMS/$(uname -m)/telegram-desktop*.rpm
 ```
 
+## Step 8
+
+Now you can remove all files from `~/rpmbuild` directory.
+
 # Build using mock
 ## Step 1
 
@@ -129,7 +133,7 @@ sudo dnf install /var/lib/mock/results/telegram-desktop*.rpm
 
 ## Step 8
 
-Remove temporary files from `~/rpmbuild`, `/var/cache/mock`, `/var/lib/mock`.
+Remove temporary files from `~/rpmbuild`, `/var/cache/mock`, `/var/lib/mock` directories.
 
 # Install pre-built from this sources packages
 You can also install pre-built from this sources package from russianfedora-free repository (maybe it will be added to RPMFusion later; package is still waiting for [package review](https://bugzilla.rpmfusion.org/show_bug.cgi?id=4285)).
