@@ -11,7 +11,7 @@
 %global shortcommit4 %(c=%{commit4}; echo ${c:0:7})
 
 # Git revision of Breakpad-lss...
-%global commit5 1549d20f6d3e7d66bb4e687c0ab9da42c2bff2ac
+%global commit5 5cedb6bf4e42ebb0a90603535321a265b72d3709
 %global shortcommit5 %(c=%{commit5}; echo ${c:0:7})
 
 Summary: Telegram is a new era of messaging
