@@ -7,7 +7,7 @@
 %global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
 
 # Git revision of Breakpad...
-%global commit4 2b7724245b7298df872983cdec941be877ea9b62
+%global commit4 fd28a5bbe9a3fde97c90f0928b62894d597f2f6a
 %global shortcommit4 %(c=%{commit4}; echo ${c:0:7})
 
 # Git revision of Breakpad-lss...
@@ -258,6 +258,7 @@ fi
 %changelog
 * Fri Feb 17 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.11-1
 - Updated to 1.0.11 (alpha).
+- Updated Breakpad to latest commit.
 
 * Sun Feb 12 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.9-1
 - Updated to 1.0.9 (alpha).
