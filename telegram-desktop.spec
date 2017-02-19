@@ -36,7 +36,7 @@ Source103: tg.protocol
 
 Patch0: fix_build_under_fedora.patch
 Patch1: fix_cmake.patch
-Patch3: qtbase-opensource-src-5.6.2-QTBUG-56514.patch
+Patch2: qtbase-opensource-src-5.6.2-QTBUG-56514.patch
 
 Requires: hicolor-icon-theme
 BuildRequires: desktop-file-utils
@@ -117,7 +117,6 @@ tar -xf %{SOURCE0}
 cd "%_builddir/%{appname}-%{version}"
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 # Unpacking Qt...
 cd "$qtdir"
@@ -132,7 +131,7 @@ patch -p1 -i "$qtpatch"
 
 # Applying QTBUG-56514 patch for Fedora Rawhide (GCC 7.x)...
 %if 0%{?fedora} >= 26
-%patch3 -p1
+%patch2 -p1
 %endif
 
 # Unpacking GYP...
