@@ -123,7 +123,7 @@ mock -r fedora-$(rpm -E %fedora)-$(uname -m)-rpmfusion_free --rebuild ~/rpmbuild
 
 Wait for a while and then install result:
 ```bash
-sudo dnf install /var/lib/mock/results/telegram-desktop*.rpm
+sudo dnf install /var/lib/mock/*/result/telegram-desktop*.rpm
 ```
 
 ## Step 8
