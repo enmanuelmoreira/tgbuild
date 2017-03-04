@@ -1,4 +1,4 @@
-From c008ec4e3d52dc471dcabaadb925280e29444f16 Mon Sep 17 00:00:00 2001
+From 572c5ab84f02534bee2008e13ca7a7196947f46e Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Mon, 27 Feb 2017 18:24:22 +0100
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock. Thanks to AUR packagers for this.
@@ -11,7 +11,7 @@ Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock. Thanks to AUR
  4 files changed, 67 insertions(+), 67 deletions(-)
 
 diff --git a/Telegram/gyp/Telegram.gyp b/Telegram/gyp/Telegram.gyp
-index 87040cc..42c9dbf 100644
+index 4d0f64f..654aebb 100644
 --- a/Telegram/gyp/Telegram.gyp
 +++ b/Telegram/gyp/Telegram.gyp
 @@ -80,18 +80,17 @@
@@ -37,7 +37,7 @@ index 87040cc..42c9dbf 100644
 -      '<(libs_loc)/openal-soft/include',
        '<(minizip_loc)',
        '<(sp_media_key_tap_loc)',
-     ],
+       '<(libs_loc)/GSL/include',
 diff --git a/Telegram/gyp/qt.gypi b/Telegram/gyp/qt.gypi
 index 356ea00..3e12f46 100644
 --- a/Telegram/gyp/qt.gypi
@@ -139,10 +139,10 @@ index 356ea00..3e12f46 100644
          '-g',
          '-rdynamic',
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index b42e744..64a5906 100644
+index dd17ac2..414eee0 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
-@@ -27,47 +27,51 @@
+@@ -27,49 +27,53 @@
  # QApplication() -> createPlatformIntegration -> QXcbIntegrationPlugin::create
          #'xkbcommon',
        ],
@@ -152,6 +152,7 @@ index b42e744..64a5906 100644
 -      'linux_path_va%': '/usr/local',
 -      'linux_path_vdpau%': '/usr/local',
        'linux_path_breakpad%': '<(libs_loc)/breakpad',
+       'linux_path_gsl%': '<(libs_loc)/GSL',
      },
      'include_dirs': [
 -      '/usr/local/include',
@@ -160,6 +161,7 @@ index b42e744..64a5906 100644
 +      '/usr/include',
 +      '/usr/include/ffmpeg',
        '<(linux_path_breakpad)/include/breakpad',
+       '<(linux_path_gsl)/include',
      ],
      'library_dirs': [
 -      '/usr/local/lib',
