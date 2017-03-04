@@ -14,6 +14,10 @@
 %global commit5 5cedb6bf4e42ebb0a90603535321a265b72d3709
 %global shortcommit5 %(c=%{commit5}; echo ${c:0:7})
 
+# Git revision of GSL...
+%global commit6 3819df6e378ffccf0e29465afe99c3b324c2aa70
+%global shortcommit6 %(c=%{commit6}; echo ${c:0:7})
+
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 1.0.18
