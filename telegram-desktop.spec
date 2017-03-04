@@ -155,6 +155,11 @@ mkdir -p "%_builddir/Libraries/breakpad/src/third_party/lss"
 cd "%_builddir/Libraries/breakpad/src/third_party/lss"
 tar -xf %{SOURCE5}
 
+# Unpacking GSL...
+mkdir -p "%_builddir/Libraries/GSL"
+cd "%_builddir/Libraries/GSL"
+tar -xf %{SOURCE6}
+
 %build
 # Setting some constants...
 qtv=%{qtversion}
