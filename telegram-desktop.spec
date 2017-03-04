@@ -33,6 +33,7 @@ Source2: https://download.qt.io/official_releases/qt/5.6/%{qtversion}/submodules
 Source3: https://chromium.googlesource.com/external/gyp/+archive/%{commit3}.tar.gz#/gyp-%{shortcommit3}.tar.gz
 Source4: https://chromium.googlesource.com/breakpad/breakpad/+archive/%{commit4}.tar.gz#/breakpad-%{shortcommit4}.tar.gz
 Source5: https://chromium.googlesource.com/linux-syscall-support/+archive/%{commit5}.tar.gz#/breakpad-lss-%{shortcommit5}.tar.gz
+Source6: https://github.com/Microsoft/GSL/archive/%{commit6}.tar.gz#/gsl-%{shortcommit6}.tar.gz
 
 Source101: telegram.desktop
 Source102: telegram-desktop.appdata.xml
