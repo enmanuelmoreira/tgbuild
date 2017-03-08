@@ -1,6 +1,6 @@
-From 97cdc99b7b9bb5a2978f5a8a7b1fc02a4d401d09 Mon Sep 17 00:00:00 2001
+From 8d4c4f7787ae2a5680e907d2e9fac050ab0c1a99 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
-Date: Sat, 8 Oct 2016 20:33:50 +0200
+Date: Wed, 8 Mar 2017 15:05:55 +0100
 Subject: [PATCH] Use correct build flags for Fedora.
 
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH] Use correct build flags for Fedora.
  2 files changed, 8 insertions(+), 26 deletions(-)
 
 diff --git a/Telegram/gyp/settings_linux.gypi b/Telegram/gyp/settings_linux.gypi
-index 3356b97..1766434 100644
+index 4cdf7a5..dea8480 100644
 --- a/Telegram/gyp/settings_linux.gypi
 +++ b/Telegram/gyp/settings_linux.gypi
-@@ -21,21 +21,6 @@
+@@ -21,22 +21,6 @@
    'conditions': [
      [ 'build_linux', {
        'variables': {
@@ -30,32 +30,35 @@ index 3356b97..1766434 100644
 -          '-Wno-comment',
 -          '-Wno-unused-but-set-variable',
 -          '-Wno-missing-field-initializers',
+-          '-Wno-sign-compare',
 -        ],
        },
        'conditions': [
          [ '"<!(uname -p)" == "x86_64"', {
-@@ -64,11 +49,13 @@
+@@ -65,13 +49,16 @@
          'QT_PLUGIN',
        ],
-       'cflags': [
+       'cflags_c': [
 -        '<@(linux_common_flags)',
 +        '<!(echo $CFLAGS)',
+         '-std=gnu11',
        ],
        'cflags_cc': [
 -        '<@(linux_common_flags)',
--        '-std=gnu++1y',
 +        '<!(echo $CXXFLAGS)',
-+      ],
+         '-std=gnu++14',
+       ],
 +      'ldflags': [
 +        '<!(echo $LDFLAGS)',
-       ],
++       ],
        'configurations': {
          'Debug': {
+         },
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index 15bfbb6..ed960b5 100644
+index 414eee0..85f5788 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
-@@ -65,18 +65,13 @@
+@@ -85,18 +85,13 @@
      'configurations': {
        'Release': {
          'cflags': [
@@ -78,5 +81,5 @@ index 15bfbb6..ed960b5 100644
        },
      },
 -- 
-2.7.4
+2.9.3
 
