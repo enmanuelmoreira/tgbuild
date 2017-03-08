@@ -11,7 +11,7 @@
 %global shortcommit4 %(c=%{commit4}; echo ${c:0:7})
 
 # Git revision of Breakpad-lss...
-%global commit5 c555f533313986d29c827eb59c7bd99fd37b3ec4
+%global commit5 5cedb6bf4e42ebb0a90603535321a265b72d3709
 %global shortcommit5 %(c=%{commit5}; echo ${c:0:7})
 
 # Git revision of GSL...
