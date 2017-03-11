@@ -173,7 +173,7 @@ mv GSL-%{commit6} GSL
 cd "%_builddir/third_party"
 rm -rf variant
 tar -xf %{SOURCE7}
-mv GSL-%{commit7} variant
+mv variant-%{commit7} variant
 
 %build
 # Setting some constants...
