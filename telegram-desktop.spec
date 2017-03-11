@@ -164,13 +164,13 @@ cd "%_builddir/Libraries/breakpad/src/third_party/lss"
 tar -xf %{SOURCE5}
 
 # Unpacking GSL...
-cd "%_builddir/third_party"
+cd "%_builddir/%{appname}-%{version}/third_party"
 rm -rf GSL
 tar -xf %{SOURCE6}
 mv GSL-%{commit6} GSL
 
 # Unpacking Variant...
-cd "%_builddir/third_party"
+cd "%_builddir/%{appname}-%{version}/third_party"
 rm -rf variant
 tar -xf %{SOURCE7}
 mv variant-%{commit7} variant
