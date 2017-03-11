@@ -159,7 +159,8 @@ cd "%_builddir/Libraries/breakpad/src/third_party/lss"
 tar -xf %{SOURCE5}
 
 # Unpacking GSL...
-cd "%_builddir/Libraries"
+cd "%_builddir/third_party"
+rm -rf GSL
 tar -xf %{SOURCE6}
 mv GSL-%{commit6} GSL
 
