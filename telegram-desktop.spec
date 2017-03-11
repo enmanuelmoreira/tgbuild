@@ -169,6 +169,12 @@ rm -rf GSL
 tar -xf %{SOURCE6}
 mv GSL-%{commit6} GSL
 
+# Unpacking Variant...
+cd "%_builddir/third_party"
+rm -rf variant
+tar -xf %{SOURCE7}
+mv GSL-%{commit7} variant
+
 %build
 # Setting some constants...
 qtv=%{qtversion}
