@@ -281,6 +281,7 @@ fi
 %changelog
 * Sat Mar 11 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.21-1
 - Updated to 1.0.21 (alpha).
+- Updated GSL build stage. Added Variant to build.
 
 * Thu Mar 09 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.20-1
 - Updated to 1.0.20 (alpha).
