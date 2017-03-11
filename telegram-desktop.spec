@@ -18,6 +18,10 @@
 %global commit6 3819df6e378ffccf0e29465afe99c3b324c2aa70
 %global shortcommit6 %(c=%{commit6}; echo ${c:0:7})
 
+# Git revision of Variant...
+%global commit7 916139a2e51e125816efce6e19d428385601273f
+%global shortcommit7 %(c=%{commit7}; echo ${c:0:7})
+
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 1.0.21
@@ -34,6 +38,7 @@ Source3: https://chromium.googlesource.com/external/gyp/+archive/%{commit3}.tar.
 Source4: https://chromium.googlesource.com/breakpad/breakpad/+archive/%{commit4}.tar.gz#/breakpad-%{shortcommit4}.tar.gz
 Source5: https://chromium.googlesource.com/linux-syscall-support/+archive/%{commit5}.tar.gz#/breakpad-lss-%{shortcommit5}.tar.gz
 Source6: https://github.com/Microsoft/GSL/archive/%{commit6}.tar.gz#/GSL-%{shortcommit6}.tar.gz
+Source7: https://github.com/mapbox/variant/archive/%{commit7}.tar.gz#/variant-%{shortcommit7}.tar.gz
 
 Source101: telegram.desktop
 Source102: telegram-desktop.appdata.xml
