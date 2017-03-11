@@ -1,4 +1,4 @@
-From 8d4c4f7787ae2a5680e907d2e9fac050ab0c1a99 Mon Sep 17 00:00:00 2001
+From 6c86ce7378260744af08a04c9e16d5fb8eeb365e Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Wed, 8 Mar 2017 15:05:55 +0100
 Subject: [PATCH] Use correct build flags for Fedora.
@@ -55,10 +55,10 @@ index 4cdf7a5..dea8480 100644
          'Debug': {
          },
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index 414eee0..85f5788 100644
+index 64a5906..632ddaf 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
-@@ -85,18 +85,13 @@
+@@ -83,18 +83,13 @@
      'configurations': {
        'Release': {
          'cflags': [
