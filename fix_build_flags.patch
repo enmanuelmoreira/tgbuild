@@ -1,82 +1,100 @@
-From 6c86ce7378260744af08a04c9e16d5fb8eeb365e Mon Sep 17 00:00:00 2001
+From 783ae3c5776596c0187c66f8f0e28b4c32d982a1 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
-Date: Wed, 8 Mar 2017 15:05:55 +0100
+Date: Sun, 12 Mar 2017 15:03:41 +0100
 Subject: [PATCH] Use correct build flags for Fedora.
 
 ---
- Telegram/gyp/settings_linux.gypi | 23 +++++------------------
- Telegram/gyp/telegram_linux.gypi | 11 +++--------
- 2 files changed, 8 insertions(+), 26 deletions(-)
+ Telegram/gyp/settings_linux.gypi | 11 +++++++++++
+ Telegram/gyp/telegram_linux.gypi | 29 ++++++++++++++++++++++++++---
+ 2 files changed, 37 insertions(+), 3 deletions(-)
 
 diff --git a/Telegram/gyp/settings_linux.gypi b/Telegram/gyp/settings_linux.gypi
-index 4cdf7a5..dea8480 100644
+index 4cdf7a5..fb702aa 100644
 --- a/Telegram/gyp/settings_linux.gypi
 +++ b/Telegram/gyp/settings_linux.gypi
-@@ -21,22 +21,6 @@
-   'conditions': [
+@@ -22,11 +22,18 @@
      [ 'build_linux', {
        'variables': {
--        'linux_common_flags': [
--          '-pipe',
--          '-g',
--          '-Wall',
--          '-W',
--          '-fPIC',
--          '-Wno-unused-result',
--          '-Wno-unused-variable',
--          '-Wno-unused-parameter',
--          '-Wno-unused-function',
--          '-Wno-switch',
--          '-Wno-comment',
--          '-Wno-unused-but-set-variable',
--          '-Wno-missing-field-initializers',
--          '-Wno-sign-compare',
--        ],
+         'linux_common_flags': [
++          '-O2',
++          '-flto',
+           '-pipe',
+           '-g',
+           '-Wall',
+           '-W',
+           '-fPIC',
++          '-Werror=format-security',
++          '-D_FORTIFY_SOURCE=2',
++          '-fexceptions',
++          '-fstack-protector-strong --param=ssp-buffer-size=4',
++          '-grecord-gcc-switches',
+           '-Wno-unused-result',
+           '-Wno-unused-variable',
+           '-Wno-unused-parameter',
+@@ -36,6 +43,7 @@
+           '-Wno-unused-but-set-variable',
+           '-Wno-missing-field-initializers',
+           '-Wno-sign-compare',
++          '-specs=/usr/lib/rpm/redhat/redhat-hardened-cc1',
+         ],
        },
        'conditions': [
-         [ '"<!(uname -p)" == "x86_64"', {
-@@ -65,13 +49,16 @@
-         'QT_PLUGIN',
-       ],
-       'cflags_c': [
--        '<@(linux_common_flags)',
-+        '<!(echo $CFLAGS)',
-         '-std=gnu11',
-       ],
-       'cflags_cc': [
--        '<@(linux_common_flags)',
-+        '<!(echo $CXXFLAGS)',
+@@ -72,6 +80,9 @@
+         '<@(linux_common_flags)',
          '-std=gnu++14',
        ],
 +      'ldflags': [
-+        '<!(echo $LDFLAGS)',
-+       ],
++        '-specs=/usr/lib/rpm/redhat/redhat-hardened-ld',
++      ],
        'configurations': {
          'Debug': {
          },
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index 64a5906..632ddaf 100644
+index 64a5906..5807570 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
-@@ -83,18 +83,13 @@
+@@ -83,18 +83,41 @@
      'configurations': {
        'Release': {
          'cflags': [
 -          '-Ofast',
--          '-flto',
--          '-fno-strict-aliasing',
-+          '<!(echo $CFLAGS)',
++          '-O2',
+           '-flto',
++          '-pipe',
++          '-g',
++          '-Wall',
++          '-W',
++          '-fPIC',
++          '-Werror=format-security',
++          '-D_FORTIFY_SOURCE=2',
++          '-fexceptions',
++          '-fstack-protector-strong --param=ssp-buffer-size=4',
++          '-grecord-gcc-switches',
+           '-fno-strict-aliasing',
++          '-specs=/usr/lib/rpm/redhat/redhat-hardened-cc1',
          ],
          'cflags_cc': [
 -          '-Ofast',
--          '-flto',
--          '-fno-strict-aliasing',
-+          '<!(echo $CXXFLAGS)',
++          '-O2',
+           '-flto',
++          '-pipe',
++          '-g',
++          '-Wall',
++          '-W',
++          '-fPIC',
++          '-Werror=format-security',
++          '-D_FORTIFY_SOURCE=2',
++          '-fexceptions',
++          '-fstack-protector-strong --param=ssp-buffer-size=4',
++          '-grecord-gcc-switches',
+           '-fno-strict-aliasing',
++          '-specs=/usr/lib/rpm/redhat/redhat-hardened-cc1',
          ],
          'ldflags': [
 -          '-Ofast',
--          '-flto',
-+          '<!(echo $LDFLAGS)',
++          '-O2',
+           '-flto',
++          '-specs=/usr/lib/rpm/redhat/redhat-hardened-ld',
          ],
        },
      },

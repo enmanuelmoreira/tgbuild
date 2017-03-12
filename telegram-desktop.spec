@@ -47,6 +47,7 @@ Source103: tg.protocol
 Patch0: fix_build_under_fedora.patch
 Patch1: fix_cmake.patch
 Patch2: qtbase-opensource-src-5.6.2-QTBUG-56514.patch
+Patch3: fix_build_flags.patch
 
 Requires: hicolor-icon-theme
 BuildRequires: desktop-file-utils
@@ -130,6 +131,7 @@ tar -xf %{SOURCE0}
 cd "%_builddir/%{appname}-%{version}"
 %patch0 -p1
 %patch1 -p1
+%patch3 -p1
 
 # Unpacking Qt...
 cd "$qtdir"
