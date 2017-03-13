@@ -1,6 +1,6 @@
-From ff0339a178718d66b19786353726e5b8c3eae452 Mon Sep 17 00:00:00 2001
+From 01aedf392a6ce52472b8dcdc624274d84f62c562 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
-Date: Mon, 27 Feb 2017 18:24:22 +0100
+Date: Mon, 13 Mar 2017 12:49:45 +0100
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock. Thanks to AUR packagers for this.
 
 ---
@@ -11,10 +11,10 @@ Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock. Thanks to AUR
  4 files changed, 67 insertions(+), 67 deletions(-)
 
 diff --git a/Telegram/gyp/Telegram.gyp b/Telegram/gyp/Telegram.gyp
-index 313064f..ea73bc3 100644
+index fb22932..17bd3b5 100644
 --- a/Telegram/gyp/Telegram.gyp
 +++ b/Telegram/gyp/Telegram.gyp
-@@ -81,18 +81,17 @@
+@@ -82,18 +82,17 @@
  
      'defines': [
        'AL_LIBTYPE_STATIC',
@@ -39,7 +39,7 @@ index 313064f..ea73bc3 100644
        '<(sp_media_key_tap_loc)',
        '<(submodules_loc)/GSL/include',
 diff --git a/Telegram/gyp/qt.gypi b/Telegram/gyp/qt.gypi
-index 356ea00..3e12f46 100644
+index a321221..12da6bf 100644
 --- a/Telegram/gyp/qt.gypi
 +++ b/Telegram/gyp/qt.gypi
 @@ -38,14 +38,13 @@
@@ -79,11 +79,16 @@ index 356ea00..3e12f46 100644
              ],
            }],
          ],
-@@ -134,11 +120,6 @@
+@@ -134,16 +120,11 @@
          'qt_loc': '<(qt_loc_unix)',
        }],
      ],
 -
+     # If you need moc sources include a line in your 'sources':
+     # '<!@(python <(DEPTH)/list_sources.py [sources] <(qt_moc_list_sources_arg))'
+     # where [sources] contains all your source files
+     'qt_moc_list_sources_arg': '--moc-prefix SHARED_INTERMEDIATE_DIR/<(_target_name)/moc/moc_',
+ 
 -    'linux_path_xkbcommon%': '/usr/local',
 -    'linux_lib_ssl%': '/usr/local/ssl/lib/libssl.a',
 -    'linux_lib_crypto%': '/usr/local/ssl/lib/libcrypto.a',
@@ -91,7 +96,7 @@ index 356ea00..3e12f46 100644
    },
  
    'configurations': {
-@@ -214,25 +195,41 @@
+@@ -219,25 +200,41 @@
          '<(qt_loc)/plugins/platforminputcontexts',
        ],
        'libraries': [
