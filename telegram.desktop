@@ -1,10 +1,12 @@
 [Desktop Entry]
-Name=Telegram
-GenericName=Telegram Messenger
+Name=Telegram Desktop
+GenericName=Telegram Desktop
+Comment=Official desktop version of Telegram messaging app
+Keywords=IM;Chat;
 Exec=/usr/bin/telegram-desktop -- %u
 Terminal=false
-StartupWMClass=telegram-desktop
+StartupWMClass=TelegramDesktop
 Icon=telegram-desktop
 Type=Application
-Categories=Network;
+Categories=Network;InstantMessaging;Qt;
 MimeType=x-scheme-handler/tg;
