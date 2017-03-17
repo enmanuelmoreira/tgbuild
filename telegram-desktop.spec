@@ -46,7 +46,7 @@ Source4: https://chromium.googlesource.com/breakpad/breakpad/+archive/%{commit4}
 Source5: https://chromium.googlesource.com/linux-syscall-support/+archive/%{commit5}.tar.gz#/breakpad-lss-%{shortcommit5}.tar.gz
 Source6: https://github.com/Microsoft/GSL/archive/%{commit6}.tar.gz#/GSL-%{shortcommit6}.tar.gz
 Source7: https://github.com/mapbox/variant/archive/%{commit7}.tar.gz#/variant-%{shortcommit7}.tar.gz
-Source8: https://tlgrm.ru/files/locales/tdesktop/Russian.strings#/%{appname}-russian.strings
+Source8: https://tlgrm.ru/files/locales/tdesktop/Russian.strings#/%{appname}-%{version}-russian.strings
 
 Source101: telegram.desktop
 Source102: telegram-desktop.appdata.xml
