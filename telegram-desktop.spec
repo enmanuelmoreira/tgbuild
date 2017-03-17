@@ -25,7 +25,7 @@
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 1.0.23
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 Group: Applications/Internet
 License: GPLv3
@@ -287,6 +287,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Fri Mar 17 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.23-2
+- Added additional russian locale.
+
 * Wed Mar 15 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.23-1
 - Updated to 1.0.23 (alpha).
 
