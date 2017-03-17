@@ -181,7 +181,7 @@ tar -xf %{SOURCE7}
 mv variant-%{commit7} variant
 
 # Unpacking additional locales from sources...
-iconv -f "UTF-16LE" -t "UTF-8" "%{SOURCE8}" > "%_builddir/%{appname}-%{version}/Telegram/Resources/langs/lang_ru.strings"
+iconv -f "UTF-16" -t "UTF-8" "%{SOURCE8}" > "%_builddir/%{appname}-%{version}/Telegram/Resources/langs/lang_ru.strings"
 
 %build
 # Setting some constants...
