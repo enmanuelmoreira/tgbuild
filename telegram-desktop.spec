@@ -134,6 +134,7 @@ cd "%_builddir/%{appname}-%{version}"
 %patch0 -p1
 %patch1 -p1
 %patch3 -p1
+%patch4 -p1
 
 # Unpacking Qt...
 cd "$qtdir"
@@ -178,6 +179,9 @@ cd "%_builddir/%{appname}-%{version}/third_party"
 rm -rf variant
 tar -xf %{SOURCE7}
 mv variant-%{commit7} variant
+
+# Unpacking additional locales from sources...
+iconv -f "UTF-16LE" -t "UTF-8" "%{SOURCE8}" > "%_builddir/%{appname}-%{version}/Telegram/Resources/langs/lang_ru.strings"
 
 %build
 # Setting some constants...
