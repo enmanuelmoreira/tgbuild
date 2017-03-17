@@ -1,0 +1,23 @@
+From a8d0f88b74e9af0bbb636f7d17b1b8ec27a48708 Mon Sep 17 00:00:00 2001
+From: Vitaly Zaitsev <vitaly@easycoding.org>
+Date: Fri, 17 Mar 2017 13:31:54 +0100
+Subject: [PATCH] Added russian localization from Transifex.
+
+---
+ Telegram/Resources/qrc/telegram.qrc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Telegram/Resources/qrc/telegram.qrc b/Telegram/Resources/qrc/telegram.qrc
+index bd68d3b..c385625 100644
+--- a/Telegram/Resources/qrc/telegram.qrc
++++ b/Telegram/Resources/qrc/telegram.qrc
+@@ -20,5 +20,6 @@
+     <file alias="lang_nl.strings">../langs/lang_nl.strings</file>
+     <file alias="lang_pt_BR.strings">../langs/lang_pt_BR.strings</file>
+     <file alias="lang_ko.strings">../langs/lang_ko.strings</file>
++    <file alias="lang_ru.strings">../langs/lang_ru.strings</file>
+   </qresource>
+ </RCC>
+-- 
+2.9.3
+

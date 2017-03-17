@@ -49,6 +49,7 @@ Patch0: fix_build_under_fedora.patch
 Patch1: fix_cmake.patch
 Patch2: qtbase-opensource-src-5.6.2-QTBUG-56514.patch
 Patch3: fix_build_flags.patch
+Patch4: add_russian_locale.patch
 
 Requires: hicolor-icon-theme
 BuildRequires: desktop-file-utils
