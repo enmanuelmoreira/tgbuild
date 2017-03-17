@@ -27,13 +27,13 @@ Name: telegram-desktop
 Version: 1.0.23
 Release: 2%{?dist}
 
-// Application and 3rd-party modules licensing:
-// * S0 (Telegram Desktop) - GPLv3+ with OpenSSL exception -- main source;
-// * S1 (Qt OpenSource), S2 (Qt-ImageFormats OpenSource) - LGPLv3 -- bundled into executable;
-// * S3 (GYP), S4 (Breakpad), S5 (Breakpad-lss) - BSD -- build-time dependencies;
-// * S6 (GSL) - MIT -- build-time dependency;
-// * S7 (Variant) - BSD -- build-time dependency;
-// * S8 (Russian language pack) - GPLv3 -- bundled into executable.
+# Application and 3rd-party modules licensing:
+# * S0 (Telegram Desktop) - GPLv3+ with OpenSSL exception -- main source;
+# * S1 (Qt OpenSource), S2 (Qt-ImageFormats OpenSource) - LGPLv3 -- bundled into executable;
+# * S3 (GYP), S4 (Breakpad), S5 (Breakpad-lss) - BSD -- build-time dependencies;
+# * S6 (GSL) - MIT -- build-time dependency;
+# * S7 (Variant) - BSD -- build-time dependency;
+# * S8 (Russian language pack) - GPLv3 -- bundled into executable.
 License: GPLv3+ and GPLv3 and LGPLv3 and BSD and MIT
 Group: Applications/Internet
 URL: https://github.com/telegramdesktop/%{appname}
