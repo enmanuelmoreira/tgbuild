@@ -1,7 +1,7 @@
 From e91c70657080ca249ee8898ee949f129cff54bef Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Thu, 30 Mar 2017 20:11:18 +0200
-Subject: [PATCH 1/4] Fixed build under Fedora using rpmbuild and mock.
+Subject: [PATCH 1/5] Fixed build under Fedora using rpmbuild and mock.
 
 ---
  Telegram/gyp/Telegram.gyp        | 11 ++++---

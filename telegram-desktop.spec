@@ -57,6 +57,7 @@ Patch1: fix_cmake.patch
 Patch2: qtbase-opensource-src-5.6.2-QTBUG-56514.patch
 Patch3: fix_build_flags.patch
 Patch4: add_russian_locale.patch
+Patch5: fix_build_under_gcc70.patch
 
 Patch101: 0001-Fix-AutoConnection-debugState-for-TCP-connections.patch
 
@@ -144,6 +145,7 @@ cd "%_builddir/%{appname}-%{version}"
 %patch1 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 # Applying temporary patches with different backports...
 %patch101 -p1

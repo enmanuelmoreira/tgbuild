@@ -1,0 +1,32 @@
+From c04588d84d0e315a84b4b8433112d9a63a7b3559 Mon Sep 17 00:00:00 2001
+From: Vitaly Zaitsev <vitaly@easycoding.org>
+Date: Thu, 30 Mar 2017 20:58:07 +0200
+Subject: [PATCH 5/5] Fixed build under GCC 7.x.
+
+---
+ Telegram/gyp/telegram_linux.gypi | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
+index 5807570..e8450f9 100644
+--- a/Telegram/gyp/telegram_linux.gypi
++++ b/Telegram/gyp/telegram_linux.gypi
+@@ -91,6 +91,7 @@
+           '-W',
+           '-fPIC',
+           '-Werror=format-security',
++          '-Wimplicit-fallthrough=0',
+           '-D_FORTIFY_SOURCE=2',
+           '-fexceptions',
+           '-fstack-protector-strong --param=ssp-buffer-size=4',
+@@ -107,6 +108,7 @@
+           '-W',
+           '-fPIC',
+           '-Werror=format-security',
++          '-Wimplicit-fallthrough=0',
+           '-D_FORTIFY_SOURCE=2',
+           '-fexceptions',
+           '-fstack-protector-strong --param=ssp-buffer-size=4',
+-- 
+2.9.3
+

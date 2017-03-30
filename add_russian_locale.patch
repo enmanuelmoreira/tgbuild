@@ -1,7 +1,7 @@
 From f59144effff3d4d1e6aecd39aa8ad7c84fddeec4 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Thu, 30 Mar 2017 20:13:15 +0200
-Subject: [PATCH 2/4] Added russian localization from Transifex.
+Subject: [PATCH 2/5] Added russian localization from Transifex.
 
 ---
  Telegram/Resources/langs/ru.lproj/Localizable.strings | 17 +++++++++++++++++

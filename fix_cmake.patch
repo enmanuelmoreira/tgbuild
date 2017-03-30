@@ -1,7 +1,7 @@
 From 204ed66771fa289319ec40bb477e94a681fec10e Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Thu, 30 Mar 2017 20:13:48 +0200
-Subject: [PATCH 3/4] Build using systemwide cmake.
+Subject: [PATCH 3/5] Build using systemwide cmake.
 
 ---
  Telegram/gyp/refresh.sh | 4 ++--
