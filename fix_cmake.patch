@@ -1,17 +1,17 @@
-From a557fcdffc3846bf73eb99c52ce8ec34280ebafa Mon Sep 17 00:00:00 2001
+From a030f90103812248fd875720153247b9f3bd60ad Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
-Date: Mon, 3 Oct 2016 16:10:25 +0200
-Subject: [PATCH] Build using systemwide cmake.
+Date: Thu, 30 Mar 2017 15:20:47 +0200
+Subject: [PATCH 4/4] Build using systemwide cmake.
 
 ---
  Telegram/gyp/refresh.sh | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Telegram/gyp/refresh.sh b/Telegram/gyp/refresh.sh
-index 5a456ce..d436d58 100755
+index 9ee05ae..c8689b4 100755
 --- a/Telegram/gyp/refresh.sh
 +++ b/Telegram/gyp/refresh.sh
-@@ -10,9 +10,9 @@ cd $FullScriptPath
+@@ -11,9 +11,9 @@ cd $FullScriptPath
  if [ "$MySystem" == "Linux" ]; then
    ../../../Libraries/gyp/gyp --depth=. --generator-output=../.. -Goutput_dir=out Telegram.gyp --format=cmake
    cd ../../out/Debug
@@ -24,5 +24,5 @@ index 5a456ce..d436d58 100755
  else
    #gyp --depth=. --generator-output=../.. -Goutput_dir=out Telegram.gyp --format=ninja
 -- 
-2.7.4
+2.9.3
 

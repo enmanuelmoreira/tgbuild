@@ -1,7 +1,7 @@
-From 3ccc6e873bbd25ab7f979ee4fafb9e5f6791526a Mon Sep 17 00:00:00 2001
+From cf652f94ca505fad8e4d4bc46feb49d91c5eee40 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Mon, 13 Mar 2017 12:50:27 +0100
-Subject: [PATCH] Use correct build flags for Fedora.
+Subject: [PATCH 2/4] Use correct build flags for Fedora.
 
 ---
  Telegram/gyp/settings_linux.gypi | 11 +++++++++++
@@ -9,10 +9,10 @@ Subject: [PATCH] Use correct build flags for Fedora.
  2 files changed, 37 insertions(+), 3 deletions(-)
 
 diff --git a/Telegram/gyp/settings_linux.gypi b/Telegram/gyp/settings_linux.gypi
-index 4cdf7a5..fb702aa 100644
+index fde88dc..bb3e710 100644
 --- a/Telegram/gyp/settings_linux.gypi
 +++ b/Telegram/gyp/settings_linux.gypi
-@@ -22,11 +22,18 @@
+@@ -22,12 +22,19 @@
      [ 'build_linux', {
        'variables': {
          'linux_common_flags': [
@@ -21,6 +21,7 @@ index 4cdf7a5..fb702aa 100644
            '-pipe',
            '-g',
            '-Wall',
+           '-Werror',
            '-W',
            '-fPIC',
 +          '-Werror=format-security',
@@ -28,9 +29,9 @@ index 4cdf7a5..fb702aa 100644
 +          '-fexceptions',
 +          '-fstack-protector-strong --param=ssp-buffer-size=4',
 +          '-grecord-gcc-switches',
-           '-Wno-unused-result',
            '-Wno-unused-variable',
            '-Wno-unused-parameter',
+           '-Wno-unused-function',
 @@ -36,6 +43,7 @@
            '-Wno-unused-but-set-variable',
            '-Wno-missing-field-initializers',
