@@ -1,12 +1,12 @@
-From cf652f94ca505fad8e4d4bc46feb49d91c5eee40 Mon Sep 17 00:00:00 2001
+From b1b5ae41f9f5b954c469b56f6306e4f5a115cee7 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
-Date: Mon, 13 Mar 2017 12:50:27 +0100
-Subject: [PATCH 2/4] Use correct build flags for Fedora.
+Date: Thu, 30 Mar 2017 20:16:32 +0200
+Subject: [PATCH 4/4] Use correct build flags for Fedora.
 
 ---
  Telegram/gyp/settings_linux.gypi | 11 +++++++++++
- Telegram/gyp/telegram_linux.gypi | 29 ++++++++++++++++++++++++++---
- 2 files changed, 37 insertions(+), 3 deletions(-)
+ Telegram/gyp/telegram_linux.gypi | 31 ++++++++++++++++++++++++++++---
+ 2 files changed, 39 insertions(+), 3 deletions(-)
 
 diff --git a/Telegram/gyp/settings_linux.gypi b/Telegram/gyp/settings_linux.gypi
 index fde88dc..bb3e710 100644
@@ -51,10 +51,10 @@ index fde88dc..bb3e710 100644
          'Debug': {
          },
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index 64a5906..5807570 100644
+index 64a5906..e8450f9 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
-@@ -83,18 +83,41 @@
+@@ -83,18 +83,43 @@
      'configurations': {
        'Release': {
          'cflags': [
@@ -67,6 +67,7 @@ index 64a5906..5807570 100644
 +          '-W',
 +          '-fPIC',
 +          '-Werror=format-security',
++          '-Wimplicit-fallthrough=0',
 +          '-D_FORTIFY_SOURCE=2',
 +          '-fexceptions',
 +          '-fstack-protector-strong --param=ssp-buffer-size=4',
@@ -84,6 +85,7 @@ index 64a5906..5807570 100644
 +          '-W',
 +          '-fPIC',
 +          '-Werror=format-security',
++          '-Wimplicit-fallthrough=0',
 +          '-D_FORTIFY_SOURCE=2',
 +          '-fexceptions',
 +          '-fstack-protector-strong --param=ssp-buffer-size=4',
