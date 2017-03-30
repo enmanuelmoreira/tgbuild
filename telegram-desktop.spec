@@ -145,9 +145,11 @@ cd "%_builddir/%{appname}-%{version}"
 %patch1 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
-# Applying temporary patches with different backports...
+# Applying temporary patches with different backports and fixes...
+%if 0%{?fedora} >= 26
+%patch5 -p1
+%endif
 %patch101 -p1
 
 # Unpacking Qt...
