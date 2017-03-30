@@ -25,7 +25,7 @@
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 1.0.26
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 # Application and 3rd-party modules licensing:
 # * S0 (Telegram Desktop) - GPLv3+ with OpenSSL exception -- main source;
@@ -57,6 +57,8 @@ Patch1: fix_cmake.patch
 Patch2: qtbase-opensource-src-5.6.2-QTBUG-56514.patch
 Patch3: fix_build_flags.patch
 Patch4: add_russian_locale.patch
+
+Patch101: 0001-Fix-AutoConnection-debugState-for-TCP-connections.patch
 
 Requires: hicolor-icon-theme
 BuildRequires: desktop-file-utils
@@ -142,6 +144,9 @@ cd "%_builddir/%{appname}-%{version}"
 %patch1 -p1
 %patch3 -p1
 %patch4 -p1
+
+# Applying temporary patches with different backports...
+%patch101 -p1
 
 # Unpacking Qt...
 cd "$qtdir"
@@ -294,6 +299,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Thu Mar 30 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.26-2
+- Backported patch to fix build under Fedora 26+.
+
 * Thu Mar 30 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.26-1
 - Updated to 1.0.26.
 
