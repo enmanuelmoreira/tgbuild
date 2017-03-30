@@ -12,9 +12,9 @@ You can also select branch:
  * **unstable** - SPEC and patches for latest unstable development (alpha) branch of Telegram Desktop.
 
 # Build package from sources manually
-Select one of this ways:
+Select one of these ways:
  * [build using mock (recommended)](doc/build_using_mock.md);
- * [build using rpmbuild (legacy)](doc/build_using_rpmbuild.md).
+ * [build using rpmbuild](doc/build_using_rpmbuild.md).
 
 # Install pre-built from this sources packages
 You can also install pre-built from this sources package from russianfedora-free repository (maybe it will be added to RPMFusion later; package is still waiting for [package review](https://bugzilla.rpmfusion.org/show_bug.cgi?id=4285)).
