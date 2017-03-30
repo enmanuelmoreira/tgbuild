@@ -10,7 +10,10 @@ Add yourself to `mock` group (you must run this only for the first time after in
 ```bash
 sudo usermod -a -G mock $(whoami)
 ```
-You need to relogin to your system after doing this.
+You need to relogin to your system after doing this or run:
+```bash
+newgrp mock
+```
 
 ## Step 2
 
