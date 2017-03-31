@@ -1,6 +1,17 @@
 # Build using mock
 ## Step 1
 
+Clone this repository with SPECs and patches to any directory:
+```bash
+git clone -b master https://github.com/xvitaly/tgbuild.git tgbuild
+```
+
+You can also select branch:
+ * **master** (default) - SPEC and patches for current stable branch of Telegram Desktop;
+ * **unstable** - SPEC and patches for latest unstable development (alpha) branch of Telegram Desktop.
+
+## Step 2
+
 Install mock, spectool and rpmbuild:
 ```bash
 sudo dnf install rpm-build rpmdevtools mock mock-rpmfusion-free
@@ -15,14 +26,14 @@ You need to relogin to your system after doing this or run:
 newgrp mock
 ```
 
-## Step 2
+## Step 3
 
 Create RPM build base directories:
 ```bash
 rpmdev-setuptree
 ```
 
-## Step 3
+## Step 4
 
 Download Telegram Desktop sources:
 ```bash
@@ -30,7 +41,7 @@ cd tgbuild
 spectool -g -R telegram-desktop.spec
 ```
 
-## Step 4
+## Step 5
 
 Copy other files to sources directory:
 ```bash
@@ -38,27 +49,27 @@ cd tgbuild
 cp -f {*.patch,telegram*,tg.protocol} $(rpm --eval %{_sourcedir})
 ```
 
-## Step 5
+## Step 6
 
 Generate SRPM package for mock:
 ```bash
 rpmbuild -bs telegram-desktop.spec
 ```
 
-## Step 6
+## Step 7
 
 Start mock build sequence:
 ```bash
 mock -r fedora-$(rpm -E %fedora)-$(uname -m)-rpmfusion_free --rebuild ~/rpmbuild/SRPMS/telegram-desktop*.src.rpm
 ```
 
-## Step 7
+## Step 8
 
 Wait for a while and then install result:
 ```bash
 sudo dnf install /var/lib/mock/*/result/telegram-desktop*.rpm
 ```
 
-## Step 8
+## Step 9
 
 Remove temporary files from `~/rpmbuild`, `/var/cache/mock`, `/var/lib/mock` directories.
