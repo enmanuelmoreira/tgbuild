@@ -62,6 +62,7 @@ Patch5: fix_build_under_gcc70.patch
 Patch101: 0001-Fix-AutoConnection-debugState-for-TCP-connections.patch
 
 Requires: hicolor-icon-theme
+Requires: libappindicator-gtk3
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
 BuildRequires: ffmpeg-devel >= 3.1
