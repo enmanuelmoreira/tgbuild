@@ -59,8 +59,6 @@ Patch3: fix_build_flags.patch
 Patch4: add_russian_locale.patch
 Patch5: fix_build_under_gcc70.patch
 
-Patch101: 0001-Fix-AutoConnection-debugState-for-TCP-connections.patch
-
 Requires: hicolor-icon-theme
 Requires: libappindicator-gtk3
 BuildRequires: desktop-file-utils
@@ -151,7 +149,6 @@ cd "%_builddir/%{appname}-%{version}"
 %if 0%{?fedora} >= 26
 %patch5 -p1
 %endif
-%patch101 -p1
 
 # Unpacking Qt...
 cd "$qtdir"
