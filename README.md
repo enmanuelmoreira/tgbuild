@@ -13,7 +13,7 @@ You can also select branch:
 
 # Build package from sources manually
 Select one of these ways:
- * [build using mock (recommended)](doc/build_using_mock.md);
+ * [build using mock](doc/build_using_mock.md) (recommended);
  * [build using rpmbuild](doc/build_using_rpmbuild.md).
 
 # Install pre-built from this sources packages
