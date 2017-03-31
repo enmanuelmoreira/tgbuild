@@ -1,6 +1,6 @@
-From 43e84dd2c7b6260449cccf20bdde1675780932c3 Mon Sep 17 00:00:00 2001
+From 3d9cb3a763b953ed824494864eaada37d3f435e6 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
-Date: Thu, 30 Mar 2017 20:16:32 +0200
+Date: Fri, 31 Mar 2017 14:32:20 +0200
 Subject: [PATCH 4/5] Use correct build flags for Fedora.
 
 ---

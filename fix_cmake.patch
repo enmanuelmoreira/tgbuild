@@ -1,6 +1,6 @@
-From 204ed66771fa289319ec40bb477e94a681fec10e Mon Sep 17 00:00:00 2001
+From 9279b1d72a4bdc70d0094870cc097ae7e6a6421c Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
-Date: Thu, 30 Mar 2017 20:13:48 +0200
+Date: Fri, 31 Mar 2017 14:31:28 +0200
 Subject: [PATCH 3/5] Build using systemwide cmake.
 
 ---
@@ -8,7 +8,7 @@ Subject: [PATCH 3/5] Build using systemwide cmake.
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Telegram/gyp/refresh.sh b/Telegram/gyp/refresh.sh
-index 9ee05ae..c8689b4 100755
+index 87f16da..a3282a5 100755
 --- a/Telegram/gyp/refresh.sh
 +++ b/Telegram/gyp/refresh.sh
 @@ -11,9 +11,9 @@ cd $FullScriptPath
