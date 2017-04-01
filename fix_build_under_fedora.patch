@@ -1,24 +1,24 @@
-From f55d7c1464f078ec0bf0afa38438a5548f880018 Mon Sep 17 00:00:00 2001
+From a8dfd30f5baf3ee54acc7a6d18545e7cc8512277 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
 
 ---
  Telegram/SourceFiles/main.cpp               |  5 +-
- Telegram/SourceFiles/qt_static_plugins.cpp  | 59 +++++++++++++++++---
- Telegram/SourceFiles/ui/text/text.cpp       |  6 +--
+ Telegram/SourceFiles/qt_static_plugins.cpp  | 59 +++++++++++++++---
+ Telegram/SourceFiles/ui/text/text.cpp       |  6 +-
  Telegram/SourceFiles/ui/text/text_block.cpp |  2 +-
  Telegram/SourceFiles/ui/twidget.cpp         |  4 +-
  Telegram/gyp/PrecompiledHeader.cmake        |  4 +-
- Telegram/gyp/Telegram.gyp                   | 14 +++--
- Telegram/gyp/qt.gypi                        | 54 +++++++------------
+ Telegram/gyp/Telegram.gyp                   | 14 ++---
+ Telegram/gyp/qt.gypi                        | 54 ++++++-----------
  Telegram/gyp/qt_rcc.gypi                    |  2 +-
  Telegram/gyp/refresh.sh                     |  4 +-
  Telegram/gyp/settings_linux.gypi            | 14 ++++-
- Telegram/gyp/telegram_linux.gypi            | 83 ++++++++++++++++-------------
- Telegram/gyp/telegram_sources.txt           |  9 +---
+ Telegram/gyp/telegram_linux.gypi            | 94 +++++++++++++++++------------
+ Telegram/gyp/telegram_sources.txt           |  9 +--
  Telegram/gyp/utils.gyp                      |  4 +-
- 14 files changed, 151 insertions(+), 113 deletions(-)
+ 14 files changed, 162 insertions(+), 113 deletions(-)
 
 diff --git a/Telegram/SourceFiles/main.cpp b/Telegram/SourceFiles/main.cpp
 index 6cd942e..3481691 100644
@@ -441,10 +441,10 @@ index fde88dc..f45fc09 100644
          'Debug': {
          },
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index b42e744..5a34231 100644
+index b42e744..5e441f7 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
-@@ -27,47 +27,31 @@
+@@ -27,47 +27,42 @@
  # QApplication() -> createPlatformIntegration -> QXcbIntegrationPlugin::create
          #'xkbcommon',
        ],
@@ -507,11 +507,22 @@ index b42e744..5a34231 100644
 +      'vdpau',
 +      'z',
 +      'webp',
++      'xkbcommon',
++      'xkbcommon-x11',
++      'xcb-randr',
++      'xcb-xinerama',
++      'xcb-xkb',
++      'xcb-shape',
++      'xcb-icccm',
++      'xcb-sync',
++      'xcb-keysyms',
++      'xcb-image',
++      'xcb-render-util',
 +      'minizip',
  #      '<!(pkg-config 2> /dev/null --libs <@(pkgconfig_libs))',
      ],
      'cflags_cc': [
-@@ -79,18 +63,41 @@
+@@ -79,18 +74,41 @@
      'configurations': {
        'Release': {
          'cflags': [
