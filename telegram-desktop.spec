@@ -53,9 +53,6 @@ BuildRequires: qt5-qtbase-devel
 BuildRequires: qt5-qtimageformats
 BuildRequires: chrpath
 BuildRequires: cmake
-BuildRequires: libwayland-client-devel
-BuildRequires: libwayland-server-devel
-BuildRequires: libwayland-cursor-devel
 BuildRequires: libproxy-devel
 BuildRequires: libxcb-devel
 BuildRequires: libogg-devel
@@ -71,10 +68,7 @@ BuildRequires: gettext-devel
 BuildRequires: libICE-devel
 BuildRequires: libSM-devel
 BuildRequires: libXi-devel
-BuildRequires: openjpeg-devel
-BuildRequires: libjpeg-turbo-devel
 BuildRequires: zlib-devel
-BuildRequires: libexif-devel
 BuildRequires: opus-devel
 BuildRequires: portaudio-devel
 BuildRequires: openal-soft-devel
@@ -90,12 +84,7 @@ BuildRequires: libvdpau-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libxkbcommon-x11-devel
 BuildRequires: harfbuzz-devel
-BuildRequires: pcre-devel
-%if 0%{?fedora} >= 26
-BuildRequires: compat-openssl10-devel
-%else
 BuildRequires: openssl-devel
-%endif
 
 %description
 Telegram is a messaging app with a focus on speed and security, it’s super
