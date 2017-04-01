@@ -1,63 +1,46 @@
 # Telegram Desktop's constants...
-%global qtversion 5.6.2
 %global appname tdesktop
 
 # Git revision of GYP...
-%global commit3 a7055b3989c1074adca03b4b4829e7f0e57f6efd
-%global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
-
-# Git revision of Breakpad...
-%global commit4 2b7724245b7298df872983cdec941be877ea9b62
-%global shortcommit4 %(c=%{commit4}; echo ${c:0:7})
-
-# Git revision of Breakpad-lss...
-%global commit5 5cedb6bf4e42ebb0a90603535321a265b72d3709
-%global shortcommit5 %(c=%{commit5}; echo ${c:0:7})
+%global commit1 a7055b3989c1074adca03b4b4829e7f0e57f6efd
+%global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
 
 # Git revision of GSL...
-%global commit6 3819df6e378ffccf0e29465afe99c3b324c2aa70
-%global shortcommit6 %(c=%{commit6}; echo ${c:0:7})
+%global commit2 3819df6e378ffccf0e29465afe99c3b324c2aa70
+%global shortcommit2 %(c=%{commit2}; echo ${c:0:7})
 
 # Git revision of Variant...
-%global commit7 916139a2e51e125816efce6e19d428385601273f
-%global shortcommit7 %(c=%{commit7}; echo ${c:0:7})
+%global commit3 916139a2e51e125816efce6e19d428385601273f
+%global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
 
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 1.0.27
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 # Application and 3rd-party modules licensing:
 # * S0 (Telegram Desktop) - GPLv3+ with OpenSSL exception -- main source;
-# * S1 (Qt OpenSource), S2 (Qt-ImageFormats OpenSource) - LGPLv3 -- bundled into executable;
-# * S3 (GYP), S4 (Breakpad), S5 (Breakpad-lss) - BSD -- build-time dependencies;
-# * S6 (GSL) - MIT -- build-time dependency;
-# * S7 (Variant) - BSD -- build-time dependency;
-# * S8 (Russian language pack) - GPLv3 -- bundled into executable.
+# * S1 (GYP) - BSD -- build-time dependency;
+# * S2 (GSL) - MIT -- build-time dependency;
+# * S3 (Variant) - BSD -- build-time dependency;
+# * S4 (Russian language pack) - GPLv3 -- bundled into executable.
 License: GPLv3+ and GPLv3 and LGPLv3 and BSD and MIT
 Group: Applications/Internet
 URL: https://github.com/telegramdesktop/%{appname}
 
 Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
-Source1: https://download.qt.io/official_releases/qt/5.6/%{qtversion}/submodules/qtbase-opensource-src-%{qtversion}.tar.xz
-Source2: https://download.qt.io/official_releases/qt/5.6/%{qtversion}/submodules/qtimageformats-opensource-src-%{qtversion}.tar.xz
-Source3: https://chromium.googlesource.com/external/gyp/+archive/%{commit3}.tar.gz#/gyp-%{shortcommit3}.tar.gz
-Source4: https://chromium.googlesource.com/breakpad/breakpad/+archive/%{commit4}.tar.gz#/breakpad-%{shortcommit4}.tar.gz
-Source5: https://chromium.googlesource.com/linux-syscall-support/+archive/%{commit5}.tar.gz#/breakpad-lss-%{shortcommit5}.tar.gz
-Source6: https://github.com/Microsoft/GSL/archive/%{commit6}.tar.gz#/GSL-%{shortcommit6}.tar.gz
-Source7: https://github.com/mapbox/variant/archive/%{commit7}.tar.gz#/variant-%{shortcommit7}.tar.gz
-Source8: https://tlgrm.ru/files/locales/tdesktop/Russian.strings#/%{appname}-%{version}-russian.strings
+Source1: https://chromium.googlesource.com/external/gyp/+archive/%{commit1}.tar.gz#/gyp-%{shortcommit1}.tar.gz
+Source2: https://github.com/Microsoft/GSL/archive/%{commit2}.tar.gz#/GSL-%{shortcommit2}.tar.gz
+Source3: https://github.com/mapbox/variant/archive/%{commit3}.tar.gz#/variant-%{shortcommit3}.tar.gz
+Source4: https://tlgrm.ru/files/locales/tdesktop/Russian.strings#/%{appname}-%{version}-russian.strings
 
 Source101: telegram.desktop
 Source102: telegram-desktop.appdata.xml
 Source103: tg.protocol
 
 Patch0: fix_build_under_fedora.patch
-Patch1: fix_cmake.patch
-Patch2: qtbase-opensource-src-5.6.2-QTBUG-56514.patch
-Patch3: fix_build_flags.patch
-Patch4: add_russian_locale.patch
-Patch5: fix_build_under_gcc70.patch
+Patch1: add_russian_locale.patch
+Patch2: fix_build_under_gcc70.patch
 
 Requires: hicolor-icon-theme
 Requires: libappindicator-gtk3
@@ -66,6 +49,8 @@ BuildRequires: libappstream-glib
 BuildRequires: ffmpeg-devel >= 3.1
 BuildRequires: gcc
 BuildRequires: gcc-c++
+BuildRequires: qt5-qtbase-devel
+BuildRequires: qt5-qtimageformats
 BuildRequires: chrpath
 BuildRequires: cmake
 BuildRequires: libwayland-client-devel
@@ -75,6 +60,7 @@ BuildRequires: libproxy-devel
 BuildRequires: libxcb-devel
 BuildRequires: libogg-devel
 BuildRequires: xz-devel
+BuildRequires: minizip-devel
 BuildRequires: libappindicator-devel
 BuildRequires: libunity-devel
 BuildRequires: libstdc++-devel
@@ -111,9 +97,6 @@ BuildRequires: compat-openssl10-devel
 BuildRequires: openssl-devel
 %endif
 
-Provides: bundled(qt5-qtbase) = %{qtversion}
-Provides: bundled(qt5-qtimageformats) = %{qtversion}
-
 %description
 Telegram is a messaging app with a focus on speed and security, it’s super
 fast, simple and free. You can use Telegram on all your devices at the same
@@ -127,14 +110,6 @@ Telegram is like SMS and email combined — and can take care of all your
 personal or business messaging needs.
 
 %prep
-# Setting some constants...
-qtv=%{qtversion}
-qtdir="%_builddir/Libraries/qt${qtv//./_}"
-qtpatch="%_builddir/%{appname}-%{version}/Telegram/Patches/qtbase_${qtv//./_}.diff"
-
-# Creating directory for libraries...
-mkdir -p "$qtdir"
-
 # Unpacking Telegram Desktop source archive...
 tar -xf %{SOURCE0}
 
@@ -142,26 +117,8 @@ tar -xf %{SOURCE0}
 cd "%_builddir/%{appname}-%{version}"
 %patch0 -p1
 %patch1 -p1
-%patch3 -p1
-%patch4 -p1
 
 # Applying temporary patches with different backports and fixes...
-%if 0%{?fedora} >= 26
-%patch5 -p1
-%endif
-
-# Unpacking Qt...
-cd "$qtdir"
-tar -xf %{SOURCE1}
-mv -f "qtbase-opensource-src-%{qtversion}" "qtbase"
-tar -xf %{SOURCE2}
-mv -f "qtimageformats-opensource-src-%{qtversion}" "qtimageformats"
-
-# Applying Qt patch by Telegram Desktop team...
-cd "$qtdir/qtbase"
-patch -p1 -i "$qtpatch"
-
-# Applying QTBUG-56514 patch for Fedora Rawhide (GCC 7.x)...
 %if 0%{?fedora} >= 26
 %patch2 -p1
 %endif
@@ -169,75 +126,31 @@ patch -p1 -i "$qtpatch"
 # Unpacking GYP...
 mkdir -p "%_builddir/Libraries/gyp"
 cd "%_builddir/Libraries/gyp"
-tar -xf %{SOURCE3}
+tar -xf %{SOURCE1}
 
 # Applying GYP patch...
 patch -p1 -i "%_builddir/%{appname}-%{version}/Telegram/Patches/gyp.diff"
 
-# Unpacking breakpad with lss support...
-mkdir -p "%_builddir/Libraries/breakpad"
-cd "%_builddir/Libraries/breakpad"
-tar -xf %{SOURCE4}
-mkdir -p "%_builddir/Libraries/breakpad/src/third_party/lss"
-cd "%_builddir/Libraries/breakpad/src/third_party/lss"
-tar -xf %{SOURCE5}
-
 # Unpacking GSL...
 cd "%_builddir/%{appname}-%{version}/third_party"
 rm -rf GSL
-tar -xf %{SOURCE6}
-mv GSL-%{commit6} GSL
+tar -xf %{SOURCE2}
+mv GSL-%{commit2} GSL
 
 # Unpacking Variant...
 cd "%_builddir/%{appname}-%{version}/third_party"
 rm -rf variant
-tar -xf %{SOURCE7}
-mv variant-%{commit7} variant
+tar -xf %{SOURCE3}
+mv variant-%{commit3} variant
 
 # Unpacking additional locales from sources...
-iconv -f "UTF-16" -t "UTF-8" "%{SOURCE8}" > "%_builddir/%{appname}-%{version}/Telegram/Resources/langs/lang_ru.strings"
+iconv -f "UTF-16" -t "UTF-8" "%{SOURCE4}" > "%_builddir/%{appname}-%{version}/Telegram/Resources/langs/lang_ru.strings"
 
 %build
-# Setting some constants...
-qtv=%{qtversion}
-qtdir="%_builddir/Libraries/qt${qtv//./_}"
-
-# Building breakpad...
-cd "%_builddir/Libraries/breakpad"
-%configure
-%make_build
-
-# Building patched Qt...
-cd "$qtdir/qtbase"
-./configure \
-    -prefix "%_builddir/qt" \
-    -release \
-    -opensource \
-    -confirm-license \
-    -system-zlib \
-    -system-libpng \
-    -system-libjpeg \
-    -system-freetype \
-    -system-harfbuzz \
-    -system-pcre \
-    -system-xcb \
-    -system-xkbcommon-x11 \
-    -no-opengl \
-    -no-gtkstyle \
-    -static \
-    -nomake examples \
-    -nomake tests
-%make_build
-make install
-
-# Exporting new PATH...
-export PATH="%_builddir/qt/bin:$PATH"
-
-# Building Qt image plugins...
-cd "$qtdir/qtimageformats"
-qmake .
-%make_build
-make install
+# Exporting correct build flags...
+export CFLAGS="%{optflags}"
+export CXXFLAGS="%{optflags}"
+export LDFLAGS="%{__global_ldflags}"
 
 # Building Telegram Desktop...
 cd "%_builddir/%{appname}-%{version}/Telegram"
@@ -301,6 +214,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Sat Apr 01 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.27-2
+- Built against system Qt.
+
 * Fri Mar 31 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.27-1
 - Updated to 1.0.27.
 
