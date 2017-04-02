@@ -40,7 +40,6 @@ Source103: tg.protocol
 
 Patch0: fix_build_under_fedora.patch
 Patch1: add_russian_locale.patch
-Patch2: fix_build_under_gcc70.patch
 
 Requires: hicolor-icon-theme
 Recommends: libappindicator-gtk3
@@ -85,8 +84,12 @@ BuildRequires: libvdpau-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libxkbcommon-x11-devel
 BuildRequires: harfbuzz-devel
-BuildRequires: openssl-devel
 BuildRequires: gtk3-devel
+%if 0%{?fedora} >= 26
+BuildRequires: compat-openssl10-devel
+%else
+BuildRequires: openssl-devel
+%endif
 
 %description
 Telegram is a messaging app with a focus on speed and security, it’s super
@@ -108,11 +111,6 @@ tar -xf %{SOURCE0}
 cd "%_builddir/%{appname}-%{version}"
 %patch0 -p1
 %patch1 -p1
-
-# Applying temporary patches with different backports and fixes...
-%if 0%{?fedora} >= 26
-%patch2 -p1
-%endif
 
 # Unpacking GYP...
 mkdir -p "%_builddir/Libraries/gyp"
