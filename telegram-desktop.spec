@@ -42,6 +42,7 @@ Patch0: fix_build_under_fedora.patch
 Patch1: add_russian_locale.patch
 
 Requires: hicolor-icon-theme
+Requires: qt5-qtimageformats
 Recommends: libappindicator-gtk3
 
 BuildRequires: desktop-file-utils
