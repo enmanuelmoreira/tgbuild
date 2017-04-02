@@ -1,24 +1,26 @@
-From a8dfd30f5baf3ee54acc7a6d18545e7cc8512277 Mon Sep 17 00:00:00 2001
+From 1d9b05d135135e94ccb7f607e1c943506c9ec60d Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
 
 ---
  Telegram/SourceFiles/main.cpp               |  5 +-
- Telegram/SourceFiles/qt_static_plugins.cpp  | 59 +++++++++++++++---
+ Telegram/SourceFiles/qt_functions.cpp       | 94 +++++++++++++++++++++++++++++
+ Telegram/SourceFiles/qt_static_plugins.cpp  |  8 ---
  Telegram/SourceFiles/ui/text/text.cpp       |  6 +-
  Telegram/SourceFiles/ui/text/text_block.cpp |  2 +-
  Telegram/SourceFiles/ui/twidget.cpp         |  4 +-
  Telegram/gyp/PrecompiledHeader.cmake        |  4 +-
- Telegram/gyp/Telegram.gyp                   | 14 ++---
- Telegram/gyp/qt.gypi                        | 54 ++++++-----------
+ Telegram/gyp/Telegram.gyp                   | 16 ++---
+ Telegram/gyp/qt.gypi                        | 79 +++++++-----------------
  Telegram/gyp/qt_rcc.gypi                    |  2 +-
  Telegram/gyp/refresh.sh                     |  4 +-
  Telegram/gyp/settings_linux.gypi            | 14 ++++-
- Telegram/gyp/telegram_linux.gypi            | 94 +++++++++++++++++------------
- Telegram/gyp/telegram_sources.txt           |  9 +--
+ Telegram/gyp/telegram_linux.gypi            | 79 ++++++++++++------------
+ Telegram/gyp/telegram_sources.txt           |  8 +--
  Telegram/gyp/utils.gyp                      |  4 +-
- 14 files changed, 162 insertions(+), 113 deletions(-)
+ 15 files changed, 189 insertions(+), 140 deletions(-)
+ create mode 100644 Telegram/SourceFiles/qt_functions.cpp
 
 diff --git a/Telegram/SourceFiles/main.cpp b/Telegram/SourceFiles/main.cpp
 index 6cd942e..3481691 100644
@@ -37,22 +39,52 @@ index 6cd942e..3481691 100644
  	QCoreApplication::setApplicationName(qsl("TelegramDesktop"));
  
  	settingsParseArgs(argc, argv);
-diff --git a/Telegram/SourceFiles/qt_static_plugins.cpp b/Telegram/SourceFiles/qt_static_plugins.cpp
-index 1d4896a..bd6c61a 100644
---- a/Telegram/SourceFiles/qt_static_plugins.cpp
-+++ b/Telegram/SourceFiles/qt_static_plugins.cpp
-@@ -28,12 +28,55 @@ Q_IMPORT_PLUGIN(QWebpPlugin)
- Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin)
- Q_IMPORT_PLUGIN(QGenericEnginePlugin)
- #elif defined Q_OS_LINUX // Q_OS_WIN | Q_OS_MAC
--Q_IMPORT_PLUGIN(QWebpPlugin)
--Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
--Q_IMPORT_PLUGIN(QConnmanEnginePlugin)
--Q_IMPORT_PLUGIN(QGenericEnginePlugin)
--Q_IMPORT_PLUGIN(QNetworkManagerEnginePlugin)
--Q_IMPORT_PLUGIN(QComposePlatformInputContextPlugin)
--Q_IMPORT_PLUGIN(QIbusPlatformInputContextPlugin)
--Q_IMPORT_PLUGIN(QFcitxPlatformInputContextPlugin)
+diff --git a/Telegram/SourceFiles/qt_functions.cpp b/Telegram/SourceFiles/qt_functions.cpp
+new file mode 100644
+index 0000000..4a722b8
+--- /dev/null
++++ b/Telegram/SourceFiles/qt_functions.cpp
+@@ -0,0 +1,94 @@
++/****************************************************************************
++**
++** Copyright (C) 2015 The Qt Company Ltd.
++** Contact: http://www.qt.io/licensing/
++**
++** This file contains some parts of the Qt Toolkit.
++**
++** $QT_BEGIN_LICENSE:LGPL21$
++** Commercial License Usage
++** Licensees holding valid commercial Qt licenses may use this file in
++** accordance with the commercial license agreement provided with the
++** Software or, alternatively, in accordance with the terms contained in
++** a written agreement between you and The Qt Company. For licensing terms
++** and conditions see http://www.qt.io/terms-conditions. For further
++** information use the contact form at http://www.qt.io/contact-us.
++**
++** GNU Lesser General Public License Usage
++** Alternatively, this file may be used under the terms of the GNU Lesser
++** General Public License version 2.1 or version 3 as published by the Free
++** Software Foundation and appearing in the file LICENSE.LGPLv21 and
++** LICENSE.LGPLv3 included in the packaging of this file. Please review the
++** following information to ensure the GNU Lesser General Public License
++** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
++** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
++**
++** As a special exception, The Qt Company gives you certain additional
++** rights. These rights are described in The Qt Company LGPL Exception
++** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
++**
++** $QT_END_LICENSE$
++**
++****************************************************************************/
++
++/* TODO: find a dynamic library with these symbols. */
++
++/* Debian maintainer: this function is taken from qfiledialog.cpp */
++/*
++    Makes a list of filters from ;;-separated text.
++    Used by the mac and windows implementations
++*/
 +QStringList qt_make_filter_list(const QString &filter)
 +{
 +    QString f(filter);
@@ -72,12 +104,15 @@ index 1d4896a..bd6c61a 100644
 +    return f.split(sep);
 +}
 +
++/* Debian maintainer: this constructor is taken from qtextengine.cpp for TextPainter::drawLine */
 +QTextItemInt::QTextItemInt(const QGlyphLayout &g, QFont *font, const QChar *chars_, int numChars, QFontEngine *fe, const QTextCharFormat &format)
 +    : flags(0), justified(false), underlineStyle(QTextCharFormat::NoUnderline), charFormat(format),
 +      num_chars(numChars), chars(chars_), logClusters(0), f(font),  glyphs(g), fontEngine(fe)
 +{
 +}
 +
++/* Debian maintainer: this method is also taken from qtextengine.cpp */
++// Fix up flags and underlineStyle with given info
 +void QTextItemInt::initWithScriptItem(const QScriptItem &si)
 +{
 +    // explicitly initialize flags so that initFontAttributes can be called
@@ -104,6 +139,22 @@ index 1d4896a..bd6c61a 100644
 +    if (f->d->strikeOut || charFormat.fontStrikeOut())
 +        flags |= QTextItem::StrikeOut;
 +}
+diff --git a/Telegram/SourceFiles/qt_static_plugins.cpp b/Telegram/SourceFiles/qt_static_plugins.cpp
+index 1d4896a..f2f876b 100644
+--- a/Telegram/SourceFiles/qt_static_plugins.cpp
++++ b/Telegram/SourceFiles/qt_static_plugins.cpp
+@@ -28,12 +28,4 @@ Q_IMPORT_PLUGIN(QWebpPlugin)
+ Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin)
+ Q_IMPORT_PLUGIN(QGenericEnginePlugin)
+ #elif defined Q_OS_LINUX // Q_OS_WIN | Q_OS_MAC
+-Q_IMPORT_PLUGIN(QWebpPlugin)
+-Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
+-Q_IMPORT_PLUGIN(QConnmanEnginePlugin)
+-Q_IMPORT_PLUGIN(QGenericEnginePlugin)
+-Q_IMPORT_PLUGIN(QNetworkManagerEnginePlugin)
+-Q_IMPORT_PLUGIN(QComposePlatformInputContextPlugin)
+-Q_IMPORT_PLUGIN(QIbusPlatformInputContextPlugin)
+-Q_IMPORT_PLUGIN(QFcitxPlatformInputContextPlugin)
  #endif // Q_OS_WIN | Q_OS_MAC | Q_OS_LINUX
 diff --git a/Telegram/SourceFiles/ui/text/text.cpp b/Telegram/SourceFiles/ui/text/text.cpp
 index 0188d70..960fc06 100644
@@ -176,7 +227,7 @@ index 5d6830e..c3f08d3 100644
          IMPLICIT_DEPENDS CXX "${_pch_header}"
          COMMENT "Precompiling ${_name} for ${_target} (C++)")
 diff --git a/Telegram/gyp/Telegram.gyp b/Telegram/gyp/Telegram.gyp
-index fb22932..77aafed 100644
+index fb22932..7b52e4f 100644
 --- a/Telegram/gyp/Telegram.gyp
 +++ b/Telegram/gyp/Telegram.gyp
 @@ -32,7 +32,6 @@
@@ -187,10 +238,11 @@ index fb22932..77aafed 100644
        'sp_media_key_tap_loc': '<(third_party_loc)/SPMediaKeyTap',
        'style_files': [
          '<(res_loc)/colors.palette',
-@@ -82,19 +81,18 @@
+@@ -81,20 +80,17 @@
+     ],
  
      'defines': [
-       'AL_LIBTYPE_STATIC',
+-      'AL_LIBTYPE_STATIC',
 -      '<!@(python -c "for s in \'<(build_defines)\'.split(\',\'): print(s)")',
 +      '__STDC_FORMAT_MACROS',
 +      'TDESKTOP_DISABLE_AUTOUPDATE',
@@ -203,7 +255,7 @@ index fb22932..77aafed 100644
      'include_dirs': [
        '<(src_loc)',
        '<(SHARED_INTERMEDIATE_DIR)',
-       '<(libs_loc)/breakpad/src',
+-      '<(libs_loc)/breakpad/src',
 -      '<(libs_loc)/lzma/C',
 -      '<(libs_loc)/libexif-0.6.20',
 -      '<(libs_loc)/zlib-1.2.8',
@@ -214,10 +266,10 @@ index fb22932..77aafed 100644
        '<(submodules_loc)/GSL/include',
        '<(submodules_loc)/variant/include',
 diff --git a/Telegram/gyp/qt.gypi b/Telegram/gyp/qt.gypi
-index a321221..ae2bbd3 100644
+index a321221..f244fa6 100644
 --- a/Telegram/gyp/qt.gypi
 +++ b/Telegram/gyp/qt.gypi
-@@ -27,25 +27,22 @@
+@@ -27,25 +27,21 @@
                [ 'build_macold', {
                  'qt_version%': '5.3.2',
                }, {
@@ -227,7 +279,7 @@ index a321221..ae2bbd3 100644
              ],
            },
            'qt_libs': [
-             'qwebp',
+-            'qwebp',
 -            'Qt5PrintSupport',
 -            'Qt5PlatformSupport',
              'Qt5Network',
@@ -245,34 +297,42 @@ index a321221..ae2bbd3 100644
              }]
            ]
          },
-@@ -86,8 +83,8 @@
+@@ -85,31 +81,12 @@
+             ],
            }],
            [ 'build_linux', {
-             'qt_lib_prefix': 'lib',
+-            'qt_lib_prefix': 'lib',
 -            'qt_lib_debug_postfix': '.a',
 -            'qt_lib_release_postfix': '.a',
-+            'qt_lib_debug_postfix': '.so',
-+            'qt_lib_release_postfix': '.so',
++            'qt_lib_prefix': '',
++            'qt_lib_debug_postfix': '',
++            'qt_lib_release_postfix': '',
              'qt_libs': [
-               'qxcb',
-               'Qt5XcbQpa',
-@@ -97,7 +94,6 @@
+-              'qxcb',
+-              'Qt5XcbQpa',
+-              'qconnmanbearer',
+-              'qgenericbearer',
+-              'qnmbearer',
                '<@(qt_libs)',
-               'Qt5DBus',
+-              'Qt5DBus',
                'Qt5Core',
 -              'qtpcre',
-               'Xi',
-               'Xext',
-               'Xfixes',
-@@ -109,7 +105,6 @@
-               'xcb-shm',
-               'xcb-xfixes',
-               'xcb-render',
+-              'Xi',
+-              'Xext',
+-              'Xfixes',
+-              'SM',
+-              'ICE',
+-              'fontconfig',
+-              'expat',
+-              'freetype',
+-              'xcb-shm',
+-              'xcb-xfixes',
+-              'xcb-render',
 -              'xcb-static',
              ],
            }],
          ],
-@@ -134,16 +129,11 @@
+@@ -134,16 +111,11 @@
          'qt_loc': '<(qt_loc_unix)',
        }],
      ],
@@ -289,7 +349,7 @@ index a321221..ae2bbd3 100644
    },
  
    'configurations': {
-@@ -192,20 +182,20 @@
+@@ -192,20 +164,20 @@
    },
  
    'include_dirs': [
@@ -322,7 +382,7 @@ index a321221..ae2bbd3 100644
    ],
    'defines': [
      'QT_WIDGETS_LIB',
-@@ -216,14 +206,11 @@
+@@ -216,28 +188,19 @@
    'conditions': [
      [ 'build_linux', {
        'library_dirs': [
@@ -335,11 +395,14 @@ index a321221..ae2bbd3 100644
 -        '<(linux_lib_ssl)',
 -        '<(linux_lib_crypto)',
 -        '<!@(python -c "for s in \'<(linux_lib_icu)\'.split(\' \'): print(s)")',
+-        'xcb',
 +        'crypto',
-         'xcb',
          'X11',
-         'X11-xcb',
-@@ -234,10 +221,9 @@
+-        'X11-xcb',
+-        'dbus-1',
+-        'dl',
+-        'gthread-2.0',
+         'glib-2.0',
          'pthread',
        ],
        'include_dirs': [
@@ -351,7 +414,7 @@ index a321221..ae2bbd3 100644
          '-pthread',
          '-g',
          '-rdynamic',
-@@ -259,7 +245,7 @@
+@@ -259,7 +222,7 @@
        '<(SHARED_INTERMEDIATE_DIR)/<(_target_name)/moc/moc_<(RULE_INPUT_ROOT).cpp',
      ],
      'action': [
@@ -441,10 +504,10 @@ index fde88dc..f45fc09 100644
          'Debug': {
          },
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index b42e744..5e441f7 100644
+index b42e744..d89d9cd 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
-@@ -27,47 +27,42 @@
+@@ -27,70 +27,69 @@
  # QApplication() -> createPlatformIntegration -> QXcbIntegrationPlugin::create
          #'xkbcommon',
        ],
@@ -493,36 +556,23 @@ index b42e744..5e441f7 100644
 -      'libvdpau.a',
 -      'libdrm.a',
 -      'libz.a',
-+      'lzma',
 +      'openal',
 +      'avformat',
 +      'avcodec',
 +      'swresample',
 +      'swscale',
 +      'avutil',
-+      'opus',
-+      'va-x11',
-+      'va-drm',
-+      'va',
-+      'vdpau',
 +      'z',
-+      'webp',
-+      'xkbcommon',
-+      'xkbcommon-x11',
-+      'xcb-randr',
-+      'xcb-xinerama',
-+      'xcb-xkb',
-+      'xcb-shape',
-+      'xcb-icccm',
-+      'xcb-sync',
-+      'xcb-keysyms',
-+      'xcb-image',
-+      'xcb-render-util',
 +      'minizip',
  #      '<!(pkg-config 2> /dev/null --libs <@(pkgconfig_libs))',
      ],
      'cflags_cc': [
-@@ -79,18 +74,41 @@
+       '<!(pkg-config 2> /dev/null --cflags appindicator-0.1)',
+-      '<!(pkg-config 2> /dev/null --cflags gtk+-2.0)',
+-      '<!(pkg-config 2> /dev/null --cflags glib-2.0)',
++      '<!(pkg-config 2> /dev/null --cflags gtk+-3.0)',
+       '<!(pkg-config 2> /dev/null --cflags dee-1.0)',
+     ],
      'configurations': {
        'Release': {
          'cflags': [
@@ -568,14 +618,13 @@ index b42e744..5e441f7 100644
        },
      },
 diff --git a/Telegram/gyp/telegram_sources.txt b/Telegram/gyp/telegram_sources.txt
-index 01f08e3..2ac1637 100644
+index 01f08e3..fd92ecd 100644
 --- a/Telegram/gyp/telegram_sources.txt
 +++ b/Telegram/gyp/telegram_sources.txt
-@@ -511,14 +511,7 @@
- <(src_loc)/structs.cpp
+@@ -512,13 +512,7 @@
  <(src_loc)/structs.h
  
--platforms: !win
+ platforms: !win
 -<(minizip_loc)/crypt.h
 -<(minizip_loc)/ioapi.c
 -<(minizip_loc)/ioapi.h
@@ -583,7 +632,7 @@ index 01f08e3..2ac1637 100644
 -<(minizip_loc)/zip.h
 -<(minizip_loc)/unzip.c
 -<(minizip_loc)/unzip.h
-+
++<(src_loc)/qt_functions.cpp
  
  platforms: mac
  <(sp_media_key_tap_loc)/SPMediaKeyTap.m

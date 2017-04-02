@@ -85,6 +85,7 @@ BuildRequires: libxkbcommon-devel
 BuildRequires: libxkbcommon-x11-devel
 BuildRequires: harfbuzz-devel
 BuildRequires: openssl-devel
+BuildRequires: gtk3-devel
 
 %description
 Telegram is a messaging app with a focus on speed and security, it’s super
