@@ -1,10 +1,10 @@
-From 1d9b05d135135e94ccb7f607e1c943506c9ec60d Mon Sep 17 00:00:00 2001
+From 81537705fb99468760727429451488d798fc1298 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
 
 ---
- Telegram/SourceFiles/main.cpp               |  5 +-
+ Telegram/SourceFiles/main.cpp               |  7 ++-
  Telegram/SourceFiles/qt_functions.cpp       | 94 +++++++++++++++++++++++++++++
  Telegram/SourceFiles/qt_static_plugins.cpp  |  8 ---
  Telegram/SourceFiles/ui/text/text.cpp       |  6 +-
@@ -19,11 +19,11 @@ Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
  Telegram/gyp/telegram_linux.gypi            | 79 ++++++++++++------------
  Telegram/gyp/telegram_sources.txt           |  8 +--
  Telegram/gyp/utils.gyp                      |  4 +-
- 15 files changed, 189 insertions(+), 140 deletions(-)
+ 15 files changed, 191 insertions(+), 140 deletions(-)
  create mode 100644 Telegram/SourceFiles/qt_functions.cpp
 
 diff --git a/Telegram/SourceFiles/main.cpp b/Telegram/SourceFiles/main.cpp
-index 6cd942e..3481691 100644
+index 6cd942e..0268e39 100644
 --- a/Telegram/SourceFiles/main.cpp
 +++ b/Telegram/SourceFiles/main.cpp
 @@ -23,9 +23,10 @@ Copyright (c) 2014-2017 John Preston, https://desktop.telegram.org
@@ -39,6 +39,15 @@ index 6cd942e..3481691 100644
  	QCoreApplication::setApplicationName(qsl("TelegramDesktop"));
  
  	settingsParseArgs(argc, argv);
+@@ -38,6 +39,8 @@ int main(int argc, char *argv[]) {
+ 	// both are finished in Application::closeApplication
+ 	Logs::start(); // must be started before Platform is started
+ 	Platform::start(); // must be started before QApplication is created
++	QCoreApplication::addLibraryPath("/usr/lib64/qt5/plugins");
++	QCoreApplication::addLibraryPath("/usr/lib/qt5/plugins");
+ 
+ 	int result = 0;
+ 	{
 diff --git a/Telegram/SourceFiles/qt_functions.cpp b/Telegram/SourceFiles/qt_functions.cpp
 new file mode 100644
 index 0000000..4a722b8
