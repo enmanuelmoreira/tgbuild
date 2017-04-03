@@ -163,16 +163,16 @@ desktop-file-install --dir="%{buildroot}%{_datadir}/applications" "%{SOURCE101}"
 for size in 16 32 48 64 128 256 512; do
 	dir="%{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps"
 	install -d "$dir"
-	install -m 644 "%_builddir/%{appname}-%{version}/Telegram/Resources/art/icon${size}.png" "$dir/%{name}.png"
+	install -m 644 -p "%_builddir/%{appname}-%{version}/Telegram/Resources/art/icon${size}.png" "$dir/%{name}.png"
 done
 
 # Installing tg protocol handler...
 install -d "%{buildroot}%{_datadir}/kde4/services"
-install -m 644 "%{SOURCE103}" "%{buildroot}%{_datadir}/kde4/services/tg.protocol"
+install -m 644 -p "%{SOURCE103}" "%{buildroot}%{_datadir}/kde4/services/tg.protocol"
 
 # Installing appdata for Gnome Software...
 install -d "%{buildroot}%{_datadir}/appdata"
-install -m 644 "%{SOURCE102}" "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
+install -m 644 -p "%{SOURCE102}" "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
 
 %check
 appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
