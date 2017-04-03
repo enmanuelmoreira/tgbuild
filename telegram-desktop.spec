@@ -106,10 +106,9 @@ personal or business messaging needs.
 
 %prep
 # Unpacking Telegram Desktop source archive...
-tar -xf %{SOURCE0}
+%setup -q -n %{appname}-%{version}
 
 # Patching Telegram Desktop...
-cd "%_builddir/%{appname}-%{version}"
 %patch0 -p1
 %patch1 -p1
 
@@ -153,7 +152,6 @@ cd "%_builddir/%{appname}-%{version}/out/Release"
 cd "%_builddir/%{appname}-%{version}/out/Release"
 mkdir -p "%{buildroot}%{_bindir}"
 chrpath -d Telegram
-strip Telegram
 install -m 755 Telegram "%{buildroot}%{_bindir}/%{name}"
 
 # Installing desktop shortcut...
@@ -195,8 +193,8 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
-%doc %{appname}-%{version}/README.md %{appname}-%{version}/changelog.txt
-%license %{appname}-%{version}/LICENSE
+%doc README.md changelog.txt
+%license LICENSE
 %{_bindir}/%{name}
 %{_datadir}/applications/telegram.desktop
 %{_datadir}/kde4/services/tg.protocol
