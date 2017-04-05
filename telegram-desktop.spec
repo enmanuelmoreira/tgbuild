@@ -106,11 +106,7 @@ personal or business messaging needs.
 
 %prep
 # Unpacking Telegram Desktop source archive...
-%setup -q -n %{appname}-%{version}
-
-# Patching Telegram Desktop...
-%patch0 -p1
-%patch1 -p1
+%autosetup -n %{appname}-%{version} -p1
 
 # Unpacking GYP...
 mkdir -p third_party/gyp
