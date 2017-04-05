@@ -1,4 +1,4 @@
-From 9a80e1885cd3224419ac605f5a6e8172da89bebf Mon Sep 17 00:00:00 2001
+From ac45a547df773a3e650fb5ff3a40505d69cb9919 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
