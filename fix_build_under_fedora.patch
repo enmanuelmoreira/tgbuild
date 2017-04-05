@@ -1,4 +1,4 @@
-From 29772f80f695cfd5fa0ab05d1087f965cbf72fd5 Mon Sep 17 00:00:00 2001
+From 9a80e1885cd3224419ac605f5a6e8172da89bebf Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -14,12 +14,12 @@ Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
  Telegram/gyp/Telegram.gyp                   | 16 ++---
  Telegram/gyp/qt.gypi                        | 80 +++++++-----------------
  Telegram/gyp/qt_rcc.gypi                    |  2 +-
- Telegram/gyp/refresh.sh                     |  4 +-
+ Telegram/gyp/refresh.sh                     |  6 +-
  Telegram/gyp/settings_linux.gypi            | 14 ++++-
  Telegram/gyp/telegram_linux.gypi            | 79 ++++++++++++------------
  Telegram/gyp/telegram_sources.txt           |  8 +--
  Telegram/gyp/utils.gyp                      |  4 +-
- 15 files changed, 191 insertions(+), 141 deletions(-)
+ 15 files changed, 192 insertions(+), 142 deletions(-)
  create mode 100644 Telegram/SourceFiles/qt_functions.cpp
 
 diff --git a/Telegram/SourceFiles/main.cpp b/Telegram/SourceFiles/main.cpp
@@ -447,12 +447,15 @@ index eebc696..3efa7d0 100644
        '-no-compress',
        '<(RULE_INPUT_PATH)',
 diff --git a/Telegram/gyp/refresh.sh b/Telegram/gyp/refresh.sh
-index 87f16da..a3282a5 100755
+index 87f16da..cfd93d8 100755
 --- a/Telegram/gyp/refresh.sh
 +++ b/Telegram/gyp/refresh.sh
-@@ -11,9 +11,9 @@ cd $FullScriptPath
+@@ -9,11 +9,11 @@ MySystem=`uname -s`
+ cd $FullScriptPath
+ 
  if [ "$MySystem" == "Linux" ]; then
-   ../../../Libraries/gyp/gyp --depth=. --generator-output=../.. -Goutput_dir=out Telegram.gyp --format=cmake
+-  ../../../Libraries/gyp/gyp --depth=. --generator-output=../.. -Goutput_dir=out Telegram.gyp --format=cmake
++  ../../third_party/gyp/gyp --depth=. --generator-output=../.. -Goutput_dir=out Telegram.gyp --format=cmake
    cd ../../out/Debug
 -  ../../../Libraries/cmake-3.6.2/bin/cmake .
 +  cmake .

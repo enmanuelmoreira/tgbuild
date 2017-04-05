@@ -113,27 +113,28 @@ personal or business messaging needs.
 %patch1 -p1
 
 # Unpacking GYP...
-mkdir -p "%_builddir/Libraries/gyp"
-cd "%_builddir/Libraries/gyp"
-tar -xf %{SOURCE1}
-
-# Applying GYP patch...
-patch -p1 -i "%_builddir/%{appname}-%{version}/Telegram/Patches/gyp.diff"
+mkdir -p third_party/gyp
+pushd third_party/gyp
+    tar -xf %{SOURCE1}
+    patch -p1 -i ../../Telegram/Patches/gyp.diff
+popd
 
 # Unpacking GSL...
-cd "%_builddir/%{appname}-%{version}/third_party"
-rm -rf GSL
-tar -xf %{SOURCE2}
-mv GSL-%{commit2} GSL
+pushd third_party
+    rm -rf GSL
+    tar -xf %{SOURCE2}
+    mv GSL-%{commit2} GSL
+popd
 
 # Unpacking Variant...
-cd "%_builddir/%{appname}-%{version}/third_party"
-rm -rf variant
-tar -xf %{SOURCE3}
-mv variant-%{commit3} variant
+pushd third_party
+    rm -rf variant
+    tar -xf %{SOURCE3}
+    mv variant-%{commit3} variant
+popd
 
 # Unpacking additional locales from sources...
-iconv -f "UTF-16" -t "UTF-8" "%{SOURCE4}" > "%_builddir/%{appname}-%{version}/Telegram/Resources/langs/lang_ru.strings"
+iconv -f "UTF-16" -t "UTF-8" "%{SOURCE4}" > Telegram/Resources/langs/lang_ru.strings
 
 %build
 # Exporting correct build flags...
@@ -141,18 +142,21 @@ export CFLAGS="%{optflags}"
 export CXXFLAGS="%{optflags}"
 export LDFLAGS="%{__global_ldflags}"
 
+# Generating cmake script using GYP...
+pushd Telegram
+    gyp/refresh.sh
+popd
+
 # Building Telegram Desktop...
-cd "%_builddir/%{appname}-%{version}/Telegram"
-gyp/refresh.sh
-cd "%_builddir/%{appname}-%{version}/out/Release"
-%make_build
+pushd out/Release
+    %make_build
+popd
 
 %install
 # Installing executables...
-cd "%_builddir/%{appname}-%{version}/out/Release"
 mkdir -p "%{buildroot}%{_bindir}"
-chrpath -d Telegram
-install -m 755 Telegram "%{buildroot}%{_bindir}/%{name}"
+chrpath -d out/Release/Telegram
+install -m 755 out/Release/Telegram "%{buildroot}%{_bindir}/%{name}"
 
 # Installing desktop shortcut...
 desktop-file-install --dir="%{buildroot}%{_datadir}/applications" "%{SOURCE101}"
@@ -161,7 +165,7 @@ desktop-file-install --dir="%{buildroot}%{_datadir}/applications" "%{SOURCE101}"
 for size in 16 32 48 64 128 256 512; do
 	dir="%{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps"
 	install -d "$dir"
-	install -m 644 -p "%_builddir/%{appname}-%{version}/Telegram/Resources/art/icon${size}.png" "$dir/%{name}.png"
+	install -m 644 -p Telegram/Resources/art/icon${size}.png "$dir/%{name}.png"
 done
 
 # Installing tg protocol handler...
