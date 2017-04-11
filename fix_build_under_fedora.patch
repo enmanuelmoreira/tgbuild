@@ -1,4 +1,4 @@
-From ac45a547df773a3e650fb5ff3a40505d69cb9919 Mon Sep 17 00:00:00 2001
+From a90ac39f4c8db71a9d76005a51afe69209e32fd4 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -166,7 +166,7 @@ index 1d4896a..f2f876b 100644
 -Q_IMPORT_PLUGIN(QFcitxPlatformInputContextPlugin)
  #endif // Q_OS_WIN | Q_OS_MAC | Q_OS_LINUX
 diff --git a/Telegram/SourceFiles/ui/text/text.cpp b/Telegram/SourceFiles/ui/text/text.cpp
-index 0188d70..960fc06 100644
+index 089a17f..a3b979c 100644
 --- a/Telegram/SourceFiles/ui/text/text.cpp
 +++ b/Telegram/SourceFiles/ui/text/text.cpp
 @@ -1692,11 +1692,11 @@ private:
@@ -236,7 +236,7 @@ index 5d6830e..c3f08d3 100644
          IMPLICIT_DEPENDS CXX "${_pch_header}"
          COMMENT "Precompiling ${_name} for ${_target} (C++)")
 diff --git a/Telegram/gyp/Telegram.gyp b/Telegram/gyp/Telegram.gyp
-index a1805eb..78945a7 100644
+index d195334..4d34463 100644
 --- a/Telegram/gyp/Telegram.gyp
 +++ b/Telegram/gyp/Telegram.gyp
 @@ -32,7 +32,6 @@
@@ -631,10 +631,10 @@ index b42e744..d89d9cd 100644
        },
      },
 diff --git a/Telegram/gyp/telegram_sources.txt b/Telegram/gyp/telegram_sources.txt
-index 6fa7b70..35d690a 100644
+index a08b77b..e9cdfdd 100644
 --- a/Telegram/gyp/telegram_sources.txt
 +++ b/Telegram/gyp/telegram_sources.txt
-@@ -523,13 +523,7 @@
+@@ -535,13 +535,7 @@
  <(src_loc)/structs.h
  
  platforms: !win
