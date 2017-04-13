@@ -34,9 +34,6 @@ Source2: https://github.com/Microsoft/GSL/archive/%{commit2}.tar.gz#/GSL-%{short
 Source3: https://github.com/mapbox/variant/archive/%{commit3}.tar.gz#/variant-%{shortcommit3}.tar.gz
 Source4: https://tlgrm.ru/files/locales/tdesktop/Russian.strings#/%{appname}-%{version}-russian.strings
 
-Source101: %{name}.desktop
-Source102: %{name}.appdata.xml
-
 Patch0: fix_build_under_fedora.patch
 Patch1: add_russian_locale.patch
 
@@ -154,7 +151,8 @@ chrpath -d out/Release/Telegram
 install -m 755 out/Release/Telegram "%{buildroot}%{_bindir}/%{name}"
 
 # Installing desktop shortcut...
-desktop-file-install --dir="%{buildroot}%{_datadir}/applications" "%{SOURCE101}"
+mv lib/xdg/telegramdesktop.desktop lib/xdg/%{name}.desktop
+desktop-file-install --dir="%{buildroot}%{_datadir}/applications" lib/xdg/%{name}.desktop
 
 # Installing icons...
 for size in 16 32 48 64 128 256 512; do
@@ -169,7 +167,7 @@ install -m 644 -p lib/xdg/tg.protocol "%{buildroot}%{_datadir}/kde4/services/tg.
 
 # Installing appdata for Gnome Software...
 install -d "%{buildroot}%{_datadir}/appdata"
-install -m 644 -p "%{SOURCE102}" "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
+install -m 644 -p lib/xdg/telegramdesktop.appdata.xml "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
 
 %check
 appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"

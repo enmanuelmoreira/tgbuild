@@ -1,4 +1,4 @@
-From 3e212ed8b56fa790c50fbff017ba505493e22e85 Mon Sep 17 00:00:00 2001
+From de8b9890618a7c7cebb2ea66ca1bbf133c8a4b13 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -19,7 +19,9 @@ Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
  Telegram/gyp/telegram_linux.gypi            | 79 ++++++++++++------------
  Telegram/gyp/telegram_sources.txt           |  8 +--
  Telegram/gyp/utils.gyp                      |  4 +-
- 15 files changed, 192 insertions(+), 142 deletions(-)
+ lib/xdg/telegramdesktop.appdata.xml         |  2 +-
+ lib/xdg/telegramdesktop.desktop             |  6 +-
+ 17 files changed, 197 insertions(+), 145 deletions(-)
  create mode 100644 Telegram/SourceFiles/qt_functions.cpp
 
 diff --git a/Telegram/SourceFiles/main.cpp b/Telegram/SourceFiles/main.cpp
@@ -671,6 +673,36 @@ index 209c737..27ce77f 100644
              ],
            }]
          ],
+diff --git a/lib/xdg/telegramdesktop.appdata.xml b/lib/xdg/telegramdesktop.appdata.xml
+index 7bcf8d8..4508c01 100644
+--- a/lib/xdg/telegramdesktop.appdata.xml
++++ b/lib/xdg/telegramdesktop.appdata.xml
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <component type="desktop">
+-    <id>org.telegram.desktop</id>
++    <id>telegram-desktop.desktop</id>
+     <metadata_license>CC0-1.0</metadata_license>
+     <project_license>GPL-3.0</project_license>
+     <name>Telegram Desktop</name>
+diff --git a/lib/xdg/telegramdesktop.desktop b/lib/xdg/telegramdesktop.desktop
+index 0a80695..550b9f7 100644
+--- a/lib/xdg/telegramdesktop.desktop
++++ b/lib/xdg/telegramdesktop.desktop
+@@ -1,9 +1,11 @@
+ [Desktop Entry]
+ Version=1.0
+ Name=Telegram Desktop
++GenericName=Telegram Desktop
++Keywords=IM;Chat;
+ Comment=Official desktop version of Telegram messaging app
+-Exec=telegram-desktop -- %u
+-Icon=telegram
++Exec=/usr/bin/telegram-desktop -- %u
++Icon=telegram-desktop
+ Terminal=false
+ StartupWMClass=TelegramDesktop
+ Type=Application
 -- 
 2.9.3
 
