@@ -156,9 +156,9 @@ desktop-file-install --dir="%{buildroot}%{_datadir}/applications" lib/xdg/%{name
 
 # Installing icons...
 for size in 16 32 48 64 128 256 512; do
-	dir="%{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps"
-	install -d "$dir"
-	install -m 644 -p Telegram/Resources/art/icon${size}.png "$dir/%{name}.png"
+    dir="%{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps"
+    install -d "$dir"
+    install -m 644 -p Telegram/Resources/art/icon${size}.png "$dir/%{name}.png"
 done
 
 # Installing tg protocol handler...
