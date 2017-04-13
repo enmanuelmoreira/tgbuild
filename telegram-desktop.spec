@@ -34,8 +34,8 @@ Source2: https://github.com/Microsoft/GSL/archive/%{commit2}.tar.gz#/GSL-%{short
 Source3: https://github.com/mapbox/variant/archive/%{commit3}.tar.gz#/variant-%{shortcommit3}.tar.gz
 Source4: https://tlgrm.ru/files/locales/tdesktop/Russian.strings#/%{appname}-%{version}-russian.strings
 
-Source101: telegram.desktop
-Source102: telegram-desktop.appdata.xml
+Source101: %{name}.desktop
+Source102: %{name}.appdata.xml
 Source103: tg.protocol
 
 Patch0: fix_build_under_fedora.patch
@@ -206,7 +206,7 @@ fi
 %doc README.md changelog.txt
 %license LICENSE
 %{_bindir}/%{name}
-%{_datadir}/applications/telegram.desktop
+%{_datadir}/applications/%{name}.desktop
 %{_datadir}/kde4/services/tg.protocol
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/appdata/%{name}.appdata.xml
