@@ -36,7 +36,6 @@ Source4: https://tlgrm.ru/files/locales/tdesktop/Russian.strings#/%{appname}-%{v
 
 Source101: %{name}.desktop
 Source102: %{name}.appdata.xml
-Source103: tg.protocol
 
 Patch0: fix_build_under_fedora.patch
 Patch1: add_russian_locale.patch
@@ -166,7 +165,7 @@ done
 
 # Installing tg protocol handler...
 install -d "%{buildroot}%{_datadir}/kde4/services"
-install -m 644 -p "%{SOURCE103}" "%{buildroot}%{_datadir}/kde4/services/tg.protocol"
+install -m 644 -p lib/xdg/tg.protocol "%{buildroot}%{_datadir}/kde4/services/tg.protocol"
 
 # Installing appdata for Gnome Software...
 install -d "%{buildroot}%{_datadir}/appdata"
