@@ -7,16 +7,11 @@ Select one of these ways:
  * [build using rpmbuild](doc/build_using_rpmbuild.md).
 
 # Install pre-built from this sources packages
-You can also install pre-built from this sources package from russianfedora-free repository (maybe it will be added to RPMFusion later; package is still waiting for [package review](https://bugzilla.rpmfusion.org/show_bug.cgi?id=4285)).
+You can also install pre-built from this sources [package](http://koji.rpmfusion.org/koji/packageinfo?packageID=492) from RPMFusion repository.
 
 Add RPMFusion repository:
 ```bash
 sudo dnf install --nogpgcheck https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-```
-
-Add RussianFedora repository:
-```bash
-sudo dnf install --nogpgcheck https://mirror.yandex.ru/fedora/russianfedora/russianfedora/free/fedora/russianfedora-free-release-stable.noarch.rpm https://mirror.yandex.ru/fedora/russianfedora/russianfedora/nonfree/fedora/russianfedora-nonfree-release-stable.noarch.rpm
 ```
 
 Now install Telegram Desktop:
