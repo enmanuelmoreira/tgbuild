@@ -1,4 +1,4 @@
-From ac45a547df773a3e650fb5ff3a40505d69cb9919 Mon Sep 17 00:00:00 2001
+From 3d25af45a3f72a18ea6391ebe84d570d779e9958 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -19,7 +19,9 @@ Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
  Telegram/gyp/telegram_linux.gypi            | 79 ++++++++++++------------
  Telegram/gyp/telegram_sources.txt           |  8 +--
  Telegram/gyp/utils.gyp                      |  4 +-
- 15 files changed, 192 insertions(+), 142 deletions(-)
+ lib/xdg/telegramdesktop.appdata.xml         |  2 +-
+ lib/xdg/telegramdesktop.desktop             |  6 +-
+ 17 files changed, 197 insertions(+), 145 deletions(-)
  create mode 100644 Telegram/SourceFiles/qt_functions.cpp
 
 diff --git a/Telegram/SourceFiles/main.cpp b/Telegram/SourceFiles/main.cpp
@@ -166,7 +168,7 @@ index 1d4896a..f2f876b 100644
 -Q_IMPORT_PLUGIN(QFcitxPlatformInputContextPlugin)
  #endif // Q_OS_WIN | Q_OS_MAC | Q_OS_LINUX
 diff --git a/Telegram/SourceFiles/ui/text/text.cpp b/Telegram/SourceFiles/ui/text/text.cpp
-index 0188d70..960fc06 100644
+index 089a17f..a3b979c 100644
 --- a/Telegram/SourceFiles/ui/text/text.cpp
 +++ b/Telegram/SourceFiles/ui/text/text.cpp
 @@ -1692,11 +1692,11 @@ private:
@@ -236,7 +238,7 @@ index 5d6830e..c3f08d3 100644
          IMPLICIT_DEPENDS CXX "${_pch_header}"
          COMMENT "Precompiling ${_name} for ${_target} (C++)")
 diff --git a/Telegram/gyp/Telegram.gyp b/Telegram/gyp/Telegram.gyp
-index a1805eb..78945a7 100644
+index 5b7ead4..91a6eb6 100644
 --- a/Telegram/gyp/Telegram.gyp
 +++ b/Telegram/gyp/Telegram.gyp
 @@ -32,7 +32,6 @@
@@ -631,10 +633,10 @@ index b42e744..d89d9cd 100644
        },
      },
 diff --git a/Telegram/gyp/telegram_sources.txt b/Telegram/gyp/telegram_sources.txt
-index 6fa7b70..35d690a 100644
+index a08b77b..e9cdfdd 100644
 --- a/Telegram/gyp/telegram_sources.txt
 +++ b/Telegram/gyp/telegram_sources.txt
-@@ -523,13 +523,7 @@
+@@ -535,13 +535,7 @@
  <(src_loc)/structs.h
  
  platforms: !win
@@ -671,6 +673,36 @@ index 209c737..27ce77f 100644
              ],
            }]
          ],
+diff --git a/lib/xdg/telegramdesktop.appdata.xml b/lib/xdg/telegramdesktop.appdata.xml
+index 7bcf8d8..4508c01 100644
+--- a/lib/xdg/telegramdesktop.appdata.xml
++++ b/lib/xdg/telegramdesktop.appdata.xml
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <component type="desktop">
+-    <id>org.telegram.desktop</id>
++    <id>telegram-desktop.desktop</id>
+     <metadata_license>CC0-1.0</metadata_license>
+     <project_license>GPL-3.0</project_license>
+     <name>Telegram Desktop</name>
+diff --git a/lib/xdg/telegramdesktop.desktop b/lib/xdg/telegramdesktop.desktop
+index 0a80695..550b9f7 100644
+--- a/lib/xdg/telegramdesktop.desktop
++++ b/lib/xdg/telegramdesktop.desktop
+@@ -1,9 +1,11 @@
+ [Desktop Entry]
+ Version=1.0
+ Name=Telegram Desktop
++GenericName=Telegram Desktop
++Keywords=IM;Chat;
+ Comment=Official desktop version of Telegram messaging app
+-Exec=telegram-desktop -- %u
+-Icon=telegram
++Exec=/usr/bin/telegram-desktop -- %u
++Icon=telegram-desktop
+ Terminal=false
+ StartupWMClass=TelegramDesktop
+ Type=Application
 -- 
 2.9.3
 

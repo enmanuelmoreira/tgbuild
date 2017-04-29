@@ -15,7 +15,7 @@
 
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
-Version: 1.0.29
+Version: 1.0.34
 Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
@@ -23,27 +23,24 @@ Release: 1%{?dist}
 # * S1 (GYP) - BSD -- build-time dependency;
 # * S2 (GSL) - MIT -- build-time dependency;
 # * S3 (Variant) - BSD -- build-time dependency;
-# * S4 (Russian language pack) - GPLv3 -- bundled into executable.
-License: GPLv3+ and GPLv3 and LGPLv3 and BSD and MIT
+# * P0 (qt_functions.cpp) - LGPLv3 -- build-time dependency.
+License: GPLv3+ and LGPLv3 and BSD and MIT
 Group: Applications/Internet
 URL: https://github.com/telegramdesktop/%{appname}
+ExclusiveArch: i686 x86_64
 
 Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
 Source1: https://chromium.googlesource.com/external/gyp/+archive/%{commit1}.tar.gz#/gyp-%{shortcommit1}.tar.gz
 Source2: https://github.com/Microsoft/GSL/archive/%{commit2}.tar.gz#/GSL-%{shortcommit2}.tar.gz
 Source3: https://github.com/mapbox/variant/archive/%{commit3}.tar.gz#/variant-%{shortcommit3}.tar.gz
-Source4: https://tlgrm.ru/files/locales/tdesktop/Russian.strings#/%{appname}-%{version}-russian.strings
-
-Source101: telegram.desktop
-Source102: telegram-desktop.appdata.xml
-Source103: tg.protocol
 
 Patch0: fix_build_under_fedora.patch
-Patch1: add_russian_locale.patch
 
 Requires: hicolor-icon-theme
-Requires: qt5-qtimageformats
-Recommends: libappindicator-gtk3
+Requires: qt5-qtimageformats%{?_isa}
+%if 0%{?fedora} >= 24
+Recommends: libappindicator-gtk3%{?_isa}
+%endif
 
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
@@ -129,9 +126,6 @@ pushd third_party
     mv variant-%{commit3} variant
 popd
 
-# Unpacking additional locales from sources...
-iconv -f "UTF-16" -t "UTF-8" "%{SOURCE4}" > Telegram/Resources/langs/lang_ru.strings
-
 %build
 # Exporting correct build flags...
 export CFLAGS="%{optflags}"
@@ -155,22 +149,23 @@ chrpath -d out/Release/Telegram
 install -m 755 out/Release/Telegram "%{buildroot}%{_bindir}/%{name}"
 
 # Installing desktop shortcut...
-desktop-file-install --dir="%{buildroot}%{_datadir}/applications" "%{SOURCE101}"
+mv lib/xdg/telegramdesktop.desktop lib/xdg/%{name}.desktop
+desktop-file-install --dir="%{buildroot}%{_datadir}/applications" lib/xdg/%{name}.desktop
 
 # Installing icons...
 for size in 16 32 48 64 128 256 512; do
-	dir="%{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps"
-	install -d "$dir"
-	install -m 644 -p Telegram/Resources/art/icon${size}.png "$dir/%{name}.png"
+    dir="%{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps"
+    install -d "$dir"
+    install -m 644 -p Telegram/Resources/art/icon${size}.png "$dir/%{name}.png"
 done
 
 # Installing tg protocol handler...
 install -d "%{buildroot}%{_datadir}/kde4/services"
-install -m 644 -p "%{SOURCE103}" "%{buildroot}%{_datadir}/kde4/services/tg.protocol"
+install -m 644 -p lib/xdg/tg.protocol "%{buildroot}%{_datadir}/kde4/services/tg.protocol"
 
 # Installing appdata for Gnome Software...
 install -d "%{buildroot}%{_datadir}/appdata"
-install -m 644 -p "%{SOURCE102}" "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
+install -m 644 -p lib/xdg/telegramdesktop.appdata.xml "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
 
 %check
 appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
@@ -206,12 +201,24 @@ fi
 %doc README.md changelog.txt
 %license LICENSE
 %{_bindir}/%{name}
-%{_datadir}/applications/telegram.desktop
+%{_datadir}/applications/%{name}.desktop
 %{_datadir}/kde4/services/tg.protocol
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Mon Apr 24 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.34-1
+- Updated to 1.0.34 (alpha).
+
+* Sun Apr 16 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.33-1
+- Updated to 1.0.33 (alpha).
+
+* Thu Apr 13 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.32-1
+- Updated to 1.0.32 (alpha).
+
+* Tue Apr 11 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.31-1
+- Updated to 1.0.31 (alpha).
+
 * Wed Apr 05 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.29-1
 - Updated to 1.0.29.
 
