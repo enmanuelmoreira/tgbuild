@@ -6,10 +6,6 @@ Clone this repository with SPECs and patches to any directory:
 git clone -b master https://github.com/xvitaly/tgbuild.git tgbuild
 ```
 
-You can also select branch:
- * **master** (default) - SPEC and patches for current stable branch of Telegram Desktop;
- * **unstable** - SPEC and patches for latest unstable development (alpha) branch of Telegram Desktop.
-
 ## Step 2
 
 Install spectool and rpmbuild:
