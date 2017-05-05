@@ -2,7 +2,7 @@
 %global appname tdesktop
 
 # Git revision of GYP...
-%global commit1 a7055b3989c1074adca03b4b4829e7f0e57f6efd
+%global commit1 a478c1ab51ea3e04e79791ac3d1dad01b3f57434
 %global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
 
 # Git revision of GSL...
