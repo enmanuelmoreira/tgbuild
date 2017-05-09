@@ -13,6 +13,10 @@
 %global commit3 916139a2e51e125816efce6e19d428385601273f
 %global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
 
+# Git revision of libtgvoip...
+%global commit4 ccf715b626246990bf57068102bc04014f4ac385
+%global shortcommit4 %(c=%{commit4}; echo ${c:0:7})
+
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 1.0.35
@@ -33,6 +37,7 @@ Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
 Source1: https://chromium.googlesource.com/external/gyp/+archive/%{commit1}.tar.gz#/gyp-%{shortcommit1}.tar.gz
 Source2: https://github.com/Microsoft/GSL/archive/%{commit2}.tar.gz#/GSL-%{shortcommit2}.tar.gz
 Source3: https://github.com/mapbox/variant/archive/%{commit3}.tar.gz#/variant-%{shortcommit3}.tar.gz
+Source3: https://github.com/telegramdesktop/libtgvoip/archive/%{commit4}.tar.gz#/libtgvoip-%{shortcommit4}.tar.gz
 
 Patch0: fix_build_under_fedora.patch
 
