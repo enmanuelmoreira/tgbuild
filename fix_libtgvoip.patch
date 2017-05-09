@@ -1,0 +1,33 @@
+From 3c3d5b9a3337674480a442714f6355146e7c8734 Mon Sep 17 00:00:00 2001
+From: Vitaly Zaitsev <vitaly@easycoding.org>
+Date: Wed, 10 May 2017 00:16:20 +0200
+Subject: [PATCH] Fixed build of libtgvoip under Fedora.
+
+---
+ libtgvoip.gyp | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/Telegram/ThirdParty/libtgvoip/libtgvoip.gyp b/Telegram/ThirdParty/libtgvoip/libtgvoip.gyp
+index 91697a2..7a5dff8 100644
+--- a/libtgvoip.gyp
++++ b/libtgvoip.gyp
+@@ -4,7 +4,6 @@
+     'targets': [
+       {
+         'target_name': 'libtgvoip',
+-        'type': 'static_library',
+         'dependencies': [],
+         'defines': [
+           'WEBRTC_APM_DEBUG_DUMP=0',
+@@ -16,7 +15,7 @@
+         },
+         'include_dirs': [
+           '<(tgvoip_src_loc)/webrtc_dsp',
+-          '<(DEPTH)/../../../Libraries/opus/include',
++          '<!(rpm --eval "%{_includedir}")',
+         ],
+         'direct_dependent_settings': {
+           'include_dirs': [
+-- 
+2.9.3
+
