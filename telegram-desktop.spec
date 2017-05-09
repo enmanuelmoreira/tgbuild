@@ -111,24 +111,31 @@ personal or business messaging needs.
 %autosetup -n %{appname}-%{version} -p1
 
 # Unpacking GYP...
-mkdir -p third_party/gyp
-pushd third_party/gyp
+mkdir -p Telegram/ThirdParty/gyp
+pushd Telegram/ThirdParty/gyp
     tar -xf %{SOURCE1}
     patch -p1 -i ../../Telegram/Patches/gyp.diff
 popd
 
 # Unpacking GSL...
-pushd third_party
+pushd Telegram/ThirdParty
     rm -rf GSL
     tar -xf %{SOURCE2}
     mv GSL-%{commit2} GSL
 popd
 
 # Unpacking Variant...
-pushd third_party
+pushd Telegram/ThirdParty
     rm -rf variant
     tar -xf %{SOURCE3}
     mv variant-%{commit3} variant
+popd
+
+# Unpacking libtgvoip...
+pushd Telegram/ThirdParty
+    rm -rf libtgvoip
+    tar -xf %{SOURCE4}
+    mv libtgvoip-%{commit4} libtgvoip
 popd
 
 %build
