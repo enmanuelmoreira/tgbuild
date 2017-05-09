@@ -109,13 +109,13 @@ personal or business messaging needs.
 
 %prep
 # Unpacking Telegram Desktop source archive...
-%autosetup -n %{appname}-%{version} -p1
+%setup -qn %{appname}-%{version}
 
 # Unpacking GYP...
 mkdir -p Telegram/ThirdParty/gyp
 pushd Telegram/ThirdParty/gyp
     tar -xf %{SOURCE1}
-    patch -p1 -i ../../Telegram/Patches/gyp.diff
+    patch -p1 -i ../../../Telegram/Patches/gyp.diff
 popd
 
 # Unpacking GSL...
@@ -139,6 +139,10 @@ pushd Telegram/ThirdParty
     mv libtgvoip-%{commit4} libtgvoip
 popd
 
+# Applying patches with different fixes...
+%patch0 -p1
+%patch1 -p1
+
 %build
 # Exporting correct build flags...
 export CFLAGS="%{optflags}"
@@ -158,8 +162,10 @@ popd
 %install
 # Installing executables...
 mkdir -p "%{buildroot}%{_bindir}"
+mkdir -p "%{buildroot}%{_libdir}"
 chrpath -d out/Release/Telegram
 install -m 755 out/Release/Telegram "%{buildroot}%{_bindir}/%{name}"
+install -m 755 out/Release/lib.target/libtgvoip.so "%{buildroot}%{_libdir}/libtgvoip.so"
 
 # Installing desktop shortcut...
 mv lib/xdg/telegramdesktop.desktop lib/xdg/%{name}.desktop
@@ -184,6 +190,7 @@ install -m 644 -p lib/xdg/telegramdesktop.appdata.xml "%{buildroot}%{_datadir}/a
 appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
 
 %post
+/sbin/ldconfig
 %if 0%{?fedora} <= 23 || 0%{?rhel} == 7
 /bin/touch --no-create %{_datadir}/mime/packages &>/dev/null || :
 %endif
@@ -193,6 +200,7 @@ appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/appdata/%{name}.a
 %endif
 
 %postun
+/sbin/ldconfig
 if [ $1 -eq 0 ] ; then
     %if 0%{?fedora} <= 23 || 0%{?rhel} == 7
     /usr/bin/update-mime-database %{_datadir}/mime &> /dev/null || :
@@ -214,6 +222,7 @@ fi
 %doc README.md changelog.txt
 %license LICENSE
 %{_bindir}/%{name}
+%{_libdir}/libtgvoip.so
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/kde4/services/tg.protocol
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
