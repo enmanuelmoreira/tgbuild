@@ -27,6 +27,7 @@ Release: 1%{?dist}
 # * S1 (GYP) - BSD -- build-time dependency;
 # * S2 (GSL) - MIT -- build-time dependency;
 # * S3 (Variant) - BSD -- build-time dependency;
+# * S4 (libtgvoip) - Public Domain -- shared library;
 # * P0 (qt_functions.cpp) - LGPLv3 -- build-time dependency.
 License: GPLv3+ and LGPLv3 and BSD and MIT
 Group: Applications/Internet
@@ -220,7 +221,7 @@ fi
 
 %files
 %doc README.md changelog.txt
-%license LICENSE
+%license LICENSE Telegram/ThirdParty/libtgvoip/UNLICENSE
 %{_bindir}/%{name}
 %{_libdir}/libtgvoip.so
 %{_datadir}/applications/%{name}.desktop
