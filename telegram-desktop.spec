@@ -96,6 +96,9 @@ BuildRequires: compat-openssl10-devel
 BuildRequires: openssl-devel
 %endif
 
+%package -n libtgvoip
+Summary: VoIP library for Telegram clients
+
 %description
 Telegram is a messaging app with a focus on speed and security, it’s super
 fast, simple and free. You can use Telegram on all your devices at the same
@@ -107,6 +110,9 @@ With Telegram, you can send messages, photos, videos and files of any type
 write to your phone contacts and find people by their usernames. As a result,
 Telegram is like SMS and email combined — and can take care of all your
 personal or business messaging needs.
+
+%description -n libtgvoip
+Adds support of VoIP to Telegram Desktop official client.
 
 %prep
 # Unpacking Telegram Desktop source archive...
@@ -191,7 +197,6 @@ install -m 644 -p lib/xdg/telegramdesktop.appdata.xml "%{buildroot}%{_datadir}/a
 appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
 
 %post
-/sbin/ldconfig
 %if 0%{?fedora} <= 23 || 0%{?rhel} == 7
 /bin/touch --no-create %{_datadir}/mime/packages &>/dev/null || :
 %endif
@@ -200,8 +205,10 @@ appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/appdata/%{name}.a
 /usr/bin/update-desktop-database &> /dev/null || :
 %endif
 
-%postun
+%post -n libtgvoip
 /sbin/ldconfig
+
+%postun
 if [ $1 -eq 0 ] ; then
     %if 0%{?fedora} <= 23 || 0%{?rhel} == 7
     /usr/bin/update-mime-database %{_datadir}/mime &> /dev/null || :
@@ -213,6 +220,9 @@ fi
 /usr/bin/update-desktop-database &> /dev/null || :
 %endif
 
+%postun -n libtgvoip
+/sbin/ldconfig
+
 %posttrans
 %if 0%{?fedora} <= 23 || 0%{?rhel} == 7
 /usr/bin/update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
@@ -221,17 +231,20 @@ fi
 
 %files
 %doc README.md changelog.txt
-%license LICENSE Telegram/ThirdParty/libtgvoip/UNLICENSE
+%license LICENSE
 %{_bindir}/%{name}
-%{_libdir}/libtgvoip.so
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/kde4/services/tg.protocol
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/appdata/%{name}.appdata.xml
 
+%files -n libtgvoip
+%license Telegram/ThirdParty/libtgvoip/UNLICENSE
+%{_libdir}/libtgvoip.so
+
 %changelog
 * Wed May 10 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.36-1
-- Updated to 1.0.36 (alpha).
+- Updated to 1.0.36 (alpha). Added subpackage for libtgvoip.
 
 * Sun Apr 30 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.35-1
 - Updated to 1.0.35 (alpha).
