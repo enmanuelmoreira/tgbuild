@@ -227,7 +227,7 @@ fi
 %doc README.md changelog.txt
 %license LICENSE Telegram/ThirdParty/libtgvoip/UNLICENSE
 %{_bindir}/%{name}
-%{_libdir}/libtgvoip*
+%{_libdir}/libtgvoip.*
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/kde4/services/tg.protocol
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
