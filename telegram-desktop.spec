@@ -170,7 +170,7 @@ install -m 755 out/Release/Telegram "%{buildroot}%{_bindir}/%{name}"
 # Installing shared libraries...
 mkdir -p "%{buildroot}%{_libdir}"
 install -m 755 out/Release/lib.target/libtgvoip.so "%{buildroot}%{_libdir}/libtgvoip.so.%{voipver}"
-ln -s libtgvoip.so.%{voipver} %{buildroot}%{_libdir}/libtgvoip.so
+ln -s libtgvoip.so.%{voipver} "%{buildroot}%{_libdir}/libtgvoip.so"
 
 # Installing desktop shortcut...
 mv lib/xdg/telegramdesktop.desktop lib/xdg/%{name}.desktop
