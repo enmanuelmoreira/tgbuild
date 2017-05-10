@@ -1,5 +1,6 @@
 # Telegram Desktop's constants...
 %global appname tdesktop
+%global voipver 0.4.1
 
 # Git revision of GYP...
 %global commit1 a478c1ab51ea3e04e79791ac3d1dad01b3f57434
@@ -163,10 +164,13 @@ popd
 %install
 # Installing executables...
 mkdir -p "%{buildroot}%{_bindir}"
-mkdir -p "%{buildroot}%{_libdir}"
 chrpath -d out/Release/Telegram
 install -m 755 out/Release/Telegram "%{buildroot}%{_bindir}/%{name}"
-install -m 755 out/Release/lib.target/libtgvoip.so "%{buildroot}%{_libdir}/libtgvoip.so"
+
+# Installing shared libraries...
+mkdir -p "%{buildroot}%{_libdir}"
+install -m 755 out/Release/lib.target/libtgvoip.so "%{buildroot}%{_libdir}/libtgvoip.so.%{voipver}"
+ln -s libtgvoip.so.%{voipver} %{buildroot}%{_libdir}/libtgvoip.so
 
 # Installing desktop shortcut...
 mv lib/xdg/telegramdesktop.desktop lib/xdg/%{name}.desktop
@@ -223,7 +227,7 @@ fi
 %doc README.md changelog.txt
 %license LICENSE Telegram/ThirdParty/libtgvoip/UNLICENSE
 %{_bindir}/%{name}
-%{_libdir}/libtgvoip.so
+%{_libdir}/libtgvoip*
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/kde4/services/tg.protocol
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
