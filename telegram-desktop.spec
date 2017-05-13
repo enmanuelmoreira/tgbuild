@@ -113,6 +113,7 @@ personal or business messaging needs.
 %prep
 # Unpacking Telegram Desktop source archive...
 %setup -qn %{appname}-%{version}
+%patch0 -p1
 
 # Unpacking GYP...
 mkdir -p Telegram/ThirdParty/gyp
@@ -142,9 +143,10 @@ pushd Telegram/ThirdParty
     mv libtgvoip-%{commit4} libtgvoip
 popd
 
-# Applying patches with different fixes...
-%patch0 -p1
+# Patching libtgvoip...
+pushd Telegram/ThirdParty/libtgvoip
 %patch1 -p1
+popd
 
 %build
 # Exporting correct build flags...
