@@ -91,6 +91,7 @@ BuildRequires: libxkbcommon-devel
 BuildRequires: libxkbcommon-x11-devel
 BuildRequires: harfbuzz-devel
 BuildRequires: gtk3-devel
+BuildRequires: pulseaudio-libs-devel
 %if 0%{?fedora} >= 26
 BuildRequires: compat-openssl10-devel
 %else
