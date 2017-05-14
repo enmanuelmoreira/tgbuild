@@ -44,7 +44,7 @@ Source4: https://github.com/telegramdesktop/libtgvoip/archive/%{commit4}.tar.gz#
 Patch0: fix_build_under_fedora.patch
 Patch1: fix_libtgvoip.patch
 
-Provides: libtgvoip
+Provides: libtgvoip = %{voipver}
 Requires: hicolor-icon-theme
 Requires: qt5-qtimageformats%{?_isa}
 %if 0%{?fedora} >= 24
