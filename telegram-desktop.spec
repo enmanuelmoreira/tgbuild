@@ -154,6 +154,9 @@ export CFLAGS="%{optflags}"
 export CXXFLAGS="%{optflags}"
 export LDFLAGS="%{__global_ldflags}"
 
+# Exporting some additional constants...
+export VOIPVER="%{voipver}"
+
 # Generating cmake script using GYP...
 pushd Telegram
     gyp/refresh.sh
@@ -172,7 +175,8 @@ install -m 755 out/Release/Telegram "%{buildroot}%{_bindir}/%{name}"
 
 # Installing shared libraries...
 mkdir -p "%{buildroot}%{_libdir}"
-install -m 755 out/Release/lib.target/libtgvoip.so "%{buildroot}%{_libdir}/libtgvoip.so.%{voipver}"
+install -m 755 out/Release/lib.target/libtgvoip.so.%{voipver} "%{buildroot}%{_libdir}/libtgvoip.so.%{voipver}"
+ln -s libtgvoip.so.%{voipver} "%{buildroot}%{_libdir}/libtgvoip.so.0"
 ln -s libtgvoip.so.%{voipver} "%{buildroot}%{_libdir}/libtgvoip.so"
 
 # Installing desktop shortcut...
