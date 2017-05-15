@@ -29,8 +29,9 @@ Release: 1%{?dist}
 # * S2 (GSL) - MIT -- build-time dependency;
 # * S3 (Variant) - BSD -- build-time dependency;
 # * S4 (libtgvoip) - Public Domain -- shared library;
+# * S5 (Russian language pack) - GPLv3 -- bundled into executable.
 # * P0 (qt_functions.cpp) - LGPLv3 -- build-time dependency.
-License: GPLv3+ and LGPLv3 and BSD and MIT
+License: GPLv3+ and GPLv3 and LGPLv3 and BSD and MIT
 Group: Applications/Internet
 URL: https://github.com/telegramdesktop/%{appname}
 ExclusiveArch: i686 x86_64
@@ -40,11 +41,13 @@ Source1: https://chromium.googlesource.com/external/gyp/+archive/%{commit1}.tar.
 Source2: https://github.com/Microsoft/GSL/archive/%{commit2}.tar.gz#/GSL-%{shortcommit2}.tar.gz
 Source3: https://github.com/mapbox/variant/archive/%{commit3}.tar.gz#/variant-%{shortcommit3}.tar.gz
 Source4: https://github.com/telegramdesktop/libtgvoip/archive/%{commit4}.tar.gz#/libtgvoip-%{shortcommit4}.tar.gz
+Source5: https://tlgrm.ru/files/locales/tdesktop/Russian.strings#/%{appname}-%{version}-russian.strings
 
 Patch0: fix_build_under_fedora.patch
 Patch1: fix_libtgvoip.patch
+Patch2: add_russian_locale.patch
 # https://github.com/telegramdesktop/tdesktop/pull/3400
-Patch2: 0001-localstorage-qFlags-is-working-only-on-enumeration-t.patch
+Patch3: 0001-localstorage-qFlags-is-working-only-on-enumeration-t.patch
 
 Provides: libtgvoip = %{voipver}
 Requires: hicolor-icon-theme
@@ -118,6 +121,7 @@ personal or business messaging needs.
 %setup -qn %{appname}-%{version}
 %patch0 -p1
 %patch2 -p1
+%patch3 -p1
 
 # Unpacking GYP...
 mkdir -p Telegram/ThirdParty/gyp
@@ -151,6 +155,9 @@ popd
 pushd Telegram/ThirdParty/libtgvoip
 %patch1 -p1
 popd
+
+# Unpacking additional locales from sources...
+iconv -f "UTF-16" -t "UTF-8" "%{SOURCE5}" > Telegram/Resources/langs/lang_ru.strings
 
 %build
 # Exporting correct build flags...
@@ -245,6 +252,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Mon May 15 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.1.0-2
+- Restored russian locale.
+
 * Sun May 14 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.1.0-1
 - Updated to 1.1.0.
 
