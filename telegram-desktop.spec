@@ -29,9 +29,9 @@ Release: 1%{?dist}
 # * S2 (GSL) - MIT -- build-time dependency;
 # * S3 (Variant) - BSD -- build-time dependency;
 # * S4 (libtgvoip) - Public Domain -- shared library;
-# * S5 (Russian language pack) - GPLv3 -- bundled into executable.
+# * S5 (Russian language pack) - GPLv3+ -- bundled into executable.
 # * P0 (qt_functions.cpp) - LGPLv3 -- build-time dependency.
-License: GPLv3+ and GPLv3 and LGPLv3 and BSD and MIT
+License: GPLv3+ and LGPLv3 and BSD and MIT
 Group: Applications/Internet
 URL: https://github.com/telegramdesktop/%{appname}
 ExclusiveArch: i686 x86_64
