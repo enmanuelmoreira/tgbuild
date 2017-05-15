@@ -42,7 +42,7 @@ spectool -g -R telegram-desktop.spec
 Copy other files to sources directory:
 ```bash
 cd tgbuild
-cp -f {*.patch,telegram*,tg.protocol} $(rpm --eval %{_sourcedir})
+cp -f *.patch $(rpm --eval %{_sourcedir})
 ```
 
 ## Step 6
