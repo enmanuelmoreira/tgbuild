@@ -46,8 +46,11 @@ Source5: https://tlgrm.ru/files/locales/tdesktop/Russian.strings#/%{appname}-%{v
 Patch0: fix_build_under_fedora.patch
 Patch1: fix_libtgvoip.patch
 Patch2: add_russian_locale.patch
+
 # https://github.com/telegramdesktop/tdesktop/pull/3400
-Patch3: 0001-localstorage-qFlags-is-working-only-on-enumeration-t.patch
+Patch101: 0001-localstorage-qFlags-is-working-only-on-enumeration-t.patch
+# https://github.com/telegramdesktop/tdesktop/commit/8a60658af7a077bf6ab705c0877abff2092036a6
+Patch102: 0002-fix_crash_in_calls_panel_closing.patch
 
 Provides: libtgvoip = %{voipver}
 Requires: hicolor-icon-theme
@@ -121,7 +124,8 @@ personal or business messaging needs.
 %setup -qn %{appname}-%{version}
 %patch0 -p1
 %patch2 -p1
-%patch3 -p1
+%patch101 -p1
+%patch102 -p1
 
 # Unpacking GYP...
 mkdir -p Telegram/ThirdParty/gyp
