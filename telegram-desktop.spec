@@ -20,8 +20,8 @@
 
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
-Version: 1.1.0
-Release: 3%{?dist}
+Version: 1.1.1
+Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
 # * S0 (Telegram Desktop) - GPLv3+ with OpenSSL exception -- main source;
@@ -249,6 +249,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Wed May 17 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.1.1-1
+- Updated to 1.1.1 (alpha).
+
 * Tue May 16 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.1.0-3
 - Backported patch with crash fixes.
 
