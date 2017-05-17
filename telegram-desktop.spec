@@ -11,7 +11,7 @@
 %global shortcommit2 %(c=%{commit2}; echo ${c:0:7})
 
 # Git revision of Variant...
-%global commit3 916139a2e51e125816efce6e19d428385601273f
+%global commit3 550ac2f159ca883d360c196149b466955c77a573
 %global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
 
 # Git revision of libtgvoip...
