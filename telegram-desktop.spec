@@ -7,7 +7,7 @@
 %global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
 
 # Git revision of GSL...
-%global commit2 3819df6e378ffccf0e29465afe99c3b324c2aa70
+%global commit2 c5851a8161938798c5594a66420cb814fea92711
 %global shortcommit2 %(c=%{commit2}; echo ${c:0:7})
 
 # Git revision of Variant...
