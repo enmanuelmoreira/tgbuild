@@ -167,7 +167,7 @@ popd
 
 # Building Telegram Desktop using cmake...
 pushd out/Release
-    %cmake . -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+    %cmake .
     %make_build
 popd
 
