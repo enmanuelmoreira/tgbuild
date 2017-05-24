@@ -157,21 +157,17 @@ popd
 iconv -f "UTF-16" -t "UTF-8" "%{SOURCE5}" > Telegram/Resources/langs/lang_ru.strings
 
 %build
-# Exporting correct build flags...
-export CFLAGS="%{optflags}"
-export CXXFLAGS="%{optflags}"
-export LDFLAGS="%{__global_ldflags}"
-
 # Exporting some additional constants...
 export VOIPVER="%{voipver}"
 
 # Generating cmake script using GYP...
-pushd Telegram
-    gyp/refresh.sh
+pushd Telegram/gyp
+    ../ThirdParty/gyp/gyp --depth=. --generator-output=../.. -Goutput_dir=out Telegram.gyp --format=cmake
 popd
 
-# Building Telegram Desktop...
+# Building Telegram Desktop using cmake...
 pushd out/Release
+    %cmake . -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
     %make_build
 popd
 
