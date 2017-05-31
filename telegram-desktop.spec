@@ -20,7 +20,7 @@
 
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
-Version: 1.1.6
+Version: 1.1.7
 Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
@@ -46,6 +46,8 @@ Source5: https://tlgrm.ru/files/locales/tdesktop/Russian.strings#/%{appname}-%{v
 Patch0: fix_build_under_fedora.patch
 Patch1: fix_libtgvoip.patch
 Patch2: add_russian_locale.patch
+
+Patch101: 0001-Fix-crash-in-video-player-seeking.patch
 
 Provides: libtgvoip = %{voipver}
 Requires: hicolor-icon-theme
@@ -119,6 +121,7 @@ personal or business messaging needs.
 %setup -qn %{appname}-%{version}
 %patch0 -p1
 %patch2 -p1
+%patch101 -p1
 
 # Unpacking GYP...
 mkdir -p Telegram/ThirdParty/gyp
@@ -245,6 +248,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Wed May 31 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.1.7-1
+- Updated to 1.1.7.
+
 * Sat May 27 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.1.6-1
 - Updated to 1.1.6 (alpha).
 
