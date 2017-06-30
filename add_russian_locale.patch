@@ -1,4 +1,4 @@
-From b4b20b7da307eaad1602b5a1345d9143d668a73f Mon Sep 17 00:00:00 2001
+From 5ea591e817db3eb314d4239704e96f97fa952349 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Mon, 15 May 2017 16:40:56 +0200
 Subject: [PATCH] Added russian localization from Transifex.
@@ -53,14 +53,14 @@ index e9ae810..aca6b0c 100644
    </qresource>
  </RCC>
 diff --git a/Telegram/SourceFiles/lang/lang_instance.h b/Telegram/SourceFiles/lang/lang_instance.h
-index 2bd5a00..fd14123 100644
+index 2bd5a00..e07edb1 100644
 --- a/Telegram/SourceFiles/lang/lang_instance.h
 +++ b/Telegram/SourceFiles/lang/lang_instance.h
 @@ -37,6 +37,7 @@ constexpr str_const kLegacyLanguages[] = {
  	"nl",
  	"pt_BR",
  	"ko",
-+    "ru",
++	"ru",
  };
  
  inline QString ConvertLegacyLanguageId(const QString &languageId) {
