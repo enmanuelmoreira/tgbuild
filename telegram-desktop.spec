@@ -24,7 +24,6 @@ Release: 1%{?dist}
 # * S1 (GYP) - BSD -- build-time dependency;
 # * S2 (GSL) - MIT -- build-time dependency;
 # * S3 (libtgvoip) - Public Domain -- shared library;
-# * S4 (Russian language pack) - GPLv3+ -- bundled into executable.
 # * P0 (qt_functions.cpp) - LGPLv3 -- build-time dependency.
 License: GPLv3+ and LGPLv3 and BSD and MIT
 Group: Applications/Internet
@@ -35,11 +34,9 @@ Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
 Source1: https://chromium.googlesource.com/external/gyp/+archive/%{commit1}.tar.gz#/gyp-%{shortcommit1}.tar.gz
 Source2: https://github.com/Microsoft/GSL/archive/%{commit2}.tar.gz#/GSL-%{shortcommit2}.tar.gz
 Source3: https://github.com/telegramdesktop/libtgvoip/archive/%{commit3}.tar.gz#/libtgvoip-%{shortcommit3}.tar.gz
-Source4: https://tlgrm.ru/files/locales/tdesktop/Russian.strings#/%{appname}-%{version}-russian.strings
 
 Patch0: fix_build_under_fedora.patch
 Patch1: fix_libtgvoip.patch
-Patch2: add_russian_locale.patch
 
 Provides: libtgvoip = %{voipver}
 Requires: hicolor-icon-theme
@@ -113,7 +110,6 @@ personal or business messaging needs.
 # Unpacking Telegram Desktop source archive...
 %setup -qn %{appname}-%{version}
 %patch0 -p1
-%patch2 -p1
 
 # Unpacking GYP...
 mkdir -p Telegram/ThirdParty/gyp
@@ -140,9 +136,6 @@ popd
 pushd Telegram/ThirdParty/libtgvoip
 %patch1 -p1
 popd
-
-# Unpacking additional locales from sources...
-iconv -f "UTF-16" -t "UTF-8" "%{SOURCE4}" > Telegram/Resources/langs/lang_ru.strings
 
 %build
 # Exporting some additional constants...
