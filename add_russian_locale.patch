@@ -1,4 +1,4 @@
-From 4611de6c9a44add439f8537be671bc919fcd2383 Mon Sep 17 00:00:00 2001
+From b4b20b7da307eaad1602b5a1345d9143d668a73f Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Mon, 15 May 2017 16:40:56 +0200
 Subject: [PATCH] Added russian localization from Transifex.
