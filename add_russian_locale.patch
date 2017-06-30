@@ -1,4 +1,4 @@
-From d071b9d4677ca3dc806f8384386eb429e56af7c7 Mon Sep 17 00:00:00 2001
+From 4611de6c9a44add439f8537be671bc919fcd2383 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Mon, 15 May 2017 16:40:56 +0200
 Subject: [PATCH] Added russian localization from Transifex.
@@ -7,7 +7,7 @@ Subject: [PATCH] Added russian localization from Transifex.
  Telegram/Resources/langs/list                         |  2 +-
  Telegram/Resources/langs/ru.lproj/Localizable.strings | 17 +++++++++++++++++
  Telegram/Resources/qrc/telegram.qrc                   |  1 +
- Telegram/SourceFiles/lang.h                           |  1 +
+ Telegram/SourceFiles/lang/lang_instance.h             |  1 +
  4 files changed, 20 insertions(+), 1 deletion(-)
  create mode 100644 Telegram/Resources/langs/ru.lproj/Localizable.strings
 
@@ -42,28 +42,28 @@ index 0000000..affee91
 +Copyright (c) 2014 John Preston, https://desktop.telegram.org
 +*/
 diff --git a/Telegram/Resources/qrc/telegram.qrc b/Telegram/Resources/qrc/telegram.qrc
-index 111f5c7..f2cb3d1 100644
+index e9ae810..aca6b0c 100644
 --- a/Telegram/Resources/qrc/telegram.qrc
 +++ b/Telegram/Resources/qrc/telegram.qrc
-@@ -27,5 +27,6 @@
+@@ -28,5 +28,6 @@
      <file alias="lang_nl.strings">../langs/lang_nl.strings</file>
      <file alias="lang_pt_BR.strings">../langs/lang_pt_BR.strings</file>
      <file alias="lang_ko.strings">../langs/lang_ko.strings</file>
 +    <file alias="lang_ru.strings">../langs/lang_ru.strings</file>
    </qresource>
  </RCC>
-diff --git a/Telegram/SourceFiles/lang.h b/Telegram/SourceFiles/lang.h
-index f935b93..93621e7 100644
---- a/Telegram/SourceFiles/lang.h
-+++ b/Telegram/SourceFiles/lang.h
-@@ -30,6 +30,7 @@ constexpr const str_const LanguageCodes[] = {
+diff --git a/Telegram/SourceFiles/lang/lang_instance.h b/Telegram/SourceFiles/lang/lang_instance.h
+index 2bd5a00..fd14123 100644
+--- a/Telegram/SourceFiles/lang/lang_instance.h
++++ b/Telegram/SourceFiles/lang/lang_instance.h
+@@ -37,6 +37,7 @@ constexpr str_const kLegacyLanguages[] = {
  	"nl",
  	"pt_BR",
  	"ko",
-+	"ru",
++    "ru",
  };
- constexpr const int languageTest = -1, languageDefault = 0, languageCount = base::array_size(LanguageCodes);
  
+ inline QString ConvertLegacyLanguageId(const QString &languageId) {
 -- 
-2.9.3
+2.9.4
 
