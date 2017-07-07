@@ -1,4 +1,4 @@
-From 337972b43b01c29248229015d86c672dac0c4f5d Mon Sep 17 00:00:00 2001
+From 3a76e8c83b872530480329a9fe69ab0593c18fc6 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -168,10 +168,10 @@ index b975c7a..f2f876b 100644
 -Q_IMPORT_PLUGIN(QHimePlatformInputContextPlugin)
  #endif // Q_OS_WIN | Q_OS_MAC | Q_OS_LINUX
 diff --git a/Telegram/SourceFiles/ui/text/text.cpp b/Telegram/SourceFiles/ui/text/text.cpp
-index 044f871..0865a5b 100644
+index 9ab1394..cec6589 100644
 --- a/Telegram/SourceFiles/ui/text/text.cpp
 +++ b/Telegram/SourceFiles/ui/text/text.cpp
-@@ -1692,11 +1692,11 @@ private:
+@@ -1688,11 +1688,11 @@ private:
  		if (item == -1)
  			return;
  
@@ -184,8 +184,8 @@ index 044f871..0865a5b 100644
 -#endif // OS_MAC_OLD
 +#endif
  
- 		int blockIndex = _lineStartBlock;
- 		ITextBlock *currentBlock = _t->_blocks[blockIndex];
+ 		auto blockIndex = _lineStartBlock;
+ 		auto currentBlock = _t->_blocks[blockIndex].get();
 diff --git a/Telegram/SourceFiles/ui/text/text_block.cpp b/Telegram/SourceFiles/ui/text/text_block.cpp
 index f89644e..35230cf 100644
 --- a/Telegram/SourceFiles/ui/text/text_block.cpp
@@ -577,10 +577,10 @@ index 2c46492..1b14723 100644
        },
      },
 diff --git a/Telegram/gyp/telegram_sources.txt b/Telegram/gyp/telegram_sources.txt
-index bfc18fd..4a1c525 100644
+index fbe63ec..d7da420 100644
 --- a/Telegram/gyp/telegram_sources.txt
 +++ b/Telegram/gyp/telegram_sources.txt
-@@ -579,13 +579,7 @@
+@@ -581,13 +581,7 @@
  <(src_loc)/structs.h
  
  platforms: !win
