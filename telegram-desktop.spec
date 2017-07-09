@@ -41,7 +41,6 @@ Patch1: fix_libtgvoip.patch
 Provides: libtgvoip = %{voipver}
 Requires: hicolor-icon-theme
 Requires: qt5-qtimageformats%{?_isa}
-Requires: libnotify%{?_isa}
 Requires: gtk3%{?_isa}
 %if 0%{?fedora} >= 24
 Recommends: libappindicator-gtk3%{?_isa}
