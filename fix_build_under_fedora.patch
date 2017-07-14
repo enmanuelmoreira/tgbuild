@@ -1,4 +1,4 @@
-From f68b0a79d4ca21b9e147bbcfc745cff6f33123de Mon Sep 17 00:00:00 2001
+From 969ddbc6cff0decc00d189ee2ec257e4c3f2c0b5 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -587,10 +587,10 @@ index 2c46492..1b14723 100644
        },
      },
 diff --git a/Telegram/gyp/telegram_sources.txt b/Telegram/gyp/telegram_sources.txt
-index fbe63ec..d7da420 100644
+index 8363ab4..b5f631c 100644
 --- a/Telegram/gyp/telegram_sources.txt
 +++ b/Telegram/gyp/telegram_sources.txt
-@@ -581,13 +581,7 @@
+@@ -579,13 +579,7 @@
  <(src_loc)/structs.h
  
  platforms: !win
