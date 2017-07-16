@@ -42,7 +42,7 @@ Provides: libtgvoip = %{voipver}
 Requires: hicolor-icon-theme
 Requires: qt5-qtimageformats%{?_isa}
 Requires: gtk3%{?_isa}
-%if 0%{?fedora} >= 24
+%if 0%{?fedora} && 0%{?fedora} >= 24
 Recommends: libappindicator-gtk3%{?_isa}
 %endif
 
@@ -89,7 +89,7 @@ BuildRequires: harfbuzz-devel
 BuildRequires: gtk3-devel
 BuildRequires: pulseaudio-libs-devel
 BuildRequires: mapbox-variant-devel
-%if 0%{?fedora} >= 26
+%if 0%{?fedora} && 0%{?fedora} >= 26
 BuildRequires: compat-openssl10-devel
 %else
 BuildRequires: openssl-devel
