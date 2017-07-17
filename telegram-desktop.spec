@@ -55,27 +55,21 @@ BuildRequires: cmake
 BuildRequires: gcc
 
 # Development packages for Telegram Desktop...
-BuildRequires: libxkbcommon-x11-devel
 BuildRequires: libappindicator-devel
 BuildRequires: mapbox-variant-devel
 BuildRequires: ffmpeg-devel >= 3.1
-BuildRequires: libxkbcommon-devel
 BuildRequires: openal-soft-devel
 BuildRequires: qt5-qtbase-devel
 BuildRequires: libstdc++-devel
-BuildRequires: libunity-devel
-BuildRequires: libproxy-devel
-BuildRequires: libvdpau-devel
 BuildRequires: minizip-devel
-BuildRequires: libxcb-devel
-BuildRequires: libva-devel
-BuildRequires: opus-devel
 BuildRequires: gtk3-devel
+BuildRequires: dee-devel
 BuildRequires: xz-devel
 
 # Development packages for libtgvoip...
 BuildRequires: pulseaudio-libs-devel
 BuildRequires: alsa-lib-devel
+BuildRequires: opus-devel
 
 # Additional development packages...
 %if 0%{?fedora} && 0%{?fedora} >= 26
