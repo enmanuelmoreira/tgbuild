@@ -46,54 +46,41 @@ Requires: gtk3%{?_isa}
 Recommends: libappindicator-gtk3%{?_isa}
 %endif
 
+# Compilers and tools...
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
-BuildRequires: ffmpeg-devel >= 3.1
-BuildRequires: gcc
 BuildRequires: gcc-c++
-BuildRequires: qt5-qtbase-devel
-BuildRequires: qt5-qtimageformats
 BuildRequires: chrpath
 BuildRequires: cmake
+BuildRequires: gcc
+
+# Development packages for Telegram Desktop...
+BuildRequires: ffmpeg-devel >= 3.1
+BuildRequires: qt5-qtbase-devel
 BuildRequires: libproxy-devel
 BuildRequires: libxcb-devel
-BuildRequires: libogg-devel
 BuildRequires: xz-devel
 BuildRequires: minizip-devel
 BuildRequires: libappindicator-devel
 BuildRequires: libunity-devel
 BuildRequires: libstdc++-devel
-BuildRequires: libwebp-devel
-BuildRequires: libpng-devel
-BuildRequires: xorg-x11-util-macros
-BuildRequires: gettext-devel
-BuildRequires: libICE-devel
-BuildRequires: libSM-devel
-BuildRequires: libXi-devel
-BuildRequires: zlib-devel
 BuildRequires: opus-devel
-BuildRequires: portaudio-devel
 BuildRequires: openal-soft-devel
-BuildRequires: xcb-util-devel
-BuildRequires: xcb-util-wm-devel
-BuildRequires: xcb-util-xrm-devel
-BuildRequires: xcb-util-image-devel
-BuildRequires: xcb-util-cursor-devel
-BuildRequires: xcb-util-keysyms-devel
-BuildRequires: xcb-util-renderutil-devel
 BuildRequires: libva-devel
 BuildRequires: libvdpau-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libxkbcommon-x11-devel
-BuildRequires: harfbuzz-devel
 BuildRequires: gtk3-devel
-BuildRequires: pulseaudio-libs-devel
 BuildRequires: mapbox-variant-devel
 %if 0%{?fedora} && 0%{?fedora} >= 26
 BuildRequires: compat-openssl10-devel
 %else
 BuildRequires: openssl-devel
 %endif
+
+# Development packages for libtgvoip...
+BuildRequires: pulseaudio-libs-devel
+BuildRequires: alsa-lib-devel
 
 %description
 Telegram is a messaging app with a focus on speed and security, it’s super
