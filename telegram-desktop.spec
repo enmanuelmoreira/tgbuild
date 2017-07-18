@@ -140,11 +140,11 @@ popd
 # Installing executables...
 mkdir -p "%{buildroot}%{_bindir}"
 chrpath -d out/Release/Telegram
-install -m 755 out/Release/Telegram "%{buildroot}%{_bindir}/%{name}"
+install -m 0755 out/Release/Telegram "%{buildroot}%{_bindir}/%{name}"
 
 # Installing shared libraries...
 mkdir -p "%{buildroot}%{_libdir}"
-install -m 755 out/Release/lib.target/libtgvoip.so.%{voipver} "%{buildroot}%{_libdir}/libtgvoip.so.%{voipver}"
+install -m 0755 out/Release/lib.target/libtgvoip.so.%{voipver} "%{buildroot}%{_libdir}/libtgvoip.so.%{voipver}"
 ln -s libtgvoip.so.%{voipver} "%{buildroot}%{_libdir}/libtgvoip.so.0"
 ln -s libtgvoip.so.%{voipver} "%{buildroot}%{_libdir}/libtgvoip.so"
 
@@ -156,16 +156,16 @@ desktop-file-install --dir="%{buildroot}%{_datadir}/applications" lib/xdg/%{name
 for size in 16 32 48 64 128 256 512; do
     dir="%{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps"
     install -d "$dir"
-    install -m 644 -p Telegram/Resources/art/icon${size}.png "$dir/%{name}.png"
+    install -m 0644 -p Telegram/Resources/art/icon${size}.png "$dir/%{name}.png"
 done
 
 # Installing tg protocol handler...
 install -d "%{buildroot}%{_datadir}/kde4/services"
-install -m 644 -p lib/xdg/tg.protocol "%{buildroot}%{_datadir}/kde4/services/tg.protocol"
+install -m 0644 -p lib/xdg/tg.protocol "%{buildroot}%{_datadir}/kde4/services/tg.protocol"
 
 # Installing appdata for Gnome Software...
 install -d "%{buildroot}%{_datadir}/appdata"
-install -m 644 -p lib/xdg/telegramdesktop.appdata.xml "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
+install -m 0644 -p lib/xdg/telegramdesktop.appdata.xml "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
 
 %check
 appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
