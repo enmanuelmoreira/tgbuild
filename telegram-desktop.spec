@@ -140,11 +140,11 @@ popd
 # Installing executables...
 mkdir -p "%{buildroot}%{_bindir}"
 chrpath -d out/Release/Telegram
-install -m 0755 out/Release/Telegram "%{buildroot}%{_bindir}/%{name}"
+install -m 0755 -p out/Release/Telegram "%{buildroot}%{_bindir}/%{name}"
 
 # Installing shared libraries...
 mkdir -p "%{buildroot}%{_libdir}"
-install -m 0755 out/Release/lib.target/libtgvoip.so.%{voipver} "%{buildroot}%{_libdir}/libtgvoip.so.%{voipver}"
+install -m 0755 -p out/Release/lib.target/libtgvoip.so.%{voipver} "%{buildroot}%{_libdir}/libtgvoip.so.%{voipver}"
 ln -s libtgvoip.so.%{voipver} "%{buildroot}%{_libdir}/libtgvoip.so.0"
 ln -s libtgvoip.so.%{voipver} "%{buildroot}%{_libdir}/libtgvoip.so"
 
