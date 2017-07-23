@@ -1,6 +1,6 @@
 # Telegram Desktop's constants...
 %global appname tdesktop
-%global voipver 0.4.1
+%global voipver 1.0.0
 
 # Git revision of GYP...
 %global commit1 a478c1ab51ea3e04e79791ac3d1dad01b3f57434
