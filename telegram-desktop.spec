@@ -11,7 +11,7 @@
 %global shortcommit2 %(c=%{commit2}; echo ${c:0:7})
 
 # Git revision of libtgvoip...
-%global commit3 de33700312e3676a520b5a79d51e953fcf23cf51
+%global commit3 e42287b6f4a520b7ddabc6cdcff205f4e7e216ec
 %global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
 
 Summary: Telegram is a new era of messaging
