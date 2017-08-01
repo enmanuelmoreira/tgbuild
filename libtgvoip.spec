@@ -22,6 +22,12 @@ BuildRequires: pulseaudio-libs-devel
 BuildRequires: alsa-lib-devel
 BuildRequires: opus-devel
 
+%if 0%{?fedora} && 0%{?fedora} >= 26
+BuildRequires: compat-openssl10-devel
+%else
+BuildRequires: openssl-devel
+%endif
+
 %description
 Provides VoIP library for Telegram clients.
 
@@ -39,9 +45,9 @@ popd
 
 %install
 mkdir -p "%{buildroot}%{_libdir}"
-install -m 0755 -p out/Release/lib.target/libtgvoip.so.%{voipver} "%{buildroot}%{_libdir}/libtgvoip.so.%{voipver}"
-ln -s libtgvoip.so.%{voipver} "%{buildroot}%{_libdir}/libtgvoip.so.1"
-#ln -s libtgvoip.so.%{voipver} "%{buildroot}%{_libdir}/libtgvoip.so"
+install -m 0755 -p out/Release/lib.target/libtgvoip.so.%{version} "%{buildroot}%{_libdir}/libtgvoip.so.%{version}"
+ln -s libtgvoip.so.%{version} "%{buildroot}%{_libdir}/libtgvoip.so.1"
+#ln -s libtgvoip.so.%{version} "%{buildroot}%{_libdir}/libtgvoip.so"
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
