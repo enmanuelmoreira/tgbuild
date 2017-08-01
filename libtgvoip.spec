@@ -31,12 +31,20 @@ BuildRequires: openssl-devel
 %description
 Provides VoIP library for Telegram clients.
 
+%package devel
+Summary: Development files for %{name}
+Group: Development/Libraries
+Requires: %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+
+%description devel
+%{summary}.
+
 %prep
 %autosetup -n %{name}-%{commit0}
 
 %build
 export VOIPVER="%{version}"
-gyp --format=cmake --depth=. --generator-output=. -Goutput_dir=out -Gconfig=Release libtgvoip.gyp
+gyp --format=cmake --depth=. --generator-output=. -Goutput_dir=out -Gconfig=Release %{name}.gyp
 
 pushd out/Release
     %cmake .
@@ -44,17 +52,27 @@ pushd out/Release
 popd
 
 %install
+# Installing shared library...
 mkdir -p "%{buildroot}%{_libdir}"
-install -m 0755 -p out/Release/lib.target/libtgvoip.so.%{version} "%{buildroot}%{_libdir}/libtgvoip.so.%{version}"
-ln -s libtgvoip.so.%{version} "%{buildroot}%{_libdir}/libtgvoip.so.1"
-#ln -s libtgvoip.so.%{version} "%{buildroot}%{_libdir}/libtgvoip.so"
+install -m 0755 -p out/Release/lib.target/%{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so.%{version}"
+ln -s %{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so.1"
+ln -s %{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so"
+
+# Installing additional development files...
+mkdir -p "%{buildroot}%{_includedir}/%{name}/audio"
+find . -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{buildroot}%{_includedir}/%{name} \;
+find audio -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{buildroot}%{_includedir}/%{name}/audio \;
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
 %license UNLICENSE
-%{_libdir}/libtgvoip.so.*
+%{_libdir}/%{name}.so.*
+
+%files devel
+%{_includedir}/%{name}
+%{_libdir}/%{name}.so
 
 %changelog
 * Tue Aug 01 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0-1
