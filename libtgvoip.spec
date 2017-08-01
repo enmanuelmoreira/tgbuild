@@ -8,7 +8,6 @@ Version: 1.0
 Release: 1.%{date}git%{shortcommit0}%{?dist}
 
 License: Public Domain
-Group: Applications/Internet
 URL: https://github.com/grishka/%{name}
 
 Source0: %{url}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
@@ -33,7 +32,6 @@ Provides VoIP library for Telegram clients.
 
 %package devel
 Summary: Development files for %{name}
-Group: Development/Libraries
 Requires: %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description devel
@@ -75,5 +73,5 @@ find audio -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{build
 %{_libdir}/%{name}.so
 
 %changelog
-* Tue Aug 01 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0-1
+* Tue Aug 01 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0-1.20170727git01f2701
 - Initial release.
