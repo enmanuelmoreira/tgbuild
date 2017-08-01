@@ -7,7 +7,7 @@ Name: libtgvoip
 Version: 1.0
 Release: 1.%{date}git%{shortcommit0}%{?dist}
 
-License: Public Domain
+License: Public Domain and BSD
 URL: https://github.com/grishka/%{name}
 
 Source0: %{url}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
