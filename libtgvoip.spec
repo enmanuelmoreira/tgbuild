@@ -13,13 +13,13 @@ URL: https://github.com/grishka/%{name}
 Source0: %{url}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 Patch0: fix_libtgvoip.patch
 
+BuildRequires: pulseaudio-libs-devel
+BuildRequires: alsa-lib-devel
+BuildRequires: opus-devel
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: gcc
 BuildRequires: gyp
-BuildRequires: pulseaudio-libs-devel
-BuildRequires: alsa-lib-devel
-BuildRequires: opus-devel
 
 %if 0%{?fedora} && 0%{?fedora} >= 26
 BuildRequires: compat-openssl10-devel
