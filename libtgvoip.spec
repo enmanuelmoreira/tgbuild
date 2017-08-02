@@ -77,7 +77,7 @@ find audio -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{build
 
 %changelog
 * Wed Aug 02 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0-2.20170801gitbfd5cfe
-- Updated to latest snapshot. Small SPEC fixes.
+- Updated to latest snapshot. Small SPEC fixes. Added virtual provides.
 
 * Tue Aug 01 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0-1.20170727git01f2701
 - Initial release.
