@@ -15,6 +15,7 @@ URL: https://github.com/grishka/%{name}
 Source0: %{url}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 Patch0: %{name}-1.0-build-fixes.patch
 
+Provides: bundled(webrtc-audio-processing) = 0.3
 BuildRequires: pulseaudio-libs-devel
 BuildRequires: alsa-lib-devel
 BuildRequires: opus-devel
