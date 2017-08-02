@@ -35,8 +35,8 @@ Source1: https://chromium.googlesource.com/external/gyp/+archive/%{commit1}.tar.
 Source2: https://github.com/Microsoft/GSL/archive/%{commit2}.tar.gz#/GSL-%{shortcommit2}.tar.gz
 Source3: https://github.com/grishka/libtgvoip/archive/%{commit3}.tar.gz#/libtgvoip-%{shortcommit3}.tar.gz
 
-Patch0: fix_build_under_fedora.patch
-Patch1: fix_libtgvoip.patch
+Patch0: %{name}-build-fixes.patch
+Patch1: libtgvoip-build-fixes.patch
 
 Provides: libtgvoip = %{voipver}
 Requires: hicolor-icon-theme
