@@ -1,11 +1,11 @@
-%global commit0 01f27014b268b280c40cdbaf57c18bfa0d596770
+%global commit0 bfd5cfecb3970de2d077ec25e6fbb01797e5afe1
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global date 20170727
+%global date 20170801
 
 Summary: VoIP library for Telegram clients
 Name: libtgvoip
 Version: 1.0
-Release: 1.%{date}git%{shortcommit0}%{?dist}
+Release: 2.%{date}git%{shortcommit0}%{?dist}
 
 License: Public Domain and BSD
 URL: https://github.com/grishka/%{name}
@@ -73,5 +73,8 @@ find audio -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{build
 %{_libdir}/%{name}.so
 
 %changelog
+* Wed Aug 02 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0-2.20170801gitbfd5cfe
+- Updated to latest snapshot. Small SPEC fixes.
+
 * Tue Aug 01 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0-1.20170727git01f2701
 - Initial release.
