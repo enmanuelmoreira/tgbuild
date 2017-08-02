@@ -11,7 +11,7 @@ License: Public Domain and BSD
 URL: https://github.com/grishka/%{name}
 
 Source0: %{url}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
-Patch0: fix_libtgvoip.patch
+Patch0: libtgvoip-1.0-build-fixes.patch
 
 BuildRequires: pulseaudio-libs-devel
 BuildRequires: alsa-lib-devel
