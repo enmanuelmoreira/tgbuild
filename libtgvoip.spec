@@ -24,7 +24,7 @@ BuildRequires: cmake
 BuildRequires: gcc
 BuildRequires: gyp
 
-%if 0%{?fedora} && 0%{?fedora} >= 26
+%if 0%{?fedora} >= 26
 BuildRequires: compat-openssl10-devel
 %else
 BuildRequires: openssl-devel
