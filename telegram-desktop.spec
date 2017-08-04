@@ -22,7 +22,6 @@ Release: 1%{?dist}
 # * S0 (Telegram Desktop) - GPLv3+ with OpenSSL exception -- main source;
 # * S1 (GYP) - BSD -- build-time dependency;
 # * S2 (GSL) - MIT -- build-time dependency;
-# * S3 (libtgvoip) - Public Domain -- shared library;
 # * P0 (qt_functions.cpp) - LGPLv3 -- build-time dependency.
 License: GPLv3+ and LGPLv3 and BSD and MIT
 Group: Applications/Internet
@@ -32,12 +31,11 @@ ExclusiveArch: i686 x86_64
 Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
 Source1: https://chromium.googlesource.com/external/gyp/+archive/%{commit1}.tar.gz#/gyp-%{shortcommit1}.tar.gz
 Source2: https://github.com/Microsoft/GSL/archive/%{commit2}.tar.gz#/GSL-%{shortcommit2}.tar.gz
-Source3: https://github.com/grishka/libtgvoip/archive/%{commit3}.tar.gz#/libtgvoip-%{shortcommit3}.tar.gz
 
 Patch0: %{name}-build-fixes.patch
 
-Requires: hicolor-icon-theme
 Requires: qt5-qtimageformats%{?_isa}
+Requires: hicolor-icon-theme
 Requires: gtk3%{?_isa}
 %if 0%{?fedora} && 0%{?fedora} >= 24
 Recommends: libappindicator-gtk3%{?_isa}
