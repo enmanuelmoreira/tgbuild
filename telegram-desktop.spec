@@ -1,6 +1,5 @@
 # Telegram Desktop's constants...
 %global appname tdesktop
-%global voipver 1.0
 
 # Git revision of GYP...
 %global commit1 a478c1ab51ea3e04e79791ac3d1dad01b3f57434
@@ -36,9 +35,7 @@ Source2: https://github.com/Microsoft/GSL/archive/%{commit2}.tar.gz#/GSL-%{short
 Source3: https://github.com/grishka/libtgvoip/archive/%{commit3}.tar.gz#/libtgvoip-%{shortcommit3}.tar.gz
 
 Patch0: %{name}-build-fixes.patch
-Patch1: libtgvoip-build-fixes.patch
 
-Provides: libtgvoip = %{voipver}
 Requires: hicolor-icon-theme
 Requires: qt5-qtimageformats%{?_isa}
 Requires: gtk3%{?_isa}
@@ -60,16 +57,12 @@ BuildRequires: mapbox-variant-devel
 BuildRequires: ffmpeg-devel >= 3.1
 BuildRequires: openal-soft-devel
 BuildRequires: qt5-qtbase-devel
+BuildRequires: libtgvoip-devel
 BuildRequires: libstdc++-devel
 BuildRequires: minizip-devel
 BuildRequires: gtk3-devel
 BuildRequires: dee-devel
 BuildRequires: xz-devel
-
-# Development packages for libtgvoip...
-BuildRequires: pulseaudio-libs-devel
-BuildRequires: alsa-lib-devel
-BuildRequires: opus-devel
 
 # Additional development packages...
 %if 0%{?fedora} && 0%{?fedora} >= 26
@@ -92,8 +85,7 @@ personal or business messaging needs.
 
 %prep
 # Unpacking Telegram Desktop source archive...
-%setup -qn %{appname}-%{version}
-%patch0 -p1
+%autosetup -n %{appname}-%{version} -p1
 
 # Unpacking GYP...
 mkdir -p Telegram/ThirdParty/gyp
@@ -109,22 +101,7 @@ pushd Telegram/ThirdParty
     mv GSL-%{commit2} GSL
 popd
 
-# Unpacking libtgvoip...
-pushd Telegram/ThirdParty
-    rm -rf libtgvoip
-    tar -xf %{SOURCE3}
-    mv libtgvoip-%{commit3} libtgvoip
-popd
-
-# Patching libtgvoip...
-pushd Telegram/ThirdParty/libtgvoip
-%patch1 -p1
-popd
-
 %build
-# Exporting some additional constants...
-export VOIPVER="%{voipver}"
-
 # Generating cmake script using GYP...
 pushd Telegram/gyp
     ../ThirdParty/gyp/gyp --depth=. --generator-output=../.. -Goutput_dir=out Telegram.gyp --format=cmake
@@ -141,12 +118,6 @@ popd
 mkdir -p "%{buildroot}%{_bindir}"
 chrpath -d out/Release/Telegram
 install -m 0755 -p out/Release/Telegram "%{buildroot}%{_bindir}/%{name}"
-
-# Installing shared libraries...
-mkdir -p "%{buildroot}%{_libdir}"
-install -m 0755 -p out/Release/lib.target/libtgvoip.so.%{voipver} "%{buildroot}%{_libdir}/libtgvoip.so.%{voipver}"
-ln -s libtgvoip.so.%{voipver} "%{buildroot}%{_libdir}/libtgvoip.so.1"
-ln -s libtgvoip.so.%{voipver} "%{buildroot}%{_libdir}/libtgvoip.so"
 
 # Installing desktop shortcut...
 mv lib/xdg/telegramdesktop.desktop lib/xdg/%{name}.desktop
@@ -171,7 +142,6 @@ install -m 0644 -p lib/xdg/telegramdesktop.appdata.xml "%{buildroot}%{_datadir}/
 appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
 
 %post
-/sbin/ldconfig
 %if (0%{?fedora} && 0%{?fedora} <= 23) || (0%{?rhel} && 0%{?rhel} <= 7)
 /bin/touch --no-create %{_datadir}/mime/packages &>/dev/null || :
 %endif
@@ -181,7 +151,6 @@ appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/appdata/%{name}.a
 %endif
 
 %postun
-/sbin/ldconfig
 if [ $1 -eq 0 ] ; then
     %if (0%{?fedora} && 0%{?fedora} <= 23) || (0%{?rhel} && 0%{?rhel} <= 7)
     /usr/bin/update-mime-database %{_datadir}/mime &> /dev/null || :
@@ -203,7 +172,6 @@ fi
 %doc README.md changelog.txt
 %license LICENSE Telegram/ThirdParty/libtgvoip/UNLICENSE
 %{_bindir}/%{name}
-%{_libdir}/libtgvoip.*
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/kde4/services/tg.protocol
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
