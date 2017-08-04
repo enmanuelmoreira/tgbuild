@@ -18,17 +18,12 @@ Patch0: %{name}-build-fixes.patch
 Provides: bundled(webrtc-audio-processing) = 0.3
 BuildRequires: pulseaudio-libs-devel
 BuildRequires: alsa-lib-devel
+BuildRequires: openssl-devel
 BuildRequires: opus-devel
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: gcc
 BuildRequires: gyp
-
-%if 0%{?fedora} >= 26
-BuildRequires: compat-openssl10-devel
-%else
-BuildRequires: openssl-devel
-%endif
 
 %description
 Provides VoIP library for Telegram clients.
@@ -41,7 +36,7 @@ Requires: %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 %{summary}.
 
 %prep
-%autosetup -n %{name}-%{commit0}
+%autosetup -n %{name}-%{commit0} -p1
 
 %build
 export VOIPVER="%{version}"
@@ -77,7 +72,7 @@ find audio -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{build
 
 %changelog
 * Fri Aug 04 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0-3.20170801gitbfd5cfe
-- Fixed build other another architectures.
+- Fixed build on other architectures. Build against regular OpenSSL.
 
 * Wed Aug 02 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0-2.20170801gitbfd5cfe
 - Updated to latest snapshot. Small SPEC fixes. Added virtual provides.

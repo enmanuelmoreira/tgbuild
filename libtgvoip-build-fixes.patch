@@ -1,15 +1,37 @@
-From a396724480f232267f2b100d35193204e0df3953 Mon Sep 17 00:00:00 2001
+From f1fac71ee8917307efb1a50d89b4a880da146e46 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Thu, 6 Jul 2017 17:27:01 +0200
 Subject: [PATCH] Fixed build of libtgvoip under Fedora as shared library.
 
 ---
+ VoIPController.cpp                           |  3 ++-
  libtgvoip.gyp                                | 17 +++++++++-----
  webrtc_dsp/webrtc/common_audio/wav_file.cc   | 20 ++++++++++++----
  webrtc_dsp/webrtc/common_audio/wav_header.cc | 34 +++++++++++++++++++++++++++-
  webrtc_dsp/webrtc/typedefs.h                 | 12 +++++++++-
- 4 files changed, 70 insertions(+), 13 deletions(-)
+ 5 files changed, 72 insertions(+), 14 deletions(-)
 
+diff --git a/VoIPController.cpp b/VoIPController.cpp
+index 78e9e4b..fb256e3 100644
+--- a/VoIPController.cpp
++++ b/VoIPController.cpp
+@@ -102,6 +102,7 @@ bool VoIPController::didInitWin32TimeScale = false;
+ #ifndef TGVOIP_USE_CUSTOM_CRYPTO
+ #include <openssl/sha.h>
+ #include <openssl/aes.h>
++#include <openssl/modes.h>
+ #include <openssl/rand.h>
+ 
+ void tgvoip_openssl_aes_ige_encrypt(uint8_t* in, uint8_t* out, size_t length, uint8_t* key, uint8_t* iv){
+@@ -131,7 +132,7 @@ void tgvoip_openssl_sha256(uint8_t* msg, size_t len, uint8_t* output){
+ void tgvoip_openssl_aes_ctr_encrypt(uint8_t* inout, size_t length, uint8_t* key, uint8_t* iv, uint8_t* ecount, uint32_t* num){
+ 	AES_KEY akey;
+ 	AES_set_encrypt_key(key, 32*8, &akey);
+-	AES_ctr128_encrypt(inout, inout, length, &akey, iv, ecount, num);
++	CRYPTO_ctr128_encrypt(inout, inout, length, &akey, iv, ecount, num, (block128_f) AES_encrypt);
+ }
+ 
+ voip_crypto_functions_t VoIPController::crypto={
 diff --git a/libtgvoip.gyp b/libtgvoip.gyp
 index 527708d..f5db56a 100644
 --- a/libtgvoip.gyp
