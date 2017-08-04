@@ -9,10 +9,6 @@
 %global commit2 c5851a8161938798c5594a66420cb814fea92711
 %global shortcommit2 %(c=%{commit2}; echo ${c:0:7})
 
-# Git revision of libtgvoip...
-%global commit3 bfd5cfecb3970de2d077ec25e6fbb01797e5afe1
-%global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
-
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 1.1.19
@@ -58,6 +54,7 @@ BuildRequires: qt5-qtbase-devel
 BuildRequires: libtgvoip-devel
 BuildRequires: libstdc++-devel
 BuildRequires: minizip-devel
+BuildRequires: opus-devel
 BuildRequires: gtk3-devel
 BuildRequires: dee-devel
 BuildRequires: xz-devel
@@ -168,7 +165,7 @@ fi
 
 %files
 %doc README.md changelog.txt
-%license LICENSE Telegram/ThirdParty/libtgvoip/UNLICENSE
+%license LICENSE
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/kde4/services/tg.protocol
