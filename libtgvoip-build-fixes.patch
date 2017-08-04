@@ -1,4 +1,4 @@
-From f1fac71ee8917307efb1a50d89b4a880da146e46 Mon Sep 17 00:00:00 2001
+From f6e77fb45052100ae7eeaca658630e0a57d4b34b Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Thu, 6 Jul 2017 17:27:01 +0200
 Subject: [PATCH] Fixed build of libtgvoip under Fedora as shared library.
@@ -8,8 +8,8 @@ Subject: [PATCH] Fixed build of libtgvoip under Fedora as shared library.
  libtgvoip.gyp                                | 17 +++++++++-----
  webrtc_dsp/webrtc/common_audio/wav_file.cc   | 20 ++++++++++++----
  webrtc_dsp/webrtc/common_audio/wav_header.cc | 34 +++++++++++++++++++++++++++-
- webrtc_dsp/webrtc/typedefs.h                 | 12 +++++++++-
- 5 files changed, 72 insertions(+), 14 deletions(-)
+ webrtc_dsp/webrtc/typedefs.h                 | 14 +++++++++++-
+ 5 files changed, 74 insertions(+), 14 deletions(-)
 
 diff --git a/VoIPController.cpp b/VoIPController.cpp
 index 78e9e4b..fb256e3 100644
@@ -177,14 +177,16 @@ index 402ea17..b11ee58 100644
  
  static inline uint32_t RiffChunkSize(size_t bytes_in_payload) {
 diff --git a/webrtc_dsp/webrtc/typedefs.h b/webrtc_dsp/webrtc/typedefs.h
-index c960d95..69740b0 100644
+index c960d95..2252855 100644
 --- a/webrtc_dsp/webrtc/typedefs.h
 +++ b/webrtc_dsp/webrtc/typedefs.h
-@@ -48,7 +48,17 @@
+@@ -48,7 +48,19 @@
  #define WEBRTC_ARCH_32_BITS
  #define WEBRTC_ARCH_LITTLE_ENDIAN
  #else
 -#error Please add support for your architecture in typedefs.h
++/* instead of failing, use typical unix defines... */
++#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
 +#define WEBRTC_ARCH_LITTLE_ENDIAN
 +#elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 +#define WEBRTC_ARCH_BIG_ENDIAN
