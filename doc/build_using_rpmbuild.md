@@ -1,4 +1,5 @@
 # Build using rpmbuild
+## Prepare build environment
 ## Step 1
 
 Clone this repository with SPECs and patches to any directory:
@@ -20,7 +21,47 @@ Create RPM build base directories:
 rpmdev-setuptree
 ```
 
-## Step 4
+## Building required VoIP library
+### Step 1
+
+Download sources:
+```bash
+cd tgbuild
+spectool -g -R libtgvoip.spec
+```
+
+### Step 2
+
+Copy patches to sources directory:
+```bash
+cd tgbuild
+cp -f *.patch $(rpm --eval %{_sourcedir})
+```
+
+### Step 3
+
+Install build-requirements:
+```bash
+cd tgbuild
+sudo dnf builddep libtgvoip.spec
+```
+
+### Step 4
+
+Build RPM package:
+```bash
+rpmbuild -ba libtgvoip.spec
+```
+
+### Step 5
+
+Wait for a while and then install result without debug subpackages:
+```bash
+sudo dnf install ~/rpmbuild/RPMS/$(uname -m)/libtgvoip*.rpm --exclude="*debug*"
+```
+
+## Building Telegram Desktop package
+### Step 1
 
 Download sources:
 ```bash
@@ -28,15 +69,15 @@ cd tgbuild
 spectool -g -R telegram-desktop.spec
 ```
 
-## Step 5
+### Step 2
 
-Copy other files to sources directory:
+Copy patches and other files to sources directory:
 ```bash
 cd tgbuild
 cp -f *.patch $(rpm --eval %{_sourcedir})
 ```
 
-## Step 6
+### Step 3
 
 Install build-requirements:
 ```bash
@@ -44,20 +85,20 @@ cd tgbuild
 sudo dnf builddep telegram-desktop.spec
 ```
 
-## Step 7
+### Step 4
 
 Build RPM package:
 ```bash
 rpmbuild -ba telegram-desktop.spec
 ```
 
-## Step 8
+### Step 5
 
-Wait for a while and then install result:
+Wait for a while and then install result without debug subpackages:
 ```bash
-sudo dnf install ~/rpmbuild/RPMS/$(uname -m)/telegram-desktop*.rpm
+sudo dnf install ~/rpmbuild/RPMS/$(uname -m)/telegram-desktop*.rpm  --exclude="*debug*"
 ```
 
-## Step 9
+### Step 6
 
 Now you can remove all files from `~/rpmbuild` directory.
