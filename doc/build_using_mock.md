@@ -31,7 +31,7 @@ rpmdev-setuptree
 ```
 
 ## Building required VoIP library
-### Step 1
+### Step 4
 
 Download libtgvoip sources:
 ```bash
@@ -39,7 +39,7 @@ cd tgbuild
 spectool -g -R libtgvoip.spec
 ```
 
-### Step 2
+### Step 5
 
 Copy patches to sources directory:
 ```bash
@@ -47,29 +47,29 @@ cd tgbuild
 cp -f *.patch $(rpm --eval %{_sourcedir})
 ```
 
-### Step 3
+### Step 6
 
 Generate SRPM package for mock:
 ```bash
 rpmbuild -bs libtgvoip.spec
 ```
 
-### Step 4
+### Step 7
 
 Start mock build sequence:
 ```bash
 mock -r fedora-$(rpm -E %fedora)-$(uname -m)-rpmfusion_free --rebuild ~/rpmbuild/SRPMS/libtgvoip*.src.rpm
 ```
 
-### Step 5
+### Step 8
 
-Wait for a while and then install result into mock chroot:
+Wait for a while and then install result into chroot:
 ```bash
 mock -r fedora-$(rpm -E %fedora)-$(uname -m)-rpmfusion_free --install /var/lib/mock/*/result/libtgvoip*.$(uname -m).rpm
 ```
 
 ## Building Telegram Desktop package
-### Step 1
+### Step 9
 
 Download Telegram Desktop sources:
 ```bash
@@ -77,7 +77,7 @@ cd tgbuild
 spectool -g -R telegram-desktop.spec
 ```
 
-### Step 2
+### Step 10
 
 Copy patches and other files to sources directory:
 ```bash
@@ -85,27 +85,27 @@ cd tgbuild
 cp -f *.patch $(rpm --eval %{_sourcedir})
 ```
 
-### Step 3
+### Step 11
 
 Generate SRPM package for mock:
 ```bash
 rpmbuild -bs telegram-desktop.spec
 ```
 
-### Step 4
+### Step 12
 
 Start mock build sequence without chroot cleanup:
 ```bash
 mock -r fedora-$(rpm -E %fedora)-$(uname -m)-rpmfusion_free --rebuild --no-clean ~/rpmbuild/SRPMS/telegram-desktop*.src.rpm
 ```
 
-### Step 5
+### Step 13
 
 Wait for a while and then install result without debug subpackages:
 ```bash
 sudo dnf install /var/lib/mock/*/result/*.$(uname -m).rpm --exclude="*debug*"
 ```
 
-### Step 6
+### Step 14
 
 Remove temporary files from `~/rpmbuild`, `/var/cache/mock`, `/var/lib/mock` directories.
