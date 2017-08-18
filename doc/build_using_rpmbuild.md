@@ -27,7 +27,8 @@ rpmdev-setuptree
 Download sources:
 ```bash
 cd tgbuild
-spectool -g -R *.spec
+spectool -g -R libtgvoip.spec
+spectool -g -R telegram-desktop.spec
 ```
 
 ### Step 2
