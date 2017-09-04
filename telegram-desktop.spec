@@ -11,8 +11,8 @@
 
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
-Version: 1.1.19
-Release: 2%{?dist}
+Version: 1.1.21
+Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
 # * S0 (Telegram Desktop) - GPLv3+ with OpenSSL exception -- main source;
@@ -44,6 +44,7 @@ BuildRequires: gcc-c++
 BuildRequires: chrpath
 BuildRequires: cmake
 BuildRequires: gcc
+BuildRequires: gyp
 
 # Development packages for Telegram Desktop...
 BuildRequires: libappindicator-devel
@@ -82,13 +83,6 @@ personal or business messaging needs.
 # Unpacking Telegram Desktop source archive...
 %autosetup -n %{appname}-%{version} -p1
 
-# Unpacking GYP...
-mkdir -p Telegram/ThirdParty/gyp
-pushd Telegram/ThirdParty/gyp
-    tar -xf %{SOURCE1}
-    patch -p1 -i ../../../Telegram/Patches/gyp.diff
-popd
-
 # Unpacking GSL...
 pushd Telegram/ThirdParty
     rm -rf GSL
@@ -99,7 +93,7 @@ popd
 %build
 # Generating cmake script using GYP...
 pushd Telegram/gyp
-    ../ThirdParty/gyp/gyp --depth=. --generator-output=../.. -Goutput_dir=out Telegram.gyp --format=cmake
+    gyp --depth=. --generator-output=../.. -Goutput_dir=out Telegram.gyp --format=cmake
 popd
 
 # Building Telegram Desktop using cmake...
@@ -173,6 +167,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Mon Sep 04 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.1.21-1
+- Updated to 1.1.21.
+
 * Fri Aug 04 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.1.19-2
 - Moved VoIP library into a separate package.
 
