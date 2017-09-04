@@ -1,13 +1,9 @@
 # Telegram Desktop's constants...
 %global appname tdesktop
 
-# Git revision of GYP...
-%global commit1 a478c1ab51ea3e04e79791ac3d1dad01b3f57434
-%global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
-
 # Git revision of GSL...
-%global commit2 c5851a8161938798c5594a66420cb814fea92711
-%global shortcommit2 %(c=%{commit2}; echo ${c:0:7})
+%global commit1 c5851a8161938798c5594a66420cb814fea92711
+%global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
 
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
@@ -16,17 +12,15 @@ Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
 # * S0 (Telegram Desktop) - GPLv3+ with OpenSSL exception -- main source;
-# * S1 (GYP) - BSD -- build-time dependency;
-# * S2 (GSL) - MIT -- build-time dependency;
+# * S1 (GSL) - MIT -- build-time dependency;
 # * P0 (qt_functions.cpp) - LGPLv3 -- build-time dependency.
-License: GPLv3+ and LGPLv3 and BSD and MIT
+License: GPLv3+ and LGPLv3 and MIT
 Group: Applications/Internet
 URL: https://github.com/telegramdesktop/%{appname}
 ExclusiveArch: i686 x86_64
 
 Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
-Source1: https://chromium.googlesource.com/external/gyp/+archive/%{commit1}.tar.gz#/gyp-%{shortcommit1}.tar.gz
-Source2: https://github.com/Microsoft/GSL/archive/%{commit2}.tar.gz#/GSL-%{shortcommit2}.tar.gz
+Source1: https://github.com/Microsoft/GSL/archive/%{commit1}.tar.gz#/GSL-%{shortcommit1}.tar.gz
 
 Patch0: %{name}-build-fixes.patch
 
@@ -86,8 +80,8 @@ personal or business messaging needs.
 # Unpacking GSL...
 pushd Telegram/ThirdParty
     rm -rf GSL
-    tar -xf %{SOURCE2}
-    mv GSL-%{commit2} GSL
+    tar -xf %{SOURCE1}
+    mv GSL-%{commit1} GSL
 popd
 
 %build
