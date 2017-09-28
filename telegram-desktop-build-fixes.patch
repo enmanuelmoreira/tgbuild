@@ -1,4 +1,4 @@
-From dba8b962c805af477ceee699aa1c05143aa19d43 Mon Sep 17 00:00:00 2001
+From b1b09336040c88dd8ed1cd3cd99092d2968d4d91 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -12,7 +12,8 @@ Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
  Telegram/SourceFiles/ui/twidget.cpp         |  4 +-
  Telegram/gyp/PrecompiledHeader.cmake        |  4 +-
  Telegram/gyp/Telegram.gyp                   | 22 ++-----
- Telegram/gyp/qt.gypi                        | 80 +++++++-----------------
+ Telegram/gyp/qt.gypi                        | 79 +++++++-----------------
+ Telegram/gyp/qt_moc.gypi                    |  2 +-
  Telegram/gyp/qt_rcc.gypi                    |  2 +-
  Telegram/gyp/settings_linux.gypi            |  8 +--
  Telegram/gyp/telegram_linux.gypi            | 60 +++++-------------
@@ -20,7 +21,7 @@ Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
  Telegram/gyp/utils.gyp                      |  4 +-
  lib/xdg/telegramdesktop.appdata.xml         |  2 +-
  lib/xdg/telegramdesktop.desktop             |  6 +-
- 16 files changed, 166 insertions(+), 157 deletions(-)
+ 17 files changed, 167 insertions(+), 157 deletions(-)
  create mode 100644 Telegram/SourceFiles/qt_functions.cpp
 
 diff --git a/Telegram/SourceFiles/main.cpp b/Telegram/SourceFiles/main.cpp
@@ -173,7 +174,7 @@ index b975c7a8..f2f876b3 100644
 -Q_IMPORT_PLUGIN(QHimePlatformInputContextPlugin)
  #endif // Q_OS_WIN | Q_OS_MAC | Q_OS_LINUX
 diff --git a/Telegram/SourceFiles/ui/text/text.cpp b/Telegram/SourceFiles/ui/text/text.cpp
-index d18a8ea5..2c58287e 100644
+index 9c9378c8..18a3b7b3 100644
 --- a/Telegram/SourceFiles/ui/text/text.cpp
 +++ b/Telegram/SourceFiles/ui/text/text.cpp
 @@ -1689,11 +1689,11 @@ private:
@@ -243,7 +244,7 @@ index 5d6830e9..c3f08d3f 100644
          IMPLICIT_DEPENDS CXX "${_pch_header}"
          COMMENT "Precompiling ${_name} for ${_target} (C++)")
 diff --git a/Telegram/gyp/Telegram.gyp b/Telegram/gyp/Telegram.gyp
-index 0d1f38aa..f275c105 100644
+index 6fa545e5..a8cf988b 100644
 --- a/Telegram/gyp/Telegram.gyp
 +++ b/Telegram/gyp/Telegram.gyp
 @@ -31,7 +31,6 @@
@@ -254,7 +255,7 @@ index 0d1f38aa..f275c105 100644
        'sp_media_key_tap_loc': '<(submodules_loc)/SPMediaKeyTap',
        'emoji_suggestions_loc': '<(submodules_loc)/emoji_suggestions',
        'style_files': [
-@@ -79,33 +78,24 @@
+@@ -80,33 +79,24 @@
        'codegen.gyp:codegen_lang',
        'codegen.gyp:codegen_numbers',
        'codegen.gyp:codegen_style',
@@ -282,7 +283,7 @@ index 0d1f38aa..f275c105 100644
 -      '<(libs_loc)/breakpad/src',
 -      '<(libs_loc)/lzma/C',
 -      '<(libs_loc)/libexif-0.6.20',
--      '<(libs_loc)/zlib-1.2.8',
+-      '<(libs_loc)/zlib',
 -      '<(libs_loc)/ffmpeg',
 -      '<(libs_loc)/openal-soft/include',
 -      '<(libs_loc)/opus/include',
@@ -295,7 +296,7 @@ index 0d1f38aa..f275c105 100644
      'sources': [
        '<@(qrc_files)',
 diff --git a/Telegram/gyp/qt.gypi b/Telegram/gyp/qt.gypi
-index 6032d066..e98f0804 100644
+index 67f7976e..8a809d18 100644
 --- a/Telegram/gyp/qt.gypi
 +++ b/Telegram/gyp/qt.gypi
 @@ -27,25 +27,21 @@
@@ -326,7 +327,7 @@ index 6032d066..e98f0804 100644
              }]
            ]
          },
-@@ -85,32 +81,12 @@
+@@ -85,32 +81,13 @@
              ],
            }],
            [ 'build_linux', {
@@ -343,7 +344,7 @@ index 6032d066..e98f0804 100644
 -              'qgenericbearer',
 -              'qnmbearer',
                '<@(qt_libs)',
--              'Qt5DBus',
+               'Qt5DBus',
                'Qt5Core',
 -              'qtpcre',
 -              'Xi',
@@ -362,7 +363,7 @@ index 6032d066..e98f0804 100644
              ],
            }],
          ],
-@@ -135,16 +111,11 @@
+@@ -135,16 +112,11 @@
          'qt_loc': '<(qt_loc_unix)',
        }],
      ],
@@ -379,13 +380,14 @@ index 6032d066..e98f0804 100644
    },
  
    'configurations': {
-@@ -193,20 +164,20 @@
+@@ -193,21 +165,21 @@
    },
  
    'include_dirs': [
 -    '<(qt_loc)/include',
 -    '<(qt_loc)/include/QtCore',
 -    '<(qt_loc)/include/QtGui',
+-    '<(qt_loc)/include/QtDBus',
 -    '<(qt_loc)/include/QtCore/<(qt_version)',
 -    '<(qt_loc)/include/QtGui/<(qt_version)',
 -    '<(qt_loc)/include/QtCore/<(qt_version)/QtCore',
@@ -393,6 +395,7 @@ index 6032d066..e98f0804 100644
 +    '<!(rpm --eval "%{_includedir}")/qt5',
 +    '<!(rpm --eval "%{_includedir}")/qt5/QtCore',
 +    '<!(rpm --eval "%{_includedir}")/qt5/QtGui',
++    '<!(rpm --eval "%{_includedir}")/qt5/QtDBus',
 +    '<!(rpm --eval "%{_includedir}")/qt5/QtCore/<(qt_version)',
 +    '<!(rpm --eval "%{_includedir}")/qt5/QtGui/<(qt_version)',
 +    '<!(rpm --eval "%{_includedir}")/qt5/QtCore/<(qt_version)/QtCore',
@@ -412,7 +415,7 @@ index 6032d066..e98f0804 100644
    ],
    'defines': [
      'QT_WIDGETS_LIB',
-@@ -217,28 +188,19 @@
+@@ -218,28 +190,19 @@
    'conditions': [
      [ 'build_linux', {
        'library_dirs': [
@@ -444,7 +447,11 @@ index 6032d066..e98f0804 100644
          '-pthread',
          '-g',
          '-rdynamic',
-@@ -260,7 +222,7 @@
+diff --git a/Telegram/gyp/qt_moc.gypi b/Telegram/gyp/qt_moc.gypi
+index fae668dc..6d461d52 100644
+--- a/Telegram/gyp/qt_moc.gypi
++++ b/Telegram/gyp/qt_moc.gypi
+@@ -25,7 +25,7 @@
        '<(SHARED_INTERMEDIATE_DIR)/<(_target_name)/moc/moc_<(RULE_INPUT_ROOT).cpp',
      ],
      'action': [
@@ -500,10 +507,10 @@ index fde88dcd..7d603220 100644
          'Debug': {
          },
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index 2c464928..3566d002 100644
+index 721d4f6c..d56cfb55 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
-@@ -27,73 +27,45 @@
+@@ -28,75 +28,47 @@
  # QApplication() -> createPlatformIntegration -> QXcbIntegrationPlugin::create
          #'xkbcommon',
        ],
@@ -568,13 +575,15 @@ index 2c464928..3566d002 100644
 +      'tgvoip',
  #      '<!(pkg-config 2> /dev/null --libs <@(pkgconfig_libs))',
      ],
-     'cflags_cc': [
-       '<!(pkg-config 2> /dev/null --cflags appindicator-0.1)',
--      '<!(pkg-config 2> /dev/null --cflags gtk+-2.0)',
--      '<!(pkg-config 2> /dev/null --cflags glib-2.0)',
-+      '<!(pkg-config 2> /dev/null --cflags gtk+-3.0)',
-       '<!(pkg-config 2> /dev/null --cflags dee-1.0)',
-     ],
+     'conditions': [['not_need_gtk!="True"', {
+         'cflags_cc': [
+             '<!(pkg-config 2> /dev/null --cflags appindicator-0.1)',
+-            '<!(pkg-config 2> /dev/null --cflags gtk+-2.0)',
+-            '<!(pkg-config 2> /dev/null --cflags glib-2.0)',
++            '<!(pkg-config 2> /dev/null --cflags gtk+-3.0)',
+             '<!(pkg-config 2> /dev/null --cflags dee-1.0)',
+          ],
+     }]],
      'configurations': {
        'Release': {
          'cflags': [
@@ -594,10 +603,10 @@ index 2c464928..3566d002 100644
        },
      },
 diff --git a/Telegram/gyp/telegram_sources.txt b/Telegram/gyp/telegram_sources.txt
-index ef66965f..854e8706 100644
+index fd17f0ea..86d750bf 100644
 --- a/Telegram/gyp/telegram_sources.txt
 +++ b/Telegram/gyp/telegram_sources.txt
-@@ -599,13 +599,7 @@
+@@ -597,13 +597,7 @@
  <(emoji_suggestions_loc)/emoji_suggestions.h
  
  platforms: !win
@@ -613,7 +622,7 @@ index ef66965f..854e8706 100644
  platforms: mac
  <(sp_media_key_tap_loc)/SPMediaKeyTap.m
 diff --git a/Telegram/gyp/utils.gyp b/Telegram/gyp/utils.gyp
-index 209c7370..27ce77f5 100644
+index c7dcb696..8a163b59 100644
 --- a/Telegram/gyp/utils.gyp
 +++ b/Telegram/gyp/utils.gyp
 @@ -134,7 +134,7 @@
