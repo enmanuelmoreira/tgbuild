@@ -30,6 +30,8 @@ Source2: https://github.com/Microsoft/GSL/archive/%{commit2}.tar.gz#/GSL-%{short
 
 Patch0: %{name}-build-fixes.patch
 
+Patch101: %{name}-ffmpeg-build-fixes.patch
+
 Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
 Requires: gtk3%{?_isa}
