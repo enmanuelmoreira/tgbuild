@@ -32,6 +32,9 @@ Patch0: %{name}-build-fixes.patch
 
 Patch101: %{name}-ffmpeg-build-fixes.patch
 Patch102: %{name}-cve-2016-10351.patch
+Patch103: %{name}-openssl11-fix.patch
+Patch104: %{name}-ime-fix.patch
+Patch105: %{name}-gccw.patch
 
 Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
@@ -177,7 +180,7 @@ fi
 
 %changelog
 * Fri Nov 17 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.1.23-3
-- Rebuild for Qt 5.9 major update.
+- Rebuild for Qt 5.9 major update. Backported upstream patches.
 
 * Tue Oct 17 2017 Leigh Scott <leigh123linux@googlemail.com> - 1.1.23-2
 - Rebuild for ffmpeg update
