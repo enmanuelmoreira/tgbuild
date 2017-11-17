@@ -35,6 +35,7 @@ Patch102: %{name}-cve-2016-10351.patch
 Patch103: %{name}-openssl11-fix.patch
 Patch104: %{name}-ime-fix.patch
 Patch105: %{name}-gccw.patch
+Patch106: %{name}-gccw2.patch
 
 Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
