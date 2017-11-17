@@ -31,6 +31,7 @@ Source2: https://github.com/Microsoft/GSL/archive/%{commit2}.tar.gz#/GSL-%{short
 Patch0: %{name}-build-fixes.patch
 
 Patch101: %{name}-ffmpeg-build-fixes.patch
+Patch102: %{name}-cve-2016-10351.patch
 
 Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
