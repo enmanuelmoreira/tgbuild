@@ -5,7 +5,7 @@
 Summary: VoIP library for Telegram clients
 Name: libtgvoip
 Version: 1.0.1
-Release: 1.%{date}git%{shortcommit0}%{?dist}
+Release: 2.%{date}git%{shortcommit0}%{?dist}
 
 # Libtgvoip shared library - Public Domain.
 # Bundled webrtc library - BSD with patented echo cancellation algorithms.
@@ -51,6 +51,7 @@ popd
 # Installing shared library...
 mkdir -p "%{buildroot}%{_libdir}"
 install -m 0755 -p out/Release/lib.target/%{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so.%{version}"
+ln -s %{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so.1.0"
 ln -s %{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so.1"
 ln -s %{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so"
 
@@ -71,6 +72,9 @@ find audio -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{build
 %{_libdir}/%{name}.so
 
 %changelog
+* Sat Nov 18 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.1-2.20171111git6a0b3b2
+- Provide compactibility with 1.0.
+
 * Sat Nov 18 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.1-1.20171111git6a0b3b2
 - Updated to 1.0.1-git.
 
