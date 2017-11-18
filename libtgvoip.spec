@@ -1,6 +1,6 @@
-%global commit0 bfd5cfecb3970de2d077ec25e6fbb01797e5afe1
+%global commit0 6a0b3b23b79949828d36be2a45007602c6f493d4
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global date 20170801
+%global date 20171111
 
 Summary: VoIP library for Telegram clients
 Name: libtgvoip
