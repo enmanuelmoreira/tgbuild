@@ -29,13 +29,7 @@ Source1: https://chromium.googlesource.com/external/gyp/+archive/%{commit1}.tar.
 Source2: https://github.com/Microsoft/GSL/archive/%{commit2}.tar.gz#/GSL-%{shortcommit2}.tar.gz
 
 Patch0: %{name}-build-fixes.patch
-
-Patch101: %{name}-ffmpeg-build-fixes.patch
-Patch102: %{name}-cve-2016-10351.patch
-Patch103: %{name}-openssl11-fix.patch
-Patch104: %{name}-ime-fix.patch
-Patch105: %{name}-gccw.patch
-Patch106: %{name}-gccw2.patch
+Patch101: %{name}-openssl11-fix.patch
 
 Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
