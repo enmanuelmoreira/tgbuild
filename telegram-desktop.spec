@@ -9,6 +9,10 @@
 %global commit2 c5851a8161938798c5594a66420cb814fea92711
 %global shortcommit2 %(c=%{commit2}; echo ${c:0:7})
 
+# Git revision of range-v3...
+%global commit3 b74c8632a089c59238d30f86fc717413d6d46f9f
+%global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
+
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 1.1.23
@@ -89,6 +93,12 @@ pushd Telegram/ThirdParty
     rm -rf GSL
     tar -xf %{SOURCE2}
     mv GSL-%{commit2} GSL
+popd
+
+# Unpacking range-v3...
+pushd Telegram/ThirdParty
+    tar -xf %{SOURCE3}
+    mv range-v3-%{commit2} range-v3
 popd
 
 %build
