@@ -31,6 +31,7 @@ ExclusiveArch: i686 x86_64
 Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
 Source1: https://chromium.googlesource.com/external/gyp/+archive/%{commit1}.tar.gz#/gyp-%{shortcommit1}.tar.gz
 Source2: https://github.com/Microsoft/GSL/archive/%{commit2}.tar.gz#/GSL-%{shortcommit2}.tar.gz
+Source3: https://github.com/ericniebler/range-v3/archive/%{commit3}.tar.gz#/range-v3-%{shortcommit3}.tar.gz
 
 Patch0: %{name}-build-fixes.patch
 Patch101: %{name}-openssl11-fix.patch
