@@ -13,6 +13,11 @@
 %global commit3 b74c8632a089c59238d30f86fc717413d6d46f9f
 %global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
 
+# Decrease debuginfo verbosity to reduce memory consumption
+%ifarch s390 s390x %{arm} %{ix86} ppc %{power64} %{mips}
+%global optflags %(echo %{optflags} | sed 's/-g / /')
+%endif
+
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
 Version: 1.1.24
