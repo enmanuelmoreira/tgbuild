@@ -1,4 +1,4 @@
-From 194cbdf9a63462d11304a3ae3ce5c16900a027fa Mon Sep 17 00:00:00 2001
+From e956528db7944e68be24615a11111871eca1e576 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -16,11 +16,11 @@ Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
  Telegram/gyp/qt_moc.gypi                    |  3 +-
  Telegram/gyp/qt_rcc.gypi                    |  2 +-
  Telegram/gyp/settings_linux.gypi            |  5 --
- Telegram/gyp/telegram_linux.gypi            | 81 ++++++-------------------
+ Telegram/gyp/telegram_linux.gypi            | 83 ++++++-------------------
  Telegram/gyp/telegram_sources.txt           |  8 +--
  lib/xdg/telegramdesktop.appdata.xml         |  2 +-
  lib/xdg/telegramdesktop.desktop             |  6 +-
- 16 files changed, 167 insertions(+), 179 deletions(-)
+ 16 files changed, 167 insertions(+), 181 deletions(-)
  create mode 100644 Telegram/SourceFiles/qt_functions.cpp
 
 diff --git a/Telegram/SourceFiles/main.cpp b/Telegram/SourceFiles/main.cpp
@@ -523,10 +523,10 @@ index b93bace4..1a637e93 100644
        ],
        'cflags_c': [
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index a7f6c455..4950399a 100644
+index f6918c22..4950399a 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
-@@ -28,97 +28,52 @@
+@@ -28,99 +28,52 @@
  # QApplication() -> createPlatformIntegration -> QXcbIntegrationPlugin::create
          #'xkbcommon',
        ],
@@ -536,6 +536,7 @@ index a7f6c455..4950399a 100644
 -      'linux_path_vdpau%': '/usr/local',
 -      'linux_path_breakpad%': '/usr/local',
 -      'linux_path_opus_include%': '<(libs_loc)/opus/include',
+-      'linux_path_range%': '/usr/local',
      },
      'include_dirs': [
 -      '/usr/local/include',
@@ -543,6 +544,7 @@ index a7f6c455..4950399a 100644
 -      '<(linux_path_openal)/include',
 -      '<(linux_path_breakpad)/include/breakpad',
 -      '<(linux_path_opus_include)',
+-      '<(linux_path_range)/include',
 +      '<!(rpm --eval "%{_includedir}")',
 +      '<!(rpm --eval "%{_includedir}")/ffmpeg',
 +      '<!(rpm --eval "%{_includedir}")/minizip',
@@ -643,7 +645,7 @@ index a7f6c455..4950399a 100644
          ],
        }]
 diff --git a/Telegram/gyp/telegram_sources.txt b/Telegram/gyp/telegram_sources.txt
-index 6da517c2..9368878b 100644
+index b9ecb3df..cdd55924 100644
 --- a/Telegram/gyp/telegram_sources.txt
 +++ b/Telegram/gyp/telegram_sources.txt
 @@ -678,13 +678,7 @@
