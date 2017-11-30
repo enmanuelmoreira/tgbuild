@@ -99,7 +99,7 @@ popd
 # Unpacking range-v3...
 pushd Telegram/ThirdParty
     tar -xf %{SOURCE3}
-    mv range-v3-%{commit2} range-v3
+    mv range-v3-%{commit3} range-v3
 popd
 
 %build

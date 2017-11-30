@@ -1,4 +1,4 @@
-From a5868882092aaf2c6d254897b9ddf8132af98ff9 Mon Sep 17 00:00:00 2001
+From 2b6f88a8dfe54249a0369c24ca62fb8a8a44799d Mon Sep 17 00:00:00 2001
 From: Nicholas Guriev <guriev-ns@ya.ru>
 Date: Sat, 11 Nov 2017 22:22:23 +0300
 Subject: [PATCH] Fix build against OpenSSL 1.1
@@ -6,9 +6,9 @@ Subject: [PATCH] Fix build against OpenSSL 1.1
 Closes: #3196
 ---
  Telegram/SourceFiles/base/openssl_help.h        |  9 ++--
- Telegram/SourceFiles/mtproto/auth_key.cpp       |  3 +-
+ Telegram/SourceFiles/mtproto/auth_key.cpp       |  5 +-
  Telegram/SourceFiles/mtproto/rsa_public_key.cpp | 62 +++++++++++++++++++++----
- 3 files changed, 60 insertions(+), 14 deletions(-)
+ 3 files changed, 62 insertions(+), 14 deletions(-)
 
 diff --git a/Telegram/SourceFiles/base/openssl_help.h b/Telegram/SourceFiles/base/openssl_help.h
 index 357462b86..b5678d5c7 100644
@@ -47,18 +47,20 @@ index 357462b86..b5678d5c7 100644
  
  };
 diff --git a/Telegram/SourceFiles/mtproto/auth_key.cpp b/Telegram/SourceFiles/mtproto/auth_key.cpp
-index 24d7f13a2..f1b393f4c 100644
+index 24d7f13a2..dad09277c 100644
 --- a/Telegram/SourceFiles/mtproto/auth_key.cpp
 +++ b/Telegram/SourceFiles/mtproto/auth_key.cpp
-@@ -21,6 +21,7 @@ Copyright (c) 2014-2017 John Preston, https://desktop.telegram.org
+@@ -21,6 +21,9 @@ Copyright (c) 2014-2017 John Preston, https://desktop.telegram.org
  #include "mtproto/auth_key.h"
  
  #include <openssl/aes.h>
++extern "C" {
 +#include <openssl/modes.h>
++}
  
  namespace MTP {
  
-@@ -109,7 +110,7 @@ void aesCtrEncrypt(void *data, uint32 len, const void *key, CTRState *state) {
+@@ -109,7 +112,7 @@ void aesCtrEncrypt(void *data, uint32 len, const void *key, CTRState *state) {
  	static_assert(CTRState::IvecSize == AES_BLOCK_SIZE, "Wrong size of ctr ivec!");
  	static_assert(CTRState::EcountSize == AES_BLOCK_SIZE, "Wrong size of ctr ecount!");
  
