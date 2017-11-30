@@ -1,4 +1,4 @@
-From f31d1f69e3a6e95afada3403602a088b7e6c3116 Mon Sep 17 00:00:00 2001
+From 2669e65204a4b6844a5417e63c3a40ce79fefa09 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -15,12 +15,12 @@ Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
  Telegram/gyp/qt.gypi                        | 81 +++++++------------------
  Telegram/gyp/qt_moc.gypi                    |  3 +-
  Telegram/gyp/qt_rcc.gypi                    |  2 +-
- Telegram/gyp/settings_linux.gypi            |  7 +--
+ Telegram/gyp/settings_linux.gypi            |  5 --
  Telegram/gyp/telegram_linux.gypi            | 81 ++++++-------------------
  Telegram/gyp/telegram_sources.txt           |  8 +--
  lib/xdg/telegramdesktop.appdata.xml         |  2 +-
  lib/xdg/telegramdesktop.desktop             |  6 +-
- 16 files changed, 169 insertions(+), 178 deletions(-)
+ 16 files changed, 167 insertions(+), 178 deletions(-)
  create mode 100644 Telegram/SourceFiles/qt_functions.cpp
 
 diff --git a/Telegram/SourceFiles/main.cpp b/Telegram/SourceFiles/main.cpp
@@ -500,7 +500,7 @@ index eebc6967..3efa7d05 100644
        '-no-compress',
        '<(RULE_INPUT_PATH)',
 diff --git a/Telegram/gyp/settings_linux.gypi b/Telegram/gyp/settings_linux.gypi
-index b93bace4..827ba678 100644
+index b93bace4..1a637e93 100644
 --- a/Telegram/gyp/settings_linux.gypi
 +++ b/Telegram/gyp/settings_linux.gypi
 @@ -22,10 +22,6 @@
@@ -522,15 +522,6 @@ index b93bace4..827ba678 100644
          'QT_PLUGIN',
        ],
        'cflags_c': [
-@@ -72,6 +67,8 @@
-         '-std=c++1z',
-         '-Wno-register',
-       ],
-+      'ldflags': [
-+      ],
-       'configurations': {
-         'Debug': {
-         },
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
 index a7f6c455..4950399a 100644
 --- a/Telegram/gyp/telegram_linux.gypi
