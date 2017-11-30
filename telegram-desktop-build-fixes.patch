@@ -1,4 +1,4 @@
-From 6d67f392aedf074e4d047e6c2ec3bfc7d2db5379 Mon Sep 17 00:00:00 2001
+From a4ba881c20b483b225d06beee6ce3a731ff408dc Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -18,10 +18,9 @@ Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
  Telegram/gyp/settings_linux.gypi            |  7 +--
  Telegram/gyp/telegram_linux.gypi            | 81 ++++++-------------------
  Telegram/gyp/telegram_sources.txt           |  8 +--
- Telegram/gyp/utils.gyp                      |  4 +-
  lib/xdg/telegramdesktop.appdata.xml         |  2 +-
  lib/xdg/telegramdesktop.desktop             |  6 +-
- 17 files changed, 170 insertions(+), 180 deletions(-)
+ 16 files changed, 168 insertions(+), 178 deletions(-)
  create mode 100644 Telegram/SourceFiles/qt_functions.cpp
 
 diff --git a/Telegram/SourceFiles/main.cpp b/Telegram/SourceFiles/main.cpp
@@ -666,28 +665,6 @@ index 6da517c2..9368878b 100644
  
  platforms: mac
  <(sp_media_key_tap_loc)/SPMediaKeyTap.m
-diff --git a/Telegram/gyp/utils.gyp b/Telegram/gyp/utils.gyp
-index 58d75ffb..08847311 100644
---- a/Telegram/gyp/utils.gyp
-+++ b/Telegram/gyp/utils.gyp
-@@ -138,7 +138,7 @@
-               '<(libs_loc)/openssl/include'
-             ],
-             'library_dirs': [
--              '/usr/local/lib',
-+              '<!(rpm --eval "%{_libdir}")',
-             ],
-           }]
-         ],
-@@ -160,7 +160,7 @@
-               '<(libs_loc)/openssl/include'
-             ],
-             'library_dirs': [
--              '/usr/local/lib',
-+              '<!(rpm --eval "%{_libdir}")',
-             ],
-           }]
-         ],
 diff --git a/lib/xdg/telegramdesktop.appdata.xml b/lib/xdg/telegramdesktop.appdata.xml
 index 7bcf8d83..4508c01c 100644
 --- a/lib/xdg/telegramdesktop.appdata.xml
