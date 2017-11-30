@@ -10,7 +10,7 @@
 %global shortcommit2 %(c=%{commit2}; echo ${c:0:7})
 
 # Git revision of range-v3...
-%global commit3 b74c8632a089c59238d30f86fc717413d6d46f9f
+%global commit3 0b0dd886bd05d389649a043bb1d0bcd27c2bf25d
 %global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
 
 # Decrease debuginfo verbosity to reduce memory consumption...
