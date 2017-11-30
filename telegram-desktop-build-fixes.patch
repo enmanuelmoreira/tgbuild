@@ -1,4 +1,4 @@
-From bc20396aefa02d8344e0f303574079a50e4672f2 Mon Sep 17 00:00:00 2001
+From 6d67f392aedf074e4d047e6c2ec3bfc7d2db5379 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -528,7 +528,7 @@ index b93bace4..827ba678 100644
          'Debug': {
          },
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index a7f6c455..6aa9b53e 100644
+index a7f6c455..4950399a 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
 @@ -28,97 +28,52 @@
@@ -602,7 +602,7 @@ index a7f6c455..6aa9b53e 100644
 -      '-Wl,-wrap,secure_getenv',
 -      '-Wl,-wrap,clock_gettime',
 -      '-Wl,--no-as-needed,-lrt',
-+        '-Wl,-z,relro -specs=/usr/lib/rpm/redhat/redhat-hardened-ld',
++      '-Wl,-z,relro -specs=/usr/lib/rpm/redhat/redhat-hardened-ld',
      ],
      'configurations': {
        'Release': {
