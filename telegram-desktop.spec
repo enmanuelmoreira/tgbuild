@@ -13,10 +13,8 @@
 %global commit3 b74c8632a089c59238d30f86fc717413d6d46f9f
 %global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
 
-# Decrease debuginfo verbosity to reduce memory consumption
-%ifarch s390 s390x %{arm} %{ix86} ppc %{power64} %{mips}
-%global optflags %(echo %{optflags} | sed 's/-g / /')
-%endif
+# Decrease debuginfo verbosity to reduce memory consumption...
+%global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
 
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
@@ -32,7 +30,10 @@ Release: 1%{?dist}
 License: GPLv3+ and LGPLv3 and BSD and MIT
 Group: Applications/Internet
 URL: https://github.com/telegramdesktop/%{appname}
-ExclusiveArch: i686 x86_64
+
+# Telegram Desktop cannot be built on i686 due technical limits of this
+# architecture: https://github.com/telegramdesktop/tdesktop/issues/4101
+ExclusiveArch: x86_64
 
 Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
 Source1: https://chromium.googlesource.com/external/gyp/+archive/%{commit1}.tar.gz#/gyp-%{shortcommit1}.tar.gz
