@@ -31,7 +31,7 @@ License: GPLv3+ and LGPLv3 and BSD and MIT
 Group: Applications/Internet
 URL: https://github.com/telegramdesktop/%{appname}
 
-# Warning! Builds on i686 may fail due technical limitaions of this
+# Warning! Builds on i686 may fail due to technical limitations of this
 # architecture: https://github.com/telegramdesktop/tdesktop/issues/4101
 ExclusiveArch: i686 x86_64
 
