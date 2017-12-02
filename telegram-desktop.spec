@@ -31,9 +31,9 @@ License: GPLv3+ and LGPLv3 and BSD and MIT
 Group: Applications/Internet
 URL: https://github.com/telegramdesktop/%{appname}
 
-# Telegram Desktop cannot be built on i686 due technical limits of this
+# Warning! Builds on i686 may fail due technical limitaions of this
 # architecture: https://github.com/telegramdesktop/tdesktop/issues/4101
-ExclusiveArch: x86_64
+ExclusiveArch: i686 x86_64
 
 Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
 Source1: https://chromium.googlesource.com/external/gyp/+archive/%{commit1}.tar.gz#/gyp-%{shortcommit1}.tar.gz
