@@ -1,4 +1,4 @@
-From e956528db7944e68be24615a11111871eca1e576 Mon Sep 17 00:00:00 2001
+From 372190ad972ab38e71657e4bfa656acc926efc3d Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -173,10 +173,10 @@ index b975c7a8..f2f876b3 100644
 -Q_IMPORT_PLUGIN(QHimePlatformInputContextPlugin)
  #endif // Q_OS_WIN | Q_OS_MAC | Q_OS_LINUX
 diff --git a/Telegram/SourceFiles/ui/text/text.cpp b/Telegram/SourceFiles/ui/text/text.cpp
-index 3b655aa0..b1abc15e 100644
+index 710277fe..5eb4465d 100644
 --- a/Telegram/SourceFiles/ui/text/text.cpp
 +++ b/Telegram/SourceFiles/ui/text/text.cpp
-@@ -1698,11 +1698,11 @@ private:
+@@ -1707,11 +1707,11 @@ private:
  		if (item == -1)
  			return;
  
@@ -205,10 +205,10 @@ index f89644e1..35230cfc 100644
  		layout.createLine();
  
 diff --git a/Telegram/SourceFiles/ui/twidget.cpp b/Telegram/SourceFiles/ui/twidget.cpp
-index 8e2eff83..ef751ea7 100644
+index a78af59d..feee450e 100644
 --- a/Telegram/SourceFiles/ui/twidget.cpp
 +++ b/Telegram/SourceFiles/ui/twidget.cpp
-@@ -232,9 +232,9 @@ void sendSynteticMouseEvent(QWidget *widget, QEvent::Type type, Qt::MouseButton
+@@ -234,9 +234,9 @@ void sendSynteticMouseEvent(QWidget *widget, QEvent::Type type, Qt::MouseButton
  			, button
  			, QGuiApplication::mouseButtons() | button
  			, QGuiApplication::keyboardModifiers()
@@ -645,10 +645,10 @@ index f6918c22..4950399a 100644
          ],
        }]
 diff --git a/Telegram/gyp/telegram_sources.txt b/Telegram/gyp/telegram_sources.txt
-index b9ecb3df..cdd55924 100644
+index d653d341..639b5cd9 100644
 --- a/Telegram/gyp/telegram_sources.txt
 +++ b/Telegram/gyp/telegram_sources.txt
-@@ -678,13 +678,7 @@
+@@ -680,13 +680,7 @@
  <(emoji_suggestions_loc)/emoji_suggestions.h
  
  platforms: !win
