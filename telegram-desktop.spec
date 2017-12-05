@@ -5,14 +5,6 @@
 %global commit1 a478c1ab51ea3e04e79791ac3d1dad01b3f57434
 %global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
 
-# Git revision of GSL...
-%global commit2 c5851a8161938798c5594a66420cb814fea92711
-%global shortcommit2 %(c=%{commit2}; echo ${c:0:7})
-
-# Git revision of range-v3...
-%global commit3 0b0dd886bd05d389649a043bb1d0bcd27c2bf25d
-%global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
-
 # Decrease debuginfo verbosity to reduce memory consumption...
 %global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
 
@@ -24,8 +16,6 @@ Release: 1%{?dist}
 # Application and 3rd-party modules licensing:
 # * S0 (Telegram Desktop) - GPLv3+ with OpenSSL exception -- main source;
 # * S1 (GYP) - BSD -- build-time dependency;
-# * S2 (GSL) - MIT -- build-time dependency;
-# * S3 (RANGE) - BSD -- build-time dependency;
 # * P0 (qt_functions.cpp) - LGPLv3 -- build-time dependency.
 License: GPLv3+ and LGPLv3 and BSD and MIT
 Group: Applications/Internet
@@ -37,8 +27,6 @@ ExclusiveArch: i686 x86_64
 
 Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
 Source1: https://chromium.googlesource.com/external/gyp/+archive/%{commit1}.tar.gz#/gyp-%{shortcommit1}.tar.gz
-Source2: https://github.com/Microsoft/GSL/archive/%{commit2}.tar.gz#/GSL-%{shortcommit2}.tar.gz
-Source3: https://github.com/ericniebler/range-v3/archive/%{commit3}.tar.gz#/range-v3-%{shortcommit3}.tar.gz
 
 Patch0: %{name}-build-fixes.patch
 Patch101: %{name}-openssl11-fix.patch
@@ -94,19 +82,6 @@ mkdir -p Telegram/ThirdParty/gyp
 pushd Telegram/ThirdParty/gyp
     tar -xf %{SOURCE1}
     patch -p1 -i ../../../Telegram/Patches/gyp.diff
-popd
-
-# Unpacking GSL...
-pushd Telegram/ThirdParty
-    rm -rf GSL
-    tar -xf %{SOURCE2}
-    mv GSL-%{commit2} GSL
-popd
-
-# Unpacking range-v3...
-pushd Telegram/ThirdParty
-    tar -xf %{SOURCE3}
-    mv range-v3-%{commit3} range-v3
 popd
 
 %build
