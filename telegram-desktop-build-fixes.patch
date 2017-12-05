@@ -1,4 +1,4 @@
-From 372190ad972ab38e71657e4bfa656acc926efc3d Mon Sep 17 00:00:00 2001
+From 24a6a625e46196ac13f8d515625b803615c537e1 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -11,16 +11,16 @@ Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
  Telegram/SourceFiles/ui/text/text_block.cpp |  2 +-
  Telegram/SourceFiles/ui/twidget.cpp         |  4 +-
  Telegram/gyp/PrecompiledHeader.cmake        |  4 +-
- Telegram/gyp/Telegram.gyp                   | 27 +++------
+ Telegram/gyp/Telegram.gyp                   | 27 ++-------
  Telegram/gyp/qt.gypi                        | 81 +++++++------------------
  Telegram/gyp/qt_moc.gypi                    |  3 +-
  Telegram/gyp/qt_rcc.gypi                    |  2 +-
  Telegram/gyp/settings_linux.gypi            |  5 --
- Telegram/gyp/telegram_linux.gypi            | 83 ++++++-------------------
+ Telegram/gyp/telegram_linux.gypi            | 85 ++++++--------------------
  Telegram/gyp/telegram_sources.txt           |  8 +--
  lib/xdg/telegramdesktop.appdata.xml         |  2 +-
  lib/xdg/telegramdesktop.desktop             |  6 +-
- 16 files changed, 167 insertions(+), 181 deletions(-)
+ 16 files changed, 168 insertions(+), 182 deletions(-)
  create mode 100644 Telegram/SourceFiles/qt_functions.cpp
 
 diff --git a/Telegram/SourceFiles/main.cpp b/Telegram/SourceFiles/main.cpp
@@ -243,7 +243,7 @@ index 5d6830e9..c3f08d3f 100644
          IMPLICIT_DEPENDS CXX "${_pch_header}"
          COMMENT "Precompiling ${_name} for ${_target} (C++)")
 diff --git a/Telegram/gyp/Telegram.gyp b/Telegram/gyp/Telegram.gyp
-index 31480945..d8abe8d7 100644
+index 31480945..ffd5d6a6 100644
 --- a/Telegram/gyp/Telegram.gyp
 +++ b/Telegram/gyp/Telegram.gyp
 @@ -31,7 +31,6 @@
@@ -263,7 +263,7 @@ index 31480945..d8abe8d7 100644
        'telegram_linux.gypi',
        'qt.gypi',
        'qt_moc.gypi',
-@@ -81,33 +78,24 @@
+@@ -81,33 +78,22 @@
        'codegen.gyp:codegen_lang',
        'codegen.gyp:codegen_numbers',
        'codegen.gyp:codegen_style',
@@ -297,14 +297,13 @@ index 31480945..d8abe8d7 100644
 -      '<(libs_loc)/range-v3/include',
 -      '<(minizip_loc)',
 -      '<(sp_media_key_tap_loc)',
-+      '<(submodules_loc)/range-v3/include',
        '<(emoji_suggestions_loc)',
-       '<(submodules_loc)/GSL/include',
+-      '<(submodules_loc)/GSL/include',
 -      '<(submodules_loc)/variant/include',
      ],
      'sources': [
        '<@(qrc_files)',
-@@ -124,7 +112,6 @@
+@@ -124,7 +110,6 @@
            'CUSTOM_API_ID',
          ],
          'dependencies': [
@@ -523,10 +522,10 @@ index b93bace4..1a637e93 100644
        ],
        'cflags_c': [
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index f6918c22..4950399a 100644
+index f6918c22..5307a518 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
-@@ -28,99 +28,52 @@
+@@ -28,99 +28,54 @@
  # QApplication() -> createPlatformIntegration -> QXcbIntegrationPlugin::create
          #'xkbcommon',
        ],
@@ -550,6 +549,8 @@ index f6918c22..4950399a 100644
 +      '<!(rpm --eval "%{_includedir}")/minizip',
 +      '<!(rpm --eval "%{_includedir}")/opus',
 +      '<!(rpm --eval "%{_includedir}")/libtgvoip',
++      '<!(rpm --eval "%{_includedir}")/guidelines-support-library',
++      '<!(rpm --eval "%{_includedir}")/range-v3',
      ],
      'library_dirs': [
 -      '/usr/local/lib',
