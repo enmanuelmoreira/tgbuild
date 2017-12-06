@@ -17,7 +17,7 @@ Release: 1%{?dist}
 # * S0 (Telegram Desktop) - GPLv3+ with OpenSSL exception -- main source;
 # * S1 (GYP) - BSD -- build-time dependency;
 # * P0 (qt_functions.cpp) - LGPLv3 -- build-time dependency.
-License: GPLv3+ and LGPLv3 and BSD and MIT
+License: GPLv3+ and LGPLv3 and BSD
 Group: Applications/Internet
 URL: https://github.com/telegramdesktop/%{appname}
 
