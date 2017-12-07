@@ -29,7 +29,6 @@ Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
 Source1: https://chromium.googlesource.com/external/gyp/+archive/%{commit1}.tar.gz#/gyp-%{shortcommit1}.tar.gz
 
 Patch0: %{name}-build-fixes.patch
-Patch101: %{name}-openssl11-fix.patch
 
 Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
