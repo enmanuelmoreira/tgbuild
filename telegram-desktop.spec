@@ -10,7 +10,7 @@
 
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
-Version: 1.1.29
+Version: 1.2.0
 Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
@@ -147,6 +147,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Sun Dec 10 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.2.0-1
+- Updated to 1.2.0.
+
 * Sat Dec 09 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.1.29-1
 - Updated to 1.1.29 (alpha).
 
