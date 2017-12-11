@@ -33,9 +33,7 @@ Patch0: %{name}-build-fixes.patch
 Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
 Requires: gtk3%{?_isa}
-%if 0%{?fedora} && 0%{?fedora} >= 24
 Recommends: libappindicator-gtk3%{?_isa}
-%endif
 
 # Compilers and tools...
 BuildRequires: desktop-file-utils
