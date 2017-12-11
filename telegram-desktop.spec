@@ -30,10 +30,10 @@ Source1: https://chromium.googlesource.com/external/gyp/+archive/%{commit1}.tar.
 
 Patch0: %{name}-build-fixes.patch
 
+Recommends: libappindicator-gtk3%{?_isa}
 Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
 Requires: gtk3%{?_isa}
-Recommends: libappindicator-gtk3%{?_isa}
 
 # Compilers and tools...
 BuildRequires: desktop-file-utils
