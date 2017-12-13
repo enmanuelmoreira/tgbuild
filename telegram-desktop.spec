@@ -32,7 +32,6 @@ Requires: gtk3%{?_isa}
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
 BuildRequires: gcc-c++
-BuildRequires: chrpath
 BuildRequires: cmake
 BuildRequires: gcc
 BuildRequires: gyp
@@ -89,7 +88,6 @@ popd
 %install
 # Installing executables...
 mkdir -p "%{buildroot}%{_bindir}"
-chrpath -d out/Release/Telegram
 install -m 0755 -p out/Release/Telegram "%{buildroot}%{_bindir}/%{name}"
 
 # Installing desktop shortcut...
