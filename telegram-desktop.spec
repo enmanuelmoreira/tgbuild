@@ -1,6 +1,10 @@
 # Telegram Desktop's constants...
 %global appname tdesktop
 
+# Git revision of crl...
+%global commit1 68d321c9a509256be86fa13097ec84a6c51b6a58
+%global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
+
 # Decrease debuginfo verbosity to reduce memory consumption...
 %global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
 
@@ -21,6 +25,7 @@ URL: https://github.com/telegramdesktop/%{appname}
 ExclusiveArch: i686 x86_64
 
 Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
+Source1: https://github.com/telegramdesktop/crl/archive/%{commit1}.tar.gz#/crl-%{shortcommit1}.tar.gz
 Patch0: %{name}-build-fixes.patch
 
 Recommends: libappindicator-gtk3%{?_isa}
@@ -68,6 +73,13 @@ personal or business messaging needs.
 %prep
 # Unpacking Telegram Desktop source archive...
 %autosetup -n %{appname}-%{version} -p1
+
+# Unpacking crl...
+pushd Telegram/ThirdParty
+    rm -rf crl
+    tar -xf %{SOURCE1}
+    mv crl-%{commit1} crl
+popd
 
 %build
 # Generating cmake script using GYP...
