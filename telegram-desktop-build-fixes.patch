@@ -1,60 +1,50 @@
-From d500056ec0af33f2c9f890f0c79d139e38e14c9c Mon Sep 17 00:00:00 2001
+From 4f105e7d7e5c9b04a6e34e0c34f0d94621faba41 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
 
 ---
- Telegram/SourceFiles/core/launcher.cpp      | 11 +++-
- Telegram/SourceFiles/qt_functions.cpp       | 94 +++++++++++++++++++++++++++++
- Telegram/SourceFiles/qt_static_plugins.cpp  |  9 ---
- Telegram/SourceFiles/ui/text/text.cpp       |  6 +-
- Telegram/SourceFiles/ui/text/text_block.cpp |  2 +-
- Telegram/SourceFiles/ui/twidget.cpp         |  4 +-
- Telegram/gyp/CMakeLists.inj                 |  3 +
- Telegram/gyp/PrecompiledHeader.cmake        |  4 +-
- Telegram/gyp/Telegram.gyp                   | 27 ++-------
- Telegram/gyp/qt.gypi                        | 81 +++++++------------------
- Telegram/gyp/qt_moc.gypi                    |  3 +-
- Telegram/gyp/qt_rcc.gypi                    |  2 +-
- Telegram/gyp/settings_linux.gypi            |  5 --
- Telegram/gyp/telegram_linux.gypi            | 85 ++++++--------------------
- Telegram/gyp/telegram_sources.txt           |  8 +--
- lib/xdg/telegramdesktop.appdata.xml         |  2 +-
- lib/xdg/telegramdesktop.desktop             |  6 +-
- 17 files changed, 170 insertions(+), 182 deletions(-)
+ Telegram/Resources/qrc/telegram_linux.qrc |  1 -
+ Telegram/SourceFiles/core/launcher.cpp    |  2 +
+ Telegram/SourceFiles/qt_functions.cpp     | 94 +++++++++++++++++++++++++++++++
+ Telegram/gyp/CMakeLists.inj               |  3 +
+ Telegram/gyp/PrecompiledHeader.cmake      |  4 +-
+ Telegram/gyp/Telegram.gyp                 | 27 ++-------
+ Telegram/gyp/qt.gypi                      | 81 +++++++-------------------
+ Telegram/gyp/qt_moc.gypi                  |  3 +-
+ Telegram/gyp/qt_rcc.gypi                  |  2 +-
+ Telegram/gyp/settings_linux.gypi          |  5 --
+ Telegram/gyp/telegram_linux.gypi          | 85 +++++++---------------------
+ Telegram/gyp/telegram_sources.txt         |  9 +--
+ lib/xdg/telegramdesktop.appdata.xml       |  2 +-
+ lib/xdg/telegramdesktop.desktop           |  6 +-
+ 14 files changed, 157 insertions(+), 167 deletions(-)
  create mode 100644 Telegram/SourceFiles/qt_functions.cpp
  create mode 100644 Telegram/gyp/CMakeLists.inj
 
+diff --git a/Telegram/Resources/qrc/telegram_linux.qrc b/Telegram/Resources/qrc/telegram_linux.qrc
+index 0554fa17..3ea02740 100644
+--- a/Telegram/Resources/qrc/telegram_linux.qrc
++++ b/Telegram/Resources/qrc/telegram_linux.qrc
+@@ -1,5 +1,4 @@
+ <RCC>
+   <qresource prefix="/qt">
+-    <file alias="etc/qt.conf">../etc/qt_linux.conf</file>
+   </qresource>
+ </RCC>
 diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
-index bf21d14d..b1dde58b 100644
+index bf21d14d..73b33feb 100644
 --- a/Telegram/SourceFiles/core/launcher.cpp
 +++ b/Telegram/SourceFiles/core/launcher.cpp
-@@ -44,9 +44,9 @@ void Launcher::init() {
- 
- 	QCoreApplication::setApplicationName(qsl("TelegramDesktop"));
- 
--#ifndef OS_MAC_OLD
-+#if !defined(Q_OS_MAC) && QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
- 	QCoreApplication::setAttribute(Qt::AA_DisableHighDpiScaling, true);
--#endif // OS_MAC_OLD
-+#endif // not defined Q_OS_MAC and QT_VERSION >= 5.6.0
- 
- 	initHook();
- }
-@@ -63,6 +63,13 @@ int Launcher::exec() {
- 	// both are finished in Application::closeApplication
+@@ -64,6 +64,8 @@ int Launcher::exec() {
  	Logs::start(this); // must be started before Platform is started
  	Platform::start(); // must be started before QApplication is created
-+#if defined(Q_OS_LINUX64)
-+	QCoreApplication::addLibraryPath("/usr/lib64/qt5/plugins");
-+#else
-+	QCoreApplication::addLibraryPath("/usr/lib/qt5/plugins");
-+#endif
+ 
 +	setenv("QT_STYLE_OVERRIDE", "qwerty", false);
 +	unsetenv("QT_QPA_PLATFORMTHEME");
- 
  	auto result = executeApplication();
  
+ 	DEBUG_LOG(("Telegram finished, result: %1").arg(result));
 diff --git a/Telegram/SourceFiles/qt_functions.cpp b/Telegram/SourceFiles/qt_functions.cpp
 new file mode 100644
 index 00000000..4a722b8d
@@ -155,72 +145,6 @@ index 00000000..4a722b8d
 +    if (f->d->strikeOut || charFormat.fontStrikeOut())
 +        flags |= QTextItem::StrikeOut;
 +}
-diff --git a/Telegram/SourceFiles/qt_static_plugins.cpp b/Telegram/SourceFiles/qt_static_plugins.cpp
-index b975c7a8..f2f876b3 100644
---- a/Telegram/SourceFiles/qt_static_plugins.cpp
-+++ b/Telegram/SourceFiles/qt_static_plugins.cpp
-@@ -28,13 +28,4 @@ Q_IMPORT_PLUGIN(QWebpPlugin)
- Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin)
- Q_IMPORT_PLUGIN(QGenericEnginePlugin)
- #elif defined Q_OS_LINUX // Q_OS_WIN | Q_OS_MAC
--Q_IMPORT_PLUGIN(QWebpPlugin)
--Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
--Q_IMPORT_PLUGIN(QConnmanEnginePlugin)
--Q_IMPORT_PLUGIN(QGenericEnginePlugin)
--Q_IMPORT_PLUGIN(QNetworkManagerEnginePlugin)
--Q_IMPORT_PLUGIN(QComposePlatformInputContextPlugin)
--Q_IMPORT_PLUGIN(QIbusPlatformInputContextPlugin)
--Q_IMPORT_PLUGIN(QFcitxPlatformInputContextPlugin)
--Q_IMPORT_PLUGIN(QHimePlatformInputContextPlugin)
- #endif // Q_OS_WIN | Q_OS_MAC | Q_OS_LINUX
-diff --git a/Telegram/SourceFiles/ui/text/text.cpp b/Telegram/SourceFiles/ui/text/text.cpp
-index 710277fe..5eb4465d 100644
---- a/Telegram/SourceFiles/ui/text/text.cpp
-+++ b/Telegram/SourceFiles/ui/text/text.cpp
-@@ -1707,11 +1707,11 @@ private:
- 		if (item == -1)
- 			return;
- 
--#ifdef OS_MAC_OLD
-+#if defined(OS_MAC_OLD) || QT_VERSION < QT_VERSION_CHECK(5, 6, 0)
- 		auto end = _e->findItem(line.from + line.length - 1);
--#else // OS_MAC_OLD
-+#else
- 		auto end = _e->findItem(line.from + line.length - 1, item);
--#endif // OS_MAC_OLD
-+#endif
- 
- 		auto blockIndex = _lineStartBlock;
- 		auto currentBlock = _t->_blocks[blockIndex].get();
-diff --git a/Telegram/SourceFiles/ui/text/text_block.cpp b/Telegram/SourceFiles/ui/text/text_block.cpp
-index e435b50d..893496b4 100644
---- a/Telegram/SourceFiles/ui/text/text_block.cpp
-+++ b/Telegram/SourceFiles/ui/text/text_block.cpp
-@@ -332,7 +332,7 @@ TextBlock::TextBlock(const style::font &font, const QString &str, QFixed minResi
- 		CrashReports::SetAnnotationRef("CrashString", &part);
- 
- 		QStackTextEngine engine(part, blockFont->f);
--		QTextLayout layout(&engine);
-+		QTextLayout layout(part, blockFont->f);
- 		layout.beginLayout();
- 		layout.createLine();
- 
-diff --git a/Telegram/SourceFiles/ui/twidget.cpp b/Telegram/SourceFiles/ui/twidget.cpp
-index a78af59d..feee450e 100644
---- a/Telegram/SourceFiles/ui/twidget.cpp
-+++ b/Telegram/SourceFiles/ui/twidget.cpp
-@@ -234,9 +234,9 @@ void sendSynteticMouseEvent(QWidget *widget, QEvent::Type type, Qt::MouseButton
- 			, button
- 			, QGuiApplication::mouseButtons() | button
- 			, QGuiApplication::keyboardModifiers()
--#ifndef OS_MAC_OLD
-+#if !defined(OS_MAC_OLD) && QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
- 			, Qt::MouseEventSynthesizedByApplication
--#endif // OS_MAC_OLD
-+#endif
- 		);
- 		ev.setTimestamp(getms());
- 		QGuiApplication::sendEvent(windowHandle, &ev);
 diff --git a/Telegram/gyp/CMakeLists.inj b/Telegram/gyp/CMakeLists.inj
 new file mode 100644
 index 00000000..6207bc74
@@ -657,10 +581,19 @@ index f6918c22..5307a518 100644
          ],
        }]
 diff --git a/Telegram/gyp/telegram_sources.txt b/Telegram/gyp/telegram_sources.txt
-index 06a63c25..7f9b20f8 100644
+index ac61482f..17f50a0a 100644
 --- a/Telegram/gyp/telegram_sources.txt
 +++ b/Telegram/gyp/telegram_sources.txt
-@@ -702,13 +702,7 @@
+@@ -697,7 +697,7 @@
+ <(src_loc)/observer_peer.h
+ <(src_loc)/passcodewidget.cpp
+ <(src_loc)/passcodewidget.h
+-<(src_loc)/qt_static_plugins.cpp
++<(src_loc)/qt_functions.cpp
+ <(src_loc)/settings.cpp
+ <(src_loc)/settings.h
+ <(src_loc)/shortcuts.cpp
+@@ -708,13 +708,6 @@
  <(emoji_suggestions_loc)/emoji_suggestions.h
  
  platforms: !win
@@ -671,7 +604,6 @@ index 06a63c25..7f9b20f8 100644
 -<(minizip_loc)/zip.h
 -<(minizip_loc)/unzip.c
 -<(minizip_loc)/unzip.h
-+<(src_loc)/qt_functions.cpp
  
  platforms: mac
  <(sp_media_key_tap_loc)/SPMediaKeyTap.m
