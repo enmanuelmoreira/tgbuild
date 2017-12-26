@@ -88,7 +88,7 @@ pushd Telegram/gyp
     gyp --depth=. --generator-output=../.. -Goutput_dir=out Telegram.gyp --format=cmake
 popd
 
-# Patching generated cmake manifest...
+# Patching generated cmake script...
 LEN=$(($(wc -l < out/Release/CMakeLists.txt) - 2))
 sed -i "$LEN r Telegram/gyp/CMakeLists.inj" out/Release/CMakeLists.txt
 
