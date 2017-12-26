@@ -89,7 +89,7 @@ pushd Telegram/gyp
 popd
 
 # Patching generated cmake manifest...
-LEN=$((`wc -l < out/Release/CMakeLists.txt` - 2))
+LEN=$(($(wc -l < out/Release/CMakeLists.txt) - 2))
 sed -i "$LEN r Telegram/gyp/CMakeLists.inj" out/Release/CMakeLists.txt
 
 # Building Telegram Desktop using cmake...
