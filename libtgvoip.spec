@@ -32,7 +32,7 @@ Requires: %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 %{summary}.
 
 %prep
-%autosetup -n %{name}-%{commit0} -p1
+%autosetup -n %{name}-%{version} -p1
 
 %build
 export VOIPVER="%{version}"
