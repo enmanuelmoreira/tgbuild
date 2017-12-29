@@ -2,7 +2,7 @@
 %global appname tdesktop
 
 # Git revision of crl...
-%global commit1 6127f98309aff27cc31aed8b3458da219f5318e9
+%global commit1 9e11a5c9291760d03df559d03d81fa7afdd0a46d
 %global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
 
 # Decrease debuginfo verbosity to reduce memory consumption...
