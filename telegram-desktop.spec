@@ -2,7 +2,7 @@
 %global appname tdesktop
 
 # Git revision of crl...
-%global commit1 9e11a5c9291760d03df559d03d81fa7afdd0a46d
+%global commit1 705a5fd6166fd577d6a95cef9d74f7aa0c4ec3ed
 %global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
 
 # Decrease debuginfo verbosity to reduce memory consumption...
@@ -10,7 +10,7 @@
 
 Summary: Telegram is a new era of messaging
 Name: telegram-desktop
-Version: 1.2.6
+Version: 1.2.7
 Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
@@ -147,6 +147,9 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Mon Jan 01 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.2.7-1
+- Updated to 1.2.7 (alpha).
+
 * Sat Dec 30 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.2.6-1
 - Updated to 1.2.6.
 
