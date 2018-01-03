@@ -139,7 +139,7 @@ fi
 
 %files
 %doc README.md changelog.txt
-%license LICENSE
+%license LICENSE LEGAL
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/kde4/services/tg.protocol
