@@ -119,11 +119,11 @@ install -d "%{buildroot}%{_datadir}/kde4/services"
 install -m 0644 -p lib/xdg/tg.protocol "%{buildroot}%{_datadir}/kde4/services/tg.protocol"
 
 # Installing appdata for Gnome Software...
-install -d "%{buildroot}%{_datadir}/appdata"
-install -m 0644 -p lib/xdg/telegramdesktop.appdata.xml "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
+install -d "%{buildroot}%{_datadir}/metainfo"
+install -m 0644 -p lib/xdg/telegramdesktop.appdata.xml "%{buildroot}%{_datadir}/metainfo/%{name}.appdata.xml"
 
 %check
-appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/appdata/%{name}.appdata.xml"
+appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/metainfo/%{name}.appdata.xml"
 
 %files
 %doc README.md changelog.txt
@@ -132,7 +132,7 @@ appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/appdata/%{name}.a
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/kde4/services/tg.protocol
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
-%{_datadir}/appdata/%{name}.appdata.xml
+%{_datadir}/metainfo/%{name}.appdata.xml
 
 %changelog
 * Wed Jan 03 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.2.8-1
