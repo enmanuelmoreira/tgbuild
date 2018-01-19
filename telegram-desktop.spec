@@ -69,8 +69,7 @@ With Telegram, you can send messages, photos, videos and files of any type
 channels for broadcasting to unlimited audiences. You can write to your
 phone contacts and find people by their usernames. As a result, Telegram is
 like SMS and email combined — and can take care of all your personal or
-business messaging needs. In addition to this, we support end-to-end
-encrypted voice calls.
+business messaging needs.
 
 %prep
 # Unpacking Telegram Desktop source archive...
