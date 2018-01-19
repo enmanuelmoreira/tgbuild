@@ -18,7 +18,6 @@ Release: 1%{?dist}
 # * S1 (crl) - GPLv3+ -- build-time dependency;
 # * P0 (qt_functions.cpp) - LGPLv3 -- build-time dependency.
 License: GPLv3+ and LGPLv3
-Group: Applications/Internet
 URL: https://github.com/telegramdesktop/%{appname}
 
 # Warning! Builds on i686 may fail due to technical limitations of this
