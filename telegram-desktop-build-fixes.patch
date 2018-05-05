@@ -1,4 +1,4 @@
-From ff1914aaef5cde44f38359ffa2169bf1d0ec2c64 Mon Sep 17 00:00:00 2001
+From acfa0505f6393918445f1ca5479fc59cf9e6d5ae Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -34,7 +34,7 @@ index 0554fa17..3ea02740 100644
    </qresource>
  </RCC>
 diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
-index 7f173565..c70ccc79 100644
+index 62662277..66598a1d 100644
 --- a/Telegram/SourceFiles/core/launcher.cpp
 +++ b/Telegram/SourceFiles/core/launcher.cpp
 @@ -51,6 +51,7 @@ int Launcher::exec() {
@@ -650,10 +650,10 @@ index a5b4b197..19aefb6b 100644
          ],
        }]
 diff --git a/Telegram/gyp/telegram_sources.txt b/Telegram/gyp/telegram_sources.txt
-index a9c36e09..40b8eb15 100644
+index 710ed8da..5aac9b1e 100644
 --- a/Telegram/gyp/telegram_sources.txt
 +++ b/Telegram/gyp/telegram_sources.txt
-@@ -750,7 +750,7 @@
+@@ -749,7 +749,7 @@
  <(src_loc)/observer_peer.h
  <(src_loc)/passcodewidget.cpp
  <(src_loc)/passcodewidget.h
@@ -662,7 +662,7 @@ index a9c36e09..40b8eb15 100644
  <(src_loc)/settings.cpp
  <(src_loc)/settings.h
  <(src_loc)/shortcuts.cpp
-@@ -761,13 +761,6 @@
+@@ -760,13 +760,6 @@
  <(emoji_suggestions_loc)/emoji_suggestions.h
  
  platforms: !win
