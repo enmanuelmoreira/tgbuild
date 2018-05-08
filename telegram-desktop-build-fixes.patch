@@ -1,4 +1,4 @@
-From acfa0505f6393918445f1ca5479fc59cf9e6d5ae Mon Sep 17 00:00:00 2001
+From 58663739fc37ff1de8bb4bcb38df34202f49970f Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -650,10 +650,10 @@ index a5b4b197..19aefb6b 100644
          ],
        }]
 diff --git a/Telegram/gyp/telegram_sources.txt b/Telegram/gyp/telegram_sources.txt
-index 710ed8da..5aac9b1e 100644
+index c14989ca..3186b24d 100644
 --- a/Telegram/gyp/telegram_sources.txt
 +++ b/Telegram/gyp/telegram_sources.txt
-@@ -749,7 +749,7 @@
+@@ -751,7 +751,7 @@
  <(src_loc)/observer_peer.h
  <(src_loc)/passcodewidget.cpp
  <(src_loc)/passcodewidget.h
@@ -662,7 +662,7 @@ index 710ed8da..5aac9b1e 100644
  <(src_loc)/settings.cpp
  <(src_loc)/settings.h
  <(src_loc)/shortcuts.cpp
-@@ -760,13 +760,6 @@
+@@ -762,13 +762,6 @@
  <(emoji_suggestions_loc)/emoji_suggestions.h
  
  platforms: !win
