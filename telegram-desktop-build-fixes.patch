@@ -1,4 +1,4 @@
-From 58663739fc37ff1de8bb4bcb38df34202f49970f Mon Sep 17 00:00:00 2001
+From e3190211c3537ab344bf1b2ea2b615145db6246d Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -6,16 +6,16 @@ Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
 ---
  Telegram/Resources/qrc/telegram_linux.qrc |  1 -
  Telegram/SourceFiles/core/launcher.cpp    |  1 +
- Telegram/SourceFiles/qt_functions.cpp     | 94 +++++++++++++++++++++++++++++++
+ Telegram/SourceFiles/qt_functions.cpp     | 94 +++++++++++++++++++++++
  Telegram/gyp/CMakeLists.inj               |  3 +
  Telegram/gyp/PrecompiledHeader.cmake      |  4 +-
- Telegram/gyp/Telegram.gyp                 | 29 +++-------
- Telegram/gyp/codegen_rules.gypi           |  8 +--
- Telegram/gyp/qt.gypi                      | 87 ++++++++--------------------
+ Telegram/gyp/Telegram.gyp                 | 29 ++-----
+ Telegram/gyp/codegen_rules.gypi           |  8 +-
+ Telegram/gyp/qt.gypi                      | 87 ++++++---------------
  Telegram/gyp/qt_moc.gypi                  |  5 +-
  Telegram/gyp/qt_rcc.gypi                  |  2 +-
  Telegram/gyp/settings_linux.gypi          |  5 --
- Telegram/gyp/telegram_linux.gypi          | 86 +++++++---------------------
+ Telegram/gyp/telegram_linux.gypi          | 86 +++++----------------
  Telegram/gyp/telegram_sources.txt         |  9 +--
  lib/xdg/telegramdesktop.appdata.xml       |  2 +-
  lib/xdg/telegramdesktop.desktop           |  6 +-
@@ -707,5 +707,5 @@ index 0a806951..550b9f78 100644
  StartupWMClass=TelegramDesktop
  Type=Application
 -- 
-2.14.3
+2.17.0
 
