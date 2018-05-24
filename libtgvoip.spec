@@ -1,14 +1,18 @@
+%global commit0 b52eb581fa9cd66ca19df850bb60ef1a63f6a58e
+%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+%global date 20180515
+
 Summary: VoIP library for Telegram clients
 Name: libtgvoip
-Version: 1.0.3
-Release: 1%{?dist}
+Version: 2.0
+Release: 0.1.%{date}git%{shortcommit0}%{?dist}
 
 # Libtgvoip shared library - Public Domain.
 # Bundled webrtc library - BSD with patented echo cancellation algorithms.
 License: Public Domain and BSD
 URL: https://github.com/grishka/%{name}
 
-Source0: %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0: %{url}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 Patch0: %{name}-build-fixes.patch
 
 Provides: bundled(webrtc-audio-processing) = 0.3
@@ -32,7 +36,7 @@ Requires: %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 %{summary}.
 
 %prep
-%autosetup -n %{name}-%{version} -p1
+%autosetup -n %{name}-%{commit0} -p1
 
 %build
 export VOIPVER="%{version}"
@@ -47,8 +51,8 @@ popd
 # Installing shared library...
 mkdir -p "%{buildroot}%{_libdir}"
 install -m 0755 -p out/Release/lib.target/%{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so.%{version}"
-ln -s %{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so.1.0"
-ln -s %{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so.1"
+ln -s %{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so.2.0"
+ln -s %{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so.2"
 ln -s %{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so"
 
 # Installing additional development files...
@@ -68,6 +72,9 @@ find audio -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{build
 %{_libdir}/%{name}.so
 
 %changelog
+* Thu May 24 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.0-0.1.20180515gitb52eb58
+- Updated to 2.0-alpha4 (snapshot).
+
 * Fri Dec 29 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.3-1
 - Updated to 1.0.3 (regular release).
 
