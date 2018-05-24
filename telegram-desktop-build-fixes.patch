@@ -1,4 +1,4 @@
-From e3619f2ad181329929e3668a13a2948626db8f3a Mon Sep 17 00:00:00 2001
+From 5a316967b4f2807ba5104422bbbe302e5af3f73d Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -518,7 +518,7 @@ index 03284c1d..9b6f0c51 100644
        ],
        'cflags_c': [
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index a5b4b197..19aefb6b 100644
+index 22f3e161..10d73e48 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
 @@ -7,7 +7,7 @@
@@ -530,7 +530,7 @@ index a5b4b197..19aefb6b 100644
        'pkgconfig_libs': [
  # In order to work libxkbcommon must be linked statically,
  # PKGCONFIG links it like "-L/usr/local/lib -lxkbcommon"
-@@ -15,99 +15,53 @@
+@@ -15,50 +15,29 @@
  # QApplication() -> createPlatformIntegration -> QXcbIntegrationPlugin::create
          #'xkbcommon',
        ],
@@ -598,7 +598,8 @@ index a5b4b197..19aefb6b 100644
  #      '<!(pkg-config 2> /dev/null --libs <@(pkgconfig_libs))',
      ],
      'cflags_cc': [
-       '-Wno-strict-overflow',
+@@ -66,49 +45,24 @@
+       '-Wno-maybe-uninitialized',
      ],
      'ldflags': [
 -      '-Wl,-wrap,aligned_alloc',
