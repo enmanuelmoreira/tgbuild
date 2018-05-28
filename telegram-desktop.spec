@@ -116,10 +116,6 @@ for size in 16 32 48 64 128 256 512; do
     install -m 0644 -p Telegram/Resources/art/icon${size}.png "$dir/%{name}.png"
 done
 
-# Installing tg protocol handler...
-install -d "%{buildroot}%{_datadir}/kde4/services"
-install -m 0644 -p lib/xdg/tg.protocol "%{buildroot}%{_datadir}/kde4/services/tg.protocol"
-
 # Installing appdata for Gnome Software...
 install -d "%{buildroot}%{_datadir}/metainfo"
 install -m 0644 -p lib/xdg/telegramdesktop.appdata.xml "%{buildroot}%{_datadir}/metainfo/%{name}.appdata.xml"
@@ -132,7 +128,6 @@ appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/metainfo/%{name}.
 %license LICENSE LEGAL
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/kde4/services/tg.protocol
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/metainfo/%{name}.appdata.xml
 
