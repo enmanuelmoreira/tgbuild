@@ -33,6 +33,7 @@ Patch2: %{name}-system-fonts.patch
 Recommends: libappindicator-gtk3%{?_isa}
 Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
+Requires: open-sans-fonts
 Requires: gtk3%{?_isa}
 
 # Compilers and tools...
