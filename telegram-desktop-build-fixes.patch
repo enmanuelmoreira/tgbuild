@@ -1,4 +1,4 @@
-From 03cff33895511e8420ba04b0a72aa82fc072d3b5 Mon Sep 17 00:00:00 2001
+From cbef9d0016c79cf66c892649e980bf7d7a97afbf Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -34,7 +34,7 @@ index 0554fa179..3ea027406 100644
    </qresource>
  </RCC>
 diff --git a/Telegram/SourceFiles/core/launcher.cpp b/Telegram/SourceFiles/core/launcher.cpp
-index e2d500f61..4aee6fb4c 100644
+index 5c97c40eb..c4dc8d22c 100644
 --- a/Telegram/SourceFiles/core/launcher.cpp
 +++ b/Telegram/SourceFiles/core/launcher.cpp
 @@ -57,6 +57,7 @@ int Launcher::exec() {
@@ -651,13 +651,13 @@ index 22f3e161a..10d73e482 100644
          ],
        }]
 diff --git a/Telegram/gyp/telegram_sources.txt b/Telegram/gyp/telegram_sources.txt
-index e21be3b60..71ed55a2b 100644
+index b980b4cda..d699f2422 100644
 --- a/Telegram/gyp/telegram_sources.txt
 +++ b/Telegram/gyp/telegram_sources.txt
 @@ -775,7 +775,7 @@
+ <(src_loc)/messenger.h
+ <(src_loc)/observer_peer.cpp
  <(src_loc)/observer_peer.h
- <(src_loc)/passcodewidget.cpp
- <(src_loc)/passcodewidget.h
 -<(src_loc)/qt_static_plugins.cpp
 +<(src_loc)/qt_functions.cpp
  <(src_loc)/settings.cpp
