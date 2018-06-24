@@ -1,4 +1,4 @@
-From a574719dac7106c0acb9bbdeba5f6656ebdd5969 Mon Sep 17 00:00:00 2001
+From dd5d68e88223bbca70ea2605791a7a1dd9d49b90 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
@@ -16,12 +16,12 @@ Subject: [PATCH] Fixed build under Fedora using rpmbuild and mock.
  Telegram/gyp/qt.gypi                      | 87 ++++++---------------
  Telegram/gyp/qt_moc.gypi                  |  5 +-
  Telegram/gyp/qt_rcc.gypi                  |  2 +-
- Telegram/gyp/settings_linux.gypi          | 23 ------
+ Telegram/gyp/settings_linux.gypi          | 25 +-----
  Telegram/gyp/telegram_linux.gypi          | 73 +++++-------------
  Telegram/gyp/telegram_sources.txt         |  9 +--
  lib/xdg/telegramdesktop.appdata.xml       |  2 +-
  lib/xdg/telegramdesktop.desktop           |  6 +-
- 17 files changed, 168 insertions(+), 185 deletions(-)
+ 17 files changed, 169 insertions(+), 186 deletions(-)
  create mode 100644 Telegram/SourceFiles/qt_functions.cpp
  create mode 100644 Telegram/gyp/CMakeLists.inj
 
@@ -521,7 +521,7 @@ index f5624a82b..b644ce29f 100644
        '-no-compress',
        '<(RULE_INPUT_PATH)',
 diff --git a/Telegram/gyp/settings_linux.gypi b/Telegram/gyp/settings_linux.gypi
-index 17219fa2c..b6f1900ad 100644
+index 17219fa2c..9b6f0c510 100644
 --- a/Telegram/gyp/settings_linux.gypi
 +++ b/Telegram/gyp/settings_linux.gypi
 @@ -9,10 +9,6 @@
@@ -552,7 +552,8 @@ index 17219fa2c..b6f1900ad 100644
 -              'ldflags': [ '-flto', '-fuse-linker-plugin' ],
 -            },
 -          },
-         }]
+-        }]
++        }],
        ],
        'defines': [
          '_REENTRANT',
