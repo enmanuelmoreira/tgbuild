@@ -45,7 +45,7 @@ BuildRequires: gcc
 BuildRequires: gyp
 
 # Development packages for Telegram Desktop...
-BuildRequires: guidelines-support-library-devel
+BuildRequires: guidelines-support-library-devel >= 1.0.0
 BuildRequires: libtgvoip-devel >= 2.1
 BuildRequires: libappindicator-devel
 BuildRequires: mapbox-variant-devel
