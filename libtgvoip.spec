@@ -56,8 +56,6 @@ mkdir -p "%{buildroot}%{_includedir}/%{name}/audio"
 find . -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{buildroot}%{_includedir}/%{name} \;
 find audio -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{buildroot}%{_includedir}/%{name}/audio \;
 
-%ldconfig_scriptlets
-
 %files
 %license UNLICENSE
 %{_libdir}/%{name}.so.*
