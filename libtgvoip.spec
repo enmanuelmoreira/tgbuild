@@ -10,7 +10,10 @@ URL: https://github.com/grishka/%{name}
 
 Source0: %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 Patch0: %{name}-build-fixes.patch
+
+# Temporary backported from upstream patches.
 Patch100: %{name}-crash-fix.patch
+Patch101: %{name}-addidional-fixes.patch
 
 Provides: bundled(webrtc-audio-processing) = 0.3
 BuildRequires: pulseaudio-libs-devel
