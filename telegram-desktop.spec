@@ -135,6 +135,9 @@ appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/metainfo/%{name}.
 %{_datadir}/metainfo/%{name}.appdata.xml
 
 %changelog
+* Mon Jul 30 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3.10-3
+- Rebuild for libtgvoip update and issue with binutils.
+
 * Fri Jul 27 2018 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.3.10-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
