@@ -1,0 +1,25 @@
+From 41012f3915427a5e712ff521de1215170088ebe6 Mon Sep 17 00:00:00 2001
+From: Vitaly Zaitsev <vitaly@easycoding.org>
+Date: Fri, 24 Aug 2018 17:26:11 +0200
+Subject: [PATCH] Fixed build under GCC 8.2.1. Added missing includes.
+
+Signed-off-by: Vitaly Zaitsev <vitaly@easycoding.org>
+---
+ VoIPController.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/VoIPController.h b/VoIPController.h
+index 954424b..b2e5982 100644
+--- a/VoIPController.h
++++ b/VoIPController.h
+@@ -21,6 +21,7 @@
+ #include <unordered_map>
+ #include <memory>
+ #include <atomic>
++#include <cfloat>
+ #include "audio/AudioInput.h"
+ #include "BlockingQueue.h"
+ #include "audio/AudioOutput.h"
+-- 
+2.17.1
+
