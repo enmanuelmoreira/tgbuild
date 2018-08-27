@@ -49,7 +49,7 @@ BuildRequires: gyp
 # Development packages for Telegram Desktop...
 BuildRequires: guidelines-support-library-devel >= 1.0.0
 BuildRequires: mapbox-variant-devel >= 0.3.6
-BuildRequires: libtgvoip-devel >= 2.1.1
+BuildRequires: libtgvoip-devel >= 2.2.3
 BuildRequires: libappindicator-devel
 BuildRequires: ffmpeg-devel >= 3.1
 BuildRequires: openal-soft-devel
