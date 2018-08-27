@@ -1,6 +1,6 @@
 Name: libtgvoip
 Version: 2.2.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: VoIP library for Telegram clients
 
 # Libtgvoip shared library - Public Domain.
@@ -13,6 +13,7 @@ Patch0: %{name}-build-fixes.patch
 
 # Temporary backported from upstream patches.
 Patch100: %{name}-add-missing-headers.patch
+Patch101: %{name}-proxy-fix.patch
 
 Provides: bundled(webrtc-audio-processing) = 0.3
 BuildRequires: pulseaudio-libs-devel
@@ -68,6 +69,9 @@ find audio -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{build
 %{_libdir}/%{name}.so
 
 %changelog
+* Mon Aug 27 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.2.3-2
+- Added upstream patch with proxy fix.
+
 * Fri Aug 24 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.2.3-1
 - Updated to 2.2.3 (regular release).
 
