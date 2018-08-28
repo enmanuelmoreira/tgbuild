@@ -30,8 +30,6 @@ Patch0: %{name}-build-fixes.patch
 Patch1: %{name}-api-tokens.patch
 Patch2: %{name}-system-fonts.patch
 
-Patch100: %{name}-fix-openssl.patch
-
 Recommends: libappindicator-gtk3%{?_isa}
 Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
