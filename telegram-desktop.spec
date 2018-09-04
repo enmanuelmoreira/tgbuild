@@ -57,7 +57,6 @@ BuildRequires: qt5-qtbase-devel
 BuildRequires: libstdc++-devel
 BuildRequires: range-v3-devel
 BuildRequires: openssl-devel
-BuildRequires: minizip-devel
 BuildRequires: xxhash-devel
 BuildRequires: lzma-devel
 BuildRequires: opus-devel
@@ -65,6 +64,12 @@ BuildRequires: gtk3-devel
 BuildRequires: dee-devel
 BuildRequires: xz-devel
 BuildRequires: python2
+
+%if 0%{?fedora} >= 30
+BuildRequires: minizip-compat-devel
+%else
+BuildRequires: minizip-devel
+%endif
 
 %description
 Telegram is a messaging app with a focus on speed and security, it’s super
