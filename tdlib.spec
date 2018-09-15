@@ -39,15 +39,11 @@ Requires: %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 mkdir -p %{_target_platform}
 
 # Adding missing SONAME for shared libraries...
-echo "set_property(TARGET tdc PROPERTY SOVERSION ${PROJECT_VERSION})" >> CMakeLists.txt
-echo "set_property(TARGET tdcore PROPERTY SOVERSION ${PROJECT_VERSION})" >> CMakeLists.txt
 echo "set_property(TARGET tdclient PROPERTY SOVERSION 1)" >> CMakeLists.txt
-echo "set_property(TARGET tdjson PROPERTY SOVERSION ${PROJECT_VERSION})" >> CMakeLists.txt
-echo "set_property(TARGET tdjson_static PROPERTY SOVERSION ${PROJECT_VERSION})" >> CMakeLists.txt
-echo "set_property(TARGET tg_cli PROPERTY SOVERSION ${PROJECT_VERSION})" >> CMakeLists.txt
+echo "set_property(TARGET tdjson PROPERTY SOVERSION 1)" >> CMakeLists.txt
 
 # Patching LIBDIR path...
-sed -e 's@lib/@%{_lib}/@g' -e 's@DESTINATION lib@DESTINATION %{_lib}@g' -i CMakeLists.txt
+sed -e 's@DESTINATION lib@DESTINATION %{_lib}@g' -e 's@lib/@%{_lib}/@g' -i CMakeLists.txt
 sed -i 's@DESTINATION lib@DESTINATION %{_lib}@g' {sqlite,tdactor,tddb,tdnet,tdutils}/CMakeLists.txt
 
 
@@ -68,7 +64,7 @@ popd
 %{_libdir}/libtd*.so.*
 
 %files devel
-%{_includedir}/%{name}
+%{_includedir}/td
 %{_libdir}/libtd*.so
 %{_libdir}/cmake/Td
 
