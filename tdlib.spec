@@ -72,4 +72,5 @@ popd
 %{_libdir}/libtd*.a
 
 %changelog
-
+* Sat Sep 15 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3.0-1
+- Initial SPEC release.
