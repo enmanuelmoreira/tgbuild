@@ -46,7 +46,6 @@ echo "set_property(TARGET tdjson PROPERTY SOVERSION 1)" >> CMakeLists.txt
 sed -e 's@DESTINATION lib@DESTINATION %{_lib}@g' -e 's@lib/@%{_lib}/@g' -i CMakeLists.txt
 sed -i 's@DESTINATION lib@DESTINATION %{_lib}@g' {sqlite,tdactor,tddb,tdnet,tdutils}/CMakeLists.txt
 
-
 %build
 pushd %{_target_platform}
     %cmake -G Ninja \
