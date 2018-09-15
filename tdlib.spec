@@ -15,6 +15,10 @@ BuildRequires: gperf
 BuildRequires: cmake
 BuildRequires: gcc
 
+# Build requires at least 16 GB of free RAM. It cannot be built
+# on non-x86 architectures.
+ExclusiveArch: i686 x86_64
+
 %description
 TDLib (Telegram Database library) is a cross-platform library for
 building Telegram clients. It can be easily used from almost any
