@@ -42,7 +42,7 @@ Requires: %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 %autosetup -n td-%{version} -p1
 mkdir -p %{_target_platform}
 
-# Adding missing SONAME for shared libraries...
+# Adding missing SOVERSION for shared libraries...
 echo "set_property(TARGET tdclient PROPERTY SOVERSION 1)" >> CMakeLists.txt
 echo "set_property(TARGET tdjson PROPERTY SOVERSION 1)" >> CMakeLists.txt
 
