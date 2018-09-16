@@ -6,6 +6,7 @@ Summary: Cross-platform library for building Telegram clients
 License: Boost
 URL: https://github.com/%{name}/td
 Source0: %{url}/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Patch0: %{name}-system-crypto.patch
 
 BuildRequires: gperftools-devel
 BuildRequires: openssl-devel
