@@ -1,6 +1,6 @@
 Name: tdlib
 Version: 1.3.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Cross-platform library for building Telegram clients
 
 License: Boost
@@ -76,5 +76,8 @@ popd
 %{_libdir}/libtd*.a
 
 %changelog
+* Sun Sep 16 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3.0-2
+- Fixed issue with crypto policies.
+
 * Sat Sep 15 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3.0-1
 - Initial SPEC release.
