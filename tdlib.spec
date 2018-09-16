@@ -64,7 +64,7 @@ popd
 %files
 %license LICENSE_1_0.txt
 %doc README.md CHANGELOG.md
-%{_libdir}/libtd*.so.*
+%{_libdir}/libtd*.so.1*
 
 %files devel
 %{_includedir}/td
