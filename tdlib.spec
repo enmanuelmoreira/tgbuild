@@ -3,7 +3,7 @@ Version: 1.3.0
 Release: 1%{?dist}
 Summary: Cross-platform library for building Telegram clients
 
-License: BSL-1.0
+License: Boost
 URL: https://github.com/%{name}/td
 Source0: %{url}/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
