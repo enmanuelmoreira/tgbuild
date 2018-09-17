@@ -1,3 +1,14 @@
+# Building with default settings require at least 16 GB of free RAM.
+# We will make some tweaks for secondary arches.
+%ifnarch %{ix86} x86_64
+%global lowmem 1
+%endif
+
+# Decrease debuginfo verbosity to reduce memory consumption...
+%if 0%{?lowmem}
+%global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
+%endif
+
 Name: tdlib
 Version: 1.3.0
 Release: 2%{?dist}
@@ -15,10 +26,6 @@ BuildRequires: gcc-c++
 BuildRequires: gperf
 BuildRequires: cmake
 BuildRequires: gcc
-
-# Build requires at least 16 GB of free RAM. It cannot be built
-# on non-x86 architectures.
-ExclusiveArch: i686 x86_64
 
 %description
 TDLib (Telegram Database library) is a cross-platform library for
@@ -52,10 +59,19 @@ echo "set_property(TARGET tdjson PROPERTY SOVERSION 1)" >> CMakeLists.txt
 sed -e 's@DESTINATION lib@DESTINATION %{_lib}@g' -e 's@lib/@%{_lib}/@g' -i CMakeLists.txt
 sed -i 's@DESTINATION lib@DESTINATION %{_lib}@g' {sqlite,tdactor,tddb,tdnet,tdutils}/CMakeLists.txt
 
+# Disable FLTO on lowend build configurations...
+%if 0%{?lowmem}
+sed -e '/-flto/d' -i CMakeLists.txt
+%endif
+
 %build
 pushd %{_target_platform}
     %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
+%if 0%{?lowmem}
+    -DTD_ENABLE_LTO=OFF \
+    -j1 \
+%endif
     ..
 popd
 %ninja_build -C %{_target_platform}
