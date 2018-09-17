@@ -1,12 +1,9 @@
-# Building with default settings require at least 16 GB of free RAM.
-# We will make some tweaks for secondary arches.
-%ifnarch %{ix86} x86_64
-%global lowmem 1
-%endif
+# Enable or disable clang compiler...
+%global clang 0
 
-# Decrease debuginfo verbosity to reduce memory consumption...
-%if 0%{?lowmem}
-%global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
+# Applying workaround to RHBZ#1559007...
+%if 0%{?clang}
+%global optflags %(echo %{optflags} | sed -e 's/-mcet//g' -e 's/-fcf-protection//g')
 %endif
 
 Name: tdlib
@@ -27,8 +24,14 @@ BuildRequires: gperf
 BuildRequires: cmake
 BuildRequires: gcc
 
-# Build failure on BigEndian arches: https://github.com/tdlib/td/issues/364
-ExcludeArch: ppc64 s390x
+%if 0%{?clang}
+BuildRequires: clang
+BuildRequires: llvm
+%endif
+
+# Building with default settings require at least 16 GB of free RAM.
+# Builds on ARM and other low-memory architectures are failing.
+ExclusiveArch: %{ix86} x86_64
 
 %description
 TDLib (Telegram Database library) is a cross-platform library for
@@ -62,19 +65,15 @@ echo "set_property(TARGET tdjson PROPERTY SOVERSION 1)" >> CMakeLists.txt
 sed -e 's@DESTINATION lib@DESTINATION %{_lib}@g' -e 's@lib/@%{_lib}/@g' -i CMakeLists.txt
 sed -i 's@DESTINATION lib@DESTINATION %{_lib}@g' {sqlite,tdactor,tddb,tdnet,tdutils}/CMakeLists.txt
 
-# Disable FLTO on lowend build configurations...
-%if 0%{?lowmem}
-sed -e '/-flto/d' -i CMakeLists.txt
+%build
+%if 0%{?clang}
+export CC=clang
+export CXX=clang++
 %endif
 
-%build
 pushd %{_target_platform}
     %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
-%if 0%{?lowmem}
-    -DTD_ENABLE_LTO=OFF \
-    -j1 \
-%endif
     ..
 popd
 %ninja_build -C %{_target_platform}
