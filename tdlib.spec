@@ -27,6 +27,9 @@ BuildRequires: gperf
 BuildRequires: cmake
 BuildRequires: gcc
 
+# Build failure on BigEndian arches: https://github.com/tdlib/td/issues/364
+ExcludeArch: ppc64 s390x
+
 %description
 TDLib (Telegram Database library) is a cross-platform library for
 building Telegram clients. It can be easily used from almost any
