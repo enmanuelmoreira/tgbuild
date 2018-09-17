@@ -58,8 +58,8 @@ Requires: %{name}-devel%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 mkdir -p %{_target_platform}
 
 # Adding missing SOVERSION for shared libraries...
-echo "set_property(TARGET tdclient PROPERTY SOVERSION 1)" >> CMakeLists.txt
-echo "set_property(TARGET tdjson PROPERTY SOVERSION 1)" >> CMakeLists.txt
+echo "set_property(TARGET tdclient PROPERTY SOVERSION ${TDLib_VERSION})" >> CMakeLists.txt
+echo "set_property(TARGET tdjson PROPERTY SOVERSION ${TDLib_VERSION})" >> CMakeLists.txt
 
 # Patching LIBDIR path...
 sed -e 's@DESTINATION lib@DESTINATION %{_lib}@g' -e 's@lib/@%{_lib}/@g' -i CMakeLists.txt
@@ -84,7 +84,7 @@ popd
 %files
 %license LICENSE_1_0.txt
 %doc README.md CHANGELOG.md
-%{_libdir}/libtd*.so.1*
+%{_libdir}/libtd*.so.%{version}
 
 %files devel
 %{_includedir}/td
