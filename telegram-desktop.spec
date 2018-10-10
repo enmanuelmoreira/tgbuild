@@ -11,7 +11,7 @@
 Summary: Telegram Desktop official messaging app
 Name: telegram-desktop
 Version: 1.4.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 # Application and 3rd-party modules licensing:
 # * S0 (Telegram Desktop) - GPLv3+ with OpenSSL exception -- main source;
@@ -145,6 +145,9 @@ appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/metainfo/%{name}.
 %{_datadir}/metainfo/%{name}.appdata.xml
 
 %changelog
+* Wed Oct 10 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.4.2-2
+- Backported patch with crash fix on logout.
+
 * Tue Oct 09 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.4.2-1
 - Updated to 1.4.2.
 
