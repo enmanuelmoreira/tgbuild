@@ -30,6 +30,8 @@ Patch0: %{name}-build-fixes.patch
 Patch1: %{name}-api-tokens.patch
 Patch2: %{name}-system-fonts.patch
 
+Patch100: %{name}-logout-crash-fix.patch
+
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 Recommends: libappindicator-gtk3%{?_isa}
 Requires: qt5-qtimageformats%{?_isa}
