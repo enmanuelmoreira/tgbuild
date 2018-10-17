@@ -29,6 +29,7 @@ Source1: https://github.com/telegramdesktop/crl/archive/%{commit1}.tar.gz#/crl-%
 Patch0: %{name}-build-fixes.patch
 Patch1: %{name}-api-tokens.patch
 Patch2: %{name}-system-fonts.patch
+Patch3: %{name}-unbundle-minizip.patch
 
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 Recommends: libappindicator-gtk3%{?_isa}
