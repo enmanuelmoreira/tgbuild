@@ -1,7 +1,7 @@
-From 0e54a8970ec3aaf9411be0948f7aed9df72cd25a Mon Sep 17 00:00:00 2001
+From ef592de24f0a1fe32257930456c92897b7a3af06 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Mon, 9 Apr 2018 16:57:13 +0200
-Subject: [PATCH 2/3] Changed default Telegram Desktop's test API keys to
+Subject: [PATCH 2/4] Changed default Telegram Desktop's test API keys to
  obtained specially for Fedora/RPMFusion. We cannot hide them because we need
  to provide reproducible builds.
 
@@ -10,10 +10,10 @@ Subject: [PATCH 2/3] Changed default Telegram Desktop's test API keys to
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Telegram/SourceFiles/config.h b/Telegram/SourceFiles/config.h
-index 863d0280e..255afd80c 100644
+index f26f04cae..abcf53cde 100644
 --- a/Telegram/SourceFiles/config.h
 +++ b/Telegram/SourceFiles/config.h
-@@ -197,8 +197,8 @@ w/CVnbwQOw0g5GBwwFV3r0uTTvy44xx8XXxk+Qknu4eBCsmrAFNnAgMBAAE=\n\
+@@ -195,8 +195,8 @@ w/CVnbwQOw0g5GBwwFV3r0uTTvy44xx8XXxk+Qknu4eBCsmrAFNnAgMBAAE=\n\
  #ifdef CUSTOM_API_ID
  #include "../../../TelegramPrivate/custom_api_id.h" // Custom API id and API hash
  #else

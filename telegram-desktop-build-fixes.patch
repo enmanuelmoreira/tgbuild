@@ -1,7 +1,7 @@
-From 2da9a65c2f0d10a1c30134c48a9894270bb83f13 Mon Sep 17 00:00:00 2001
+From c200d4ef6a7146819808ace16534787b0094e833 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
-Subject: [PATCH 1/3] Fixed build under Fedora using rpmbuild and mock.
+Subject: [PATCH 1/4] Fixed build under Fedora using rpmbuild and mock.
 
 ---
  Telegram/Resources/qrc/telegram_linux.qrc |  1 -
@@ -9,7 +9,7 @@ Subject: [PATCH 1/3] Fixed build under Fedora using rpmbuild and mock.
  Telegram/SourceFiles/qt_functions.cpp     | 94 +++++++++++++++++++++++
  Telegram/gyp/CMakeLists.inj               |  6 ++
  Telegram/gyp/PrecompiledHeader.cmake      |  4 +-
- Telegram/gyp/Telegram.gyp                 | 31 ++------
+ Telegram/gyp/Telegram.gyp                 | 29 ++-----
  Telegram/gyp/codegen_rules.gypi           |  6 +-
  Telegram/gyp/lib_base.gyp                 | 11 +--
  Telegram/gyp/lib_export.gyp               |  9 +--
@@ -19,11 +19,11 @@ Subject: [PATCH 1/3] Fixed build under Fedora using rpmbuild and mock.
  Telegram/gyp/qt_moc.gypi                  |  5 +-
  Telegram/gyp/qt_rcc.gypi                  |  2 +-
  Telegram/gyp/settings_linux.gypi          | 25 +-----
- Telegram/gyp/telegram_linux.gypi          | 75 ++++++------------
- Telegram/gyp/telegram_sources.txt         |  9 +--
+ Telegram/gyp/telegram_linux.gypi          | 73 +++++-------------
+ Telegram/gyp/telegram_sources.txt         |  2 +-
  lib/xdg/telegramdesktop.appdata.xml       |  2 +-
  lib/xdg/telegramdesktop.desktop           |  6 +-
- 19 files changed, 183 insertions(+), 206 deletions(-)
+ 19 files changed, 181 insertions(+), 197 deletions(-)
  create mode 100644 Telegram/SourceFiles/qt_functions.cpp
  create mode 100644 Telegram/gyp/CMakeLists.inj
 
@@ -184,18 +184,10 @@ index a0e1e0489..bd9bce0c1 100644
          IMPLICIT_DEPENDS CXX "${_pch_header}"
          COMMENT "Precompiling header ${_name} for ${_target} (C++)")
 diff --git a/Telegram/gyp/Telegram.gyp b/Telegram/gyp/Telegram.gyp
-index dd7779c7e..d92e36b79 100644
+index dd7779c7e..db904453e 100644
 --- a/Telegram/gyp/Telegram.gyp
 +++ b/Telegram/gyp/Telegram.gyp
-@@ -18,7 +18,6 @@
-       'src_loc': '../SourceFiles',
-       'res_loc': '../Resources',
-       'submodules_loc': '../ThirdParty',
--      'minizip_loc': '<(submodules_loc)/minizip',
-       'sp_media_key_tap_loc': '<(submodules_loc)/SPMediaKeyTap',
-       'emoji_suggestions_loc': '<(submodules_loc)/emoji_suggestions',
-       'style_files': [
-@@ -51,15 +50,13 @@
+@@ -51,15 +51,13 @@
          'pt-BR',
        ],
        'build_defines%': '',
@@ -212,7 +204,7 @@ index dd7779c7e..d92e36b79 100644
        'telegram_linux.gypi',
        'openssl.gypi',
        'qt.gypi',
-@@ -74,9 +71,6 @@
+@@ -74,9 +72,6 @@
        'codegen.gyp:codegen_lang',
        'codegen.gyp:codegen_numbers',
        'codegen.gyp:codegen_style',
@@ -222,7 +214,7 @@ index dd7779c7e..d92e36b79 100644
        'crl.gyp:crl',
        'lib_base.gyp:lib_base',
        'lib_export.gyp:lib_export',
-@@ -84,30 +78,20 @@
+@@ -84,30 +79,21 @@
      ],
  
      'defines': [
@@ -249,7 +241,7 @@ index dd7779c7e..d92e36b79 100644
 -      '<(libs_loc)/openal-soft/include',
 -      '<(libs_loc)/opus/include',
 -      '<(libs_loc)/range-v3/include',
--      '<(minizip_loc)',
+       '<(minizip_loc)',
 -      '<(sp_media_key_tap_loc)',
        '<(emoji_suggestions_loc)',
 -      '<(submodules_loc)/GSL/include',
@@ -259,7 +251,7 @@ index dd7779c7e..d92e36b79 100644
      ],
      'sources': [
        '<@(qrc_files)',
-@@ -129,7 +113,6 @@
+@@ -129,7 +115,6 @@
            'CUSTOM_API_ID',
          ],
          'dependencies': [
@@ -677,7 +669,7 @@ index 17219fa2c..9b6f0c510 100644
          'Debug': {
          },
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index 80259c687..1e1b14748 100644
+index 80259c687..cd6414461 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
 @@ -10,7 +10,7 @@
@@ -689,7 +681,7 @@ index 80259c687..1e1b14748 100644
        'pkgconfig_libs': [
  # In order to work libxkbcommon must be linked statically,
  # PKGCONFIG links it like "-L/usr/local/lib -lxkbcommon"
-@@ -18,50 +18,31 @@
+@@ -18,50 +18,29 @@
  # QApplication() -> createPlatformIntegration -> QXcbIntegrationPlugin::create
          #'xkbcommon',
        ],
@@ -710,7 +702,6 @@ index 80259c687..1e1b14748 100644
 -      '<(linux_path_range)/include',
 +      '<!(rpm --eval "%{_includedir}")',
 +      '<!(rpm --eval "%{_includedir}")/ffmpeg',
-+      '<!(rpm --eval "%{_includedir}")/minizip',
 +      '<!(rpm --eval "%{_includedir}")/opus',
 +      '<!(rpm --eval "%{_includedir}")/libtgvoip',
 +      '<!(rpm --eval "%{_includedir}")/guidelines-support-library',
@@ -752,14 +743,13 @@ index 80259c687..1e1b14748 100644
 +      'swscale',
 +      'avutil',
 +      'z',
-+      'minizip',
 +      'tgvoip',
 +      'lzma',
 +      'xxhash',
  #      '<!(pkg-config 2> /dev/null --libs <@(pkgconfig_libs))',
      ],
      'cflags_cc': [
-@@ -69,36 +50,24 @@
+@@ -69,36 +48,24 @@
        '-Wno-maybe-uninitialized',
      ],
      'ldflags': [
@@ -799,10 +789,10 @@ index 80259c687..1e1b14748 100644
          ],
        }]
 diff --git a/Telegram/gyp/telegram_sources.txt b/Telegram/gyp/telegram_sources.txt
-index a21f20b56..657fc8c5b 100644
+index cbc79de27..b17c4081f 100644
 --- a/Telegram/gyp/telegram_sources.txt
 +++ b/Telegram/gyp/telegram_sources.txt
-@@ -753,7 +753,7 @@
+@@ -751,7 +751,7 @@
  <(src_loc)/messenger.h
  <(src_loc)/observer_peer.cpp
  <(src_loc)/observer_peer.h
@@ -811,20 +801,6 @@ index a21f20b56..657fc8c5b 100644
  <(src_loc)/settings.cpp
  <(src_loc)/settings.h
  <(src_loc)/shortcuts.cpp
-@@ -762,13 +762,6 @@
- <(emoji_suggestions_loc)/emoji_suggestions.h
- 
- platforms: !win
--<(minizip_loc)/crypt.h
--<(minizip_loc)/ioapi.c
--<(minizip_loc)/ioapi.h
--<(minizip_loc)/zip.c
--<(minizip_loc)/zip.h
--<(minizip_loc)/unzip.c
--<(minizip_loc)/unzip.h
- 
- platforms: win
- <(res_loc)/winrc/Telegram.rc
 diff --git a/lib/xdg/telegramdesktop.appdata.xml b/lib/xdg/telegramdesktop.appdata.xml
 index 7bcf8d835..4508c01cd 100644
 --- a/lib/xdg/telegramdesktop.appdata.xml

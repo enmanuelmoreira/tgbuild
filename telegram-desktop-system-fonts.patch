@@ -1,7 +1,7 @@
-From b9deb89449e8f1523bd5d94d3f9daeaccae1881a Mon Sep 17 00:00:00 2001
+From a8a5e5d3b1552176ae93724ecf634f45dde34aea Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Sun, 24 Jun 2018 22:59:34 +0200
-Subject: [PATCH 3/3] Backported and rebased patch from Debian maintainer
+Subject: [PATCH 3/4] Backported and rebased patch from Debian maintainer
  Nicholas Guriev. Removed links to packaged Open Sans fonts. Telegram Desktop
  will use packaged versions.
 
