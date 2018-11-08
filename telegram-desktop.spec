@@ -65,7 +65,7 @@ BuildRequires: opus-devel
 BuildRequires: gtk3-devel
 BuildRequires: dee-devel
 BuildRequires: xz-devel
-BuildRequires: python2
+BuildRequires: python3
 
 %if 0%{?fedora} >= 30
 BuildRequires: minizip-compat-devel
