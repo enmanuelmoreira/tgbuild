@@ -1,5 +1,7 @@
 # Telegram Desktop's constants...
 %global appname tdesktop
+%global apiid 208164
+%global apihash dfbe1bc42dc9d20507e17d1814cc2f0a
 
 # Git revision of crl...
 %global commit1 4291015efab76bda5886a56b5007f4531be17d46
@@ -27,9 +29,8 @@ ExclusiveArch: i686 x86_64
 Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
 Source1: https://github.com/telegramdesktop/crl/archive/%{commit1}.tar.gz#/crl-%{shortcommit1}.tar.gz
 Patch0: %{name}-build-fixes.patch
-Patch1: %{name}-api-tokens.patch
-Patch2: %{name}-system-fonts.patch
-Patch3: %{name}-unbundle-minizip.patch
+Patch1: %{name}-system-fonts.patch
+Patch2: %{name}-unbundle-minizip.patch
 
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 Recommends: libappindicator-gtk3%{?_isa}
@@ -99,7 +100,7 @@ popd
 %build
 # Generating cmake script using GYP...
 pushd Telegram/gyp
-    gyp --depth=. --generator-output=../.. -Goutput_dir=out Telegram.gyp --format=cmake
+    gyp --depth=. --generator-output=../.. -Goutput_dir=out -Dapi_id=%{apiid} -Dapi_hash=%{apihash} Telegram.gyp --format=cmake
 popd
 
 # Patching generated cmake script...
