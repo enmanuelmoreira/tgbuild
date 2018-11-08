@@ -1,7 +1,7 @@
-From c200d4ef6a7146819808ace16534787b0094e833 Mon Sep 17 00:00:00 2001
+From cd8fb2b8663c5e5e26c74170a51b2db9bb9531c5 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
-Subject: [PATCH 1/4] Fixed build under Fedora using rpmbuild and mock.
+Subject: [PATCH 1/3] Fixed build under Fedora using rpmbuild and mock.
 
 ---
  Telegram/Resources/qrc/telegram_linux.qrc |  1 -
@@ -9,7 +9,7 @@ Subject: [PATCH 1/4] Fixed build under Fedora using rpmbuild and mock.
  Telegram/SourceFiles/qt_functions.cpp     | 94 +++++++++++++++++++++++
  Telegram/gyp/CMakeLists.inj               |  6 ++
  Telegram/gyp/PrecompiledHeader.cmake      |  4 +-
- Telegram/gyp/Telegram.gyp                 | 29 ++-----
+ Telegram/gyp/Telegram.gyp                 | 28 ++-----
  Telegram/gyp/codegen_rules.gypi           |  6 +-
  Telegram/gyp/lib_base.gyp                 | 11 +--
  Telegram/gyp/lib_export.gyp               |  9 +--
@@ -23,7 +23,7 @@ Subject: [PATCH 1/4] Fixed build under Fedora using rpmbuild and mock.
  Telegram/gyp/telegram_sources.txt         |  2 +-
  lib/xdg/telegramdesktop.appdata.xml       |  2 +-
  lib/xdg/telegramdesktop.desktop           |  6 +-
- 19 files changed, 181 insertions(+), 197 deletions(-)
+ 19 files changed, 180 insertions(+), 197 deletions(-)
  create mode 100644 Telegram/SourceFiles/qt_functions.cpp
  create mode 100644 Telegram/gyp/CMakeLists.inj
 
@@ -184,7 +184,7 @@ index a0e1e0489..bd9bce0c1 100644
          IMPLICIT_DEPENDS CXX "${_pch_header}"
          COMMENT "Precompiling header ${_name} for ${_target} (C++)")
 diff --git a/Telegram/gyp/Telegram.gyp b/Telegram/gyp/Telegram.gyp
-index dd7779c7e..db904453e 100644
+index ac7696e1d..33db47b26 100644
 --- a/Telegram/gyp/Telegram.gyp
 +++ b/Telegram/gyp/Telegram.gyp
 @@ -51,15 +51,13 @@
@@ -192,7 +192,7 @@ index dd7779c7e..db904453e 100644
        ],
        'build_defines%': '',
 -      'list_sources_command': 'python <(DEPTH)/list_sources.py --input <(DEPTH)/telegram_sources.txt --replace src_loc=<(src_loc)',
-+      'list_sources_command': 'python2 <(DEPTH)/list_sources.py --input <(DEPTH)/telegram_sources.txt --replace src_loc=<(src_loc)',
++      'list_sources_command': 'python3 <(DEPTH)/list_sources.py --input <(DEPTH)/telegram_sources.txt --replace src_loc=<(src_loc)',
        'pch_source': '<(src_loc)/stdafx.cpp',
        'pch_header': '<(src_loc)/stdafx.h',
      },
@@ -214,7 +214,7 @@ index dd7779c7e..db904453e 100644
        'crl.gyp:crl',
        'lib_base.gyp:lib_base',
        'lib_export.gyp:lib_export',
-@@ -84,30 +79,21 @@
+@@ -84,32 +79,22 @@
      ],
  
      'defines': [
@@ -222,8 +222,9 @@ index dd7779c7e..db904453e 100644
 -      'AL_ALEXT_PROTOTYPES',
        'TGVOIP_USE_CXX11_LIB',
 -      'XXH_INLINE_ALL',
+       'TDESKTOP_API_ID=<(api_id)',
+       'TDESKTOP_API_HASH=<(api_hash)',
 -      '<!@(python -c "for s in \'<(build_defines)\'.split(\',\'): print(s)")',
-+      '__STDC_FORMAT_MACROS',
 +      'TDESKTOP_DISABLE_AUTOUPDATE',
 +      'TDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME',
 +      'TDESKTOP_DISABLE_DESKTOP_FILE_GENERATION',
@@ -251,8 +252,8 @@ index dd7779c7e..db904453e 100644
      ],
      'sources': [
        '<@(qrc_files)',
-@@ -129,7 +115,6 @@
-           'CUSTOM_API_ID',
+@@ -131,7 +116,6 @@
+           'TDESKTOP_OFFICIAL_TARGET=<(official_build_target)',
          ],
          'dependencies': [
 -          'utils.gyp:Packer',
@@ -260,7 +261,7 @@ index dd7779c7e..db904453e 100644
        }], [ 'build_mac', {
          'mac_bundle': '1',
 diff --git a/Telegram/gyp/codegen_rules.gypi b/Telegram/gyp/codegen_rules.gypi
-index a901db3bb..424f70eea 100644
+index a901db3bb..28873f8dc 100644
 --- a/Telegram/gyp/codegen_rules.gypi
 +++ b/Telegram/gyp/codegen_rules.gypi
 @@ -15,7 +15,7 @@
@@ -268,7 +269,7 @@ index a901db3bb..424f70eea 100644
      ],
      'action': [
 -      'python', '<(DEPTH)/update_dependent.py', '--styles',
-+      'python2', '<(DEPTH)/update_dependent.py', '--styles',
++      'python3', '<(DEPTH)/update_dependent.py', '--styles',
        '-I', '<(res_loc)', '-I', '<(src_loc)',
        '-o', '<(SHARED_INTERMEDIATE_DIR)/update_dependent_styles.timestamp',
        '<@(style_files)',
@@ -277,19 +278,19 @@ index a901db3bb..424f70eea 100644
        '<(DEPTH)/update_dependent.py',
        '<@(qrc_files)',
 -      '<!@(python <(DEPTH)/update_dependent.py --qrc_list <@(qrc_files))',
-+      '<!@(python2 <(DEPTH)/update_dependent.py --qrc_list <@(qrc_files))',
++      '<!@(python3 <(DEPTH)/update_dependent.py --qrc_list <@(qrc_files))',
      ],
      'outputs': [
        '<(SHARED_INTERMEDIATE_DIR)/update_dependent_qrc.timestamp',
      ],
      'action': [
 -      'python', '<(DEPTH)/update_dependent.py', '--qrc',
-+      'python2', '<(DEPTH)/update_dependent.py', '--qrc',
++      'python3', '<(DEPTH)/update_dependent.py', '--qrc',
        '-o', '<(SHARED_INTERMEDIATE_DIR)/update_dependent_qrc.timestamp',
        '<@(qrc_files)',
      ],
 diff --git a/Telegram/gyp/lib_base.gyp b/Telegram/gyp/lib_base.gyp
-index 1f3e9c34e..dcb34b536 100644
+index d70fe8fad..9a09afda4 100644
 --- a/Telegram/gyp/lib_base.gyp
 +++ b/Telegram/gyp/lib_base.gyp
 @@ -15,8 +15,6 @@
@@ -353,7 +354,7 @@ index 2d1ac6c56..c81930f80 100644
      ],
      'sources': [
 diff --git a/Telegram/gyp/lib_scheme.gyp b/Telegram/gyp/lib_scheme.gyp
-index b52a9d071..32b126682 100644
+index b52a9d071..4850157a8 100644
 --- a/Telegram/gyp/lib_scheme.gyp
 +++ b/Telegram/gyp/lib_scheme.gyp
 @@ -35,7 +35,7 @@
@@ -370,7 +371,7 @@ index b52a9d071..32b126682 100644
        ],
        'action': [
 -        'python', '<(src_loc)/codegen/scheme/codegen_scheme.py',
-+        'python2', '<(src_loc)/codegen/scheme/codegen_scheme.py',
++        'python3', '<(src_loc)/codegen/scheme/codegen_scheme.py',
          '-o', '<(SHARED_INTERMEDIATE_DIR)', '<(res_loc)/scheme.tl',
        ],
        'message': 'codegen_scheme-ing scheme.tl..',
@@ -412,7 +413,7 @@ index 527713546..3856cd87a 100644
      'sources': [
        '<(src_loc)/storage/storage_clear_legacy.cpp',
 diff --git a/Telegram/gyp/qt.gypi b/Telegram/gyp/qt.gypi
-index 0b783ec21..653562ffb 100644
+index 0b783ec21..125ab2513 100644
 --- a/Telegram/gyp/qt.gypi
 +++ b/Telegram/gyp/qt.gypi
 @@ -14,25 +14,21 @@
@@ -483,14 +484,14 @@ index 0b783ec21..653562ffb 100644
        'qt_version%': '<(qt_version)',
        'qt_loc_unix': '<(qt_loc_unix)',
 -      'qt_version_loc': '<!(python -c "print(\'<(qt_version)\'.replace(\'.\', \'_\'))")',
-+      'qt_version_loc': '<!(python2 -c "print(\'<(qt_version)\'.replace(\'.\', \'_\'))")',
++      'qt_version_loc': '<!(python3 -c "print(\'<(qt_version)\'.replace(\'.\', \'_\'))")',
        'qt_libs_debug': [
 -        '<!@(python -c "for s in \'<@(qt_libs)\'.split(\' \'): print(\'<(qt_lib_prefix)\' + s + \'<(qt_lib_debug_postfix)\')")',
-+        '<!@(python2 -c "for s in \'<@(qt_libs)\'.split(\' \'): print(\'<(qt_lib_prefix)\' + s + \'<(qt_lib_debug_postfix)\')")',
++        '<!@(python3 -c "for s in \'<@(qt_libs)\'.split(\' \'): print(\'<(qt_lib_prefix)\' + s + \'<(qt_lib_debug_postfix)\')")',
        ],
        'qt_libs_release': [
 -        '<!@(python -c "for s in \'<@(qt_libs)\'.split(\' \'): print(\'<(qt_lib_prefix)\' + s + \'<(qt_lib_release_postfix)\')")',
-+        '<!@(python2 -c "for s in \'<@(qt_libs)\'.split(\' \'): print(\'<(qt_lib_prefix)\' + s + \'<(qt_lib_release_postfix)\')")',
++        '<!@(python3 -c "for s in \'<@(qt_libs)\'.split(\' \'): print(\'<(qt_lib_prefix)\' + s + \'<(qt_lib_release_postfix)\')")',
        ],
      },
      'qt_libs_debug': [ '<@(qt_libs_debug)' ],
@@ -583,7 +584,7 @@ index 0b783ec21..653562ffb 100644
          '-rdynamic',
        ],
 diff --git a/Telegram/gyp/qt_moc.gypi b/Telegram/gyp/qt_moc.gypi
-index 464d3c818..909c4c5af 100644
+index 464d3c818..6f20dbbfc 100644
 --- a/Telegram/gyp/qt_moc.gypi
 +++ b/Telegram/gyp/qt_moc.gypi
 @@ -12,12 +12,13 @@
@@ -598,7 +599,7 @@ index 464d3c818..909c4c5af 100644
  
 -      '<!@(python -c "for s in \'<@(_defines)\'.split(\' \'): print(\'-D\' + s)")',
 +      '<!@(rpm --eval "%{optflags}" | grep -Po "[-]([IDU]\s*\S*|E)")',
-+      '<!@(python2 -c "for s in \'<@(_defines)\'.split(\' \'): print(\'-D\' + s)")',
++      '<!@(python3 -c "for s in \'<@(_defines)\'.split(\' \'): print(\'-D\' + s)")',
        # '<!@(python -c "for s in \'<@(_include_dirs)\'.split(\' \'): print(\'-I\' + s)")',
        '<(RULE_INPUT_PATH)',
        '-o', '<(SHARED_INTERMEDIATE_DIR)/<(_target_name)/moc/moc_<(RULE_INPUT_ROOT).cpp',
@@ -669,7 +670,7 @@ index 17219fa2c..9b6f0c510 100644
          'Debug': {
          },
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index 80259c687..cd6414461 100644
+index 80259c687..bebc4f4a3 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
 @@ -10,7 +10,7 @@
@@ -677,7 +678,7 @@ index 80259c687..cd6414461 100644
          'build_defines%': '',
        },
 -      'not_need_gtk%': '<!(python -c "print(\'TDESKTOP_DISABLE_GTK_INTEGRATION\' in \'<(build_defines)\')")',
-+      'not_need_gtk%': '<!(python2 -c "print(\'TDESKTOP_DISABLE_GTK_INTEGRATION\' in \'<(build_defines)\')")',
++      'not_need_gtk%': '<!(python3 -c "print(\'TDESKTOP_DISABLE_GTK_INTEGRATION\' in \'<(build_defines)\')")',
        'pkgconfig_libs': [
  # In order to work libxkbcommon must be linked statically,
  # PKGCONFIG links it like "-L/usr/local/lib -lxkbcommon"
@@ -789,10 +790,10 @@ index 80259c687..cd6414461 100644
          ],
        }]
 diff --git a/Telegram/gyp/telegram_sources.txt b/Telegram/gyp/telegram_sources.txt
-index cbc79de27..b17c4081f 100644
+index e311af8fe..b9893fa0a 100644
 --- a/Telegram/gyp/telegram_sources.txt
 +++ b/Telegram/gyp/telegram_sources.txt
-@@ -751,7 +751,7 @@
+@@ -762,7 +762,7 @@
  <(src_loc)/messenger.h
  <(src_loc)/observer_peer.cpp
  <(src_loc)/observer_peer.h
@@ -814,7 +815,7 @@ index 7bcf8d835..4508c01cd 100644
      <project_license>GPL-3.0</project_license>
      <name>Telegram Desktop</name>
 diff --git a/lib/xdg/telegramdesktop.desktop b/lib/xdg/telegramdesktop.desktop
-index 0a8069512..550b9f785 100644
+index bb2a8ea79..6b09c6caf 100644
 --- a/lib/xdg/telegramdesktop.desktop
 +++ b/lib/xdg/telegramdesktop.desktop
 @@ -1,9 +1,11 @@
@@ -832,5 +833,5 @@ index 0a8069512..550b9f785 100644
  StartupWMClass=TelegramDesktop
  Type=Application
 -- 
-2.17.2
+2.19.1
 

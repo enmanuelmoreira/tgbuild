@@ -1,7 +1,7 @@
-From a8a5e5d3b1552176ae93724ecf634f45dde34aea Mon Sep 17 00:00:00 2001
+From 75da327869ae171a36807f74480a0fb026c9f72e Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Sun, 24 Jun 2018 22:59:34 +0200
-Subject: [PATCH 3/4] Backported and rebased patch from Debian maintainer
+Subject: [PATCH 2/3] Backported and rebased patch from Debian maintainer
  Nicholas Guriev. Removed links to packaged Open Sans fonts. Telegram Desktop
  will use packaged versions.
 
@@ -25,7 +25,7 @@ index 5d4433627..26bc20807 100644
      <file alias="art/bg_initial.jpg">../art/bg_initial.jpg</file>
      <file alias="art/logo_256.png">../art/logo_256.png</file>
 diff --git a/Telegram/SourceFiles/ui/twidget.cpp b/Telegram/SourceFiles/ui/twidget.cpp
-index 71f318229..8912791a3 100644
+index d9b57cb3b..385a59906 100644
 --- a/Telegram/SourceFiles/ui/twidget.cpp
 +++ b/Telegram/SourceFiles/ui/twidget.cpp
 @@ -70,9 +70,9 @@ void Start() {
@@ -42,5 +42,5 @@ index 71f318229..8912791a3 100644
  #ifdef Q_OS_WIN
  	// Attempt to workaround a strange font bug with Open Sans Semibold not loading.
 -- 
-2.17.2
+2.19.1
 
