@@ -1,0 +1,134 @@
+From 2d05281ba9dbf917eba96c8af7d4f98d6e24f586 Mon Sep 17 00:00:00 2001
+From: John Preston <johnprestonmail@gmail.com>
+Date: Fri, 9 Nov 2018 16:28:15 +0400
+Subject: [PATCH] Add configuration for OpenAL effects usage.
+
+---
+ Telegram/SourceFiles/media/media_audio.cpp         |  8 ++++++++
+ .../media/player/media_player_widget.cpp           | 14 +++++++++++---
+ .../SourceFiles/media/player/media_player_widget.h |  1 +
+ 3 files changed, 20 insertions(+), 3 deletions(-)
+
+diff --git a/Telegram/SourceFiles/media/media_audio.cpp b/Telegram/SourceFiles/media/media_audio.cpp
+index 3fbcdf3c9..3816c919b 100644
+--- a/Telegram/SourceFiles/media/media_audio.cpp
++++ b/Telegram/SourceFiles/media/media_audio.cpp
+@@ -45,12 +45,14 @@ namespace {
+ 
+ Player::Mixer *MixerInstance = nullptr;
+ 
++#ifndef TDESKTOP_DISABLE_OPENAL_EFFECTS
+ struct PlaybackSpeedData {
+ 	ALuint uiEffectSlot = 0;
+ 	ALuint uiEffect = 0;
+ 	ALuint uiFilter = 0;
+ };
+ PlaybackSpeedData _playbackSpeedData;
++#endif // TDESKTOP_DISABLE_OPENAL_EFFECTS
+ 
+ // Thread: Any.
+ bool ContextErrorHappened() {
+@@ -152,6 +154,7 @@ bool CreatePlaybackDevice() {
+ 	alListener3f(AL_VELOCITY, 0.f, 0.f, 0.f);
+ 	alListenerfv(AL_ORIENTATION, v);
+ 
++#ifndef TDESKTOP_DISABLE_OPENAL_EFFECTS
+ 	// playback speed related init
+ 	// generate an effect slot and an effect
+ 	alGenAuxiliaryEffectSlots(1, &_playbackSpeedData.uiEffectSlot);
+@@ -169,6 +172,7 @@ bool CreatePlaybackDevice() {
+ 	alFilterf(_playbackSpeedData.uiFilter, AL_LOWPASS_GAIN, 0.f);
+ 	// to use the modified playback speed:
+ 	// connect both the effect slot and filter with the stream source and set AL_PITCH
++#endif // TDESKTOP_DISABLE_OPENAL_EFFECTS
+ 
+ 	alDistanceModel(AL_NONE);
+ 
+@@ -181,6 +185,7 @@ void ClosePlaybackDevice() {
+ 
+ 	LOG(("Audio Info: Closing audio playback device."));
+ 
++#ifndef TDESKTOP_DISABLE_OPENAL_EFFECTS
+ 	// playback speed related
+ 	alDeleteFilters(1, &_playbackSpeedData.uiFilter);
+ 	alDeleteEffects(1, &_playbackSpeedData.uiEffect);
+@@ -188,6 +193,7 @@ void ClosePlaybackDevice() {
+ 	_playbackSpeedData.uiFilter = 0;
+ 	_playbackSpeedData.uiEffect = 0;
+ 	_playbackSpeedData.uiEffectSlot = 0;
++#endif // TDESKTOP_DISABLE_OPENAL_EFFECTS
+ 
+ 	if (Player::mixer()) {
+ 		Player::mixer()->detachTracks();
+@@ -1031,6 +1037,7 @@ void Mixer::updatePlaybackSpeed(Track *track, bool doubled) {
+ 	if (!track->isStreamCreated()) {
+ 		return;
+ 	}
++#ifndef TDESKTOP_DISABLE_OPENAL_EFFECTS
+ 	const auto source = track->stream.source;
+ 	// Note: This alters the playback speed AND the pitch
+ 	alSourcef(source, AL_PITCH, doubled ? 2. : 1.);
+@@ -1046,6 +1053,7 @@ void Mixer::updatePlaybackSpeed(Track *track, bool doubled) {
+ 		// disconnect the filter
+ 		alSourcei(source, AL_DIRECT_FILTER, AL_FILTER_NULL);
+ 	}
++#endif // TDESKTOP_DISABLE_OPENAL_EFFECTS
+ }
+ 
+ void Mixer::stopAndClear() {
+diff --git a/Telegram/SourceFiles/media/player/media_player_widget.cpp b/Telegram/SourceFiles/media/player/media_player_widget.cpp
+index cf7fc32b0..3df3818bd 100644
+--- a/Telegram/SourceFiles/media/player/media_player_widget.cpp
++++ b/Telegram/SourceFiles/media/player/media_player_widget.cpp
+@@ -259,7 +259,7 @@ void Widget::handleSeekFinished(float64 progress) {
+ void Widget::resizeEvent(QResizeEvent *e) {
+ 	auto right = st::mediaPlayerCloseRight;
+ 	_close->moveToRight(right, st::mediaPlayerPlayTop); right += _close->width();
+-	if (_type == AudioMsgId::Type::Voice) {
++	if (hasPlaybackSpeedControl()) {
+ 		_playbackSpeed->moveToRight(right, st::mediaPlayerPlayTop); right += _playbackSpeed->width();
+ 	}
+ 	_repeatTrack->moveToRight(right, st::mediaPlayerPlayTop); right += _repeatTrack->width();
+@@ -345,7 +345,7 @@ int Widget::getLabelsRight() const {
+ 	auto result = st::mediaPlayerCloseRight + _close->width();
+ 	if (_type == AudioMsgId::Type::Song) {
+ 		result += _repeatTrack->width() + _volumeToggle->width();
+-	} else if (_type == AudioMsgId::Type::Voice) {
++	} else if (hasPlaybackSpeedControl()) {
+ 		result += _playbackSpeed->width();
+ 	}
+ 	result += st::mediaPlayerPadding;
+@@ -391,12 +391,20 @@ void Widget::checkForTypeChange() {
+ 	}
+ }
+ 
++bool Widget::hasPlaybackSpeedControl() const {
++#ifndef TDESKTOP_DISABLE_OPENAL_EFFECTS
++	return (_type == AudioMsgId::Type::Voice);
++#else // TDESKTOP_DISABLE_OPENAL_EFFECTS
++	return false;
++#endif // TDESKTOP_DISABLE_OPENAL_EFFECTS
++}
++
+ void Widget::setType(AudioMsgId::Type type) {
+ 	if (_type != type) {
+ 		_type = type;
+ 		_repeatTrack->setVisible(_type == AudioMsgId::Type::Song);
+ 		_volumeToggle->setVisible(_type == AudioMsgId::Type::Song);
+-		_playbackSpeed->setVisible(_type == AudioMsgId::Type::Voice);
++		_playbackSpeed->setVisible(hasPlaybackSpeedControl());
+ 		if (!_shadow->isHidden()) {
+ 			_playbackSlider->setVisible(_type == AudioMsgId::Type::Song);
+ 		}
+diff --git a/Telegram/SourceFiles/media/player/media_player_widget.h b/Telegram/SourceFiles/media/player/media_player_widget.h
+index 6e2160f69..00d3227dd 100644
+--- a/Telegram/SourceFiles/media/player/media_player_widget.h
++++ b/Telegram/SourceFiles/media/player/media_player_widget.h
+@@ -70,6 +70,7 @@ class Widget : public Ui::RpWidget, private base::Subscriber {
+ 	void createPrevNextButtons();
+ 	void destroyPrevNextButtons();
+ 
++	bool hasPlaybackSpeedControl() const;
+ 	void updateVolumeToggleIcon();
+ 
+ 	void checkForTypeChange();
