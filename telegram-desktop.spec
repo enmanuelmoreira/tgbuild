@@ -2,6 +2,7 @@
 %global appname tdesktop
 %global apiid 208164
 %global apihash dfbe1bc42dc9d20507e17d1814cc2f0a
+%global appdef TDESKTOP_DISABLE_AUTOUPDATE,TDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME,TDESKTOP_DISABLE_DESKTOP_FILE_GENERATION,TDESKTOP_DISABLE_CRASH_REPORTS,TDESKTOP_DISABLE_UNITY_INTEGRATION
 
 # Git revision of crl...
 %global commit1 4291015efab76bda5886a56b5007f4531be17d46
@@ -100,7 +101,7 @@ popd
 %build
 # Generating cmake script using GYP...
 pushd Telegram/gyp
-    gyp --depth=. --generator-output=../.. -Goutput_dir=out -Dapi_id=%{apiid} -Dapi_hash=%{apihash} Telegram.gyp --format=cmake
+    gyp --depth=. --generator-output=../.. -Goutput_dir=out -Dapi_id=%{apiid} -Dapi_hash=%{apihash} -Dbuild_defines=%{appdef} Telegram.gyp --format=cmake
 popd
 
 # Patching generated cmake script...
