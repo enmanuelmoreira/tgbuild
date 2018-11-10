@@ -1,4 +1,4 @@
-From 9bae6eb0555636cd2950c69422f2e4a205242cb0 Mon Sep 17 00:00:00 2001
+From 823155a5a50e0047b9f15cfb1063bcb8e41ba530 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Thu, 6 Jul 2017 17:27:01 +0200
 Subject: [PATCH] Fixed build of libtgvoip under Fedora as shared library.
@@ -11,7 +11,7 @@ Subject: [PATCH] Fixed build of libtgvoip under Fedora as shared library.
  4 files changed, 65 insertions(+), 10 deletions(-)
 
 diff --git a/libtgvoip.gyp b/libtgvoip.gyp
-index 0cf04ea..88a98cd 100644
+index 964a7bc..4d982dd 100644
 --- a/libtgvoip.gyp
 +++ b/libtgvoip.gyp
 @@ -4,7 +4,8 @@
@@ -156,5 +156,5 @@ index c960d95..2252855 100644
  
  #if !(defined(WEBRTC_ARCH_LITTLE_ENDIAN) ^ defined(WEBRTC_ARCH_BIG_ENDIAN))
 -- 
-2.17.1
+2.19.1
 
