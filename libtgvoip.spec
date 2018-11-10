@@ -51,9 +51,10 @@ ln -s %{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so.2"
 ln -s %{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so"
 
 # Installing additional development files...
-mkdir -p "%{buildroot}%{_includedir}/%{name}/{audio,video}"
 find . -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{buildroot}%{_includedir}/%{name} \;
+mkdir -p "%{buildroot}%{_includedir}/%{name}/audio"
 find audio -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{buildroot}%{_includedir}/%{name}/audio \;
+mkdir -p "%{buildroot}%{_includedir}/%{name}/video"
 find video -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{buildroot}%{_includedir}/%{name}/video \;
 
 %files
