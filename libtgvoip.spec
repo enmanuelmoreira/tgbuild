@@ -1,5 +1,5 @@
 Name: libtgvoip
-Version: 2.2.4
+Version: 2.3
 Release: 1%{?dist}
 Summary: VoIP library for Telegram clients
 
@@ -47,7 +47,6 @@ popd
 # Installing shared library...
 mkdir -p "%{buildroot}%{_libdir}"
 install -m 0755 -p out/Release/lib.target/%{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so.%{version}"
-ln -s %{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so.2.2"
 ln -s %{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so.2"
 ln -s %{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so"
 
@@ -65,6 +64,9 @@ find audio -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{build
 %{_libdir}/%{name}.so
 
 %changelog
+* Sat Nov 10 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.3-1
+- Updated to 2.3 (regular release).
+
 * Sun Sep 02 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.2.4-1
 - Updated to 2.2.4 (regular release).
 
