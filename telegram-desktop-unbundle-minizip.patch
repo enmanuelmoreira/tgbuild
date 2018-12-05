@@ -1,4 +1,4 @@
-From 81ba588165b88f70a9ea74887c3ca234fa2f6c90 Mon Sep 17 00:00:00 2001
+From 153d636f28b2c868be9b91196b2bdeb20a22c0d4 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Wed, 17 Oct 2018 17:57:59 +0200
 Subject: [PATCH 3/3] Use packaged version of minizip on Fedora <= 29.
@@ -30,7 +30,7 @@ index 783ad1da2..5a8a53557 100644
        '<(submodules_loc)/crl/src',
      ],
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index c9f7b9c4c..bf6b52986 100644
+index f2094266c..ec251c428 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
 @@ -22,6 +22,7 @@
@@ -47,13 +47,13 @@ index c9f7b9c4c..bf6b52986 100644
        'z',
 +      'minizip',
        'tgvoip',
-       'lzma',
+       'xz',
        'xxhash',
 diff --git a/Telegram/gyp/telegram_sources.txt b/Telegram/gyp/telegram_sources.txt
-index b9893fa0a..691a32c0b 100644
+index b3a385064..10895dc5e 100644
 --- a/Telegram/gyp/telegram_sources.txt
 +++ b/Telegram/gyp/telegram_sources.txt
-@@ -771,13 +771,6 @@
+@@ -776,13 +776,6 @@
  <(emoji_suggestions_loc)/emoji_suggestions.h
  
  platforms: !win
@@ -68,5 +68,5 @@ index b9893fa0a..691a32c0b 100644
  platforms: win
  <(res_loc)/winrc/Telegram.rc
 -- 
-2.19.1
+2.19.2
 
