@@ -1,4 +1,4 @@
-From bc26de65814bd029f16915a3e9059cc67465e13c Mon Sep 17 00:00:00 2001
+From 13a63e72ce3172d93cf828da1a1a5b17c10d8a56 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Fri, 31 Mar 2017 14:29:58 +0200
 Subject: [PATCH 1/3] Fixed build under Fedora using rpmbuild and mock.
@@ -19,11 +19,11 @@ Subject: [PATCH 1/3] Fixed build under Fedora using rpmbuild and mock.
  Telegram/gyp/qt_moc.gypi                  |  5 +-
  Telegram/gyp/qt_rcc.gypi                  |  2 +-
  Telegram/gyp/settings_linux.gypi          | 25 +-----
- Telegram/gyp/telegram_linux.gypi          | 72 +++++------------
+ Telegram/gyp/telegram_linux.gypi          | 73 +++++-------------
  Telegram/gyp/telegram_sources.txt         |  2 +-
  lib/xdg/telegramdesktop.appdata.xml       |  2 +-
  lib/xdg/telegramdesktop.desktop           |  5 +-
- 19 files changed, 172 insertions(+), 197 deletions(-)
+ 19 files changed, 172 insertions(+), 198 deletions(-)
  create mode 100644 Telegram/SourceFiles/qt_functions.cpp
  create mode 100644 Telegram/gyp/CMakeLists.inj
 
@@ -665,7 +665,7 @@ index 17219fa2c..9b6f0c510 100644
          'Debug': {
          },
 diff --git a/Telegram/gyp/telegram_linux.gypi b/Telegram/gyp/telegram_linux.gypi
-index dc0f4b90d..9bc686d44 100644
+index ffe0e5a96..9bc686d44 100644
 --- a/Telegram/gyp/telegram_linux.gypi
 +++ b/Telegram/gyp/telegram_linux.gypi
 @@ -10,7 +10,7 @@
@@ -677,7 +677,7 @@ index dc0f4b90d..9bc686d44 100644
        'pkgconfig_libs': [
  # In order to work libxkbcommon must be linked statically,
  # PKGCONFIG links it like "-L/usr/local/lib -lxkbcommon"
-@@ -18,50 +18,28 @@
+@@ -18,51 +18,28 @@
  # QApplication() -> createPlatformIntegration -> QXcbIntegrationPlugin::create
          #'xkbcommon',
        ],
@@ -717,6 +717,7 @@ index dc0f4b90d..9bc686d44 100644
 -      'ibusplatforminputcontextplugin',
 -      'fcitxplatforminputcontextplugin',
 -      'himeplatforminputcontextplugin',
+-      'nimfplatforminputcontextplugin',
 -      'liblzma.a',
 -      'libopenal.a',
 -      'libavformat.a',
@@ -744,7 +745,7 @@ index dc0f4b90d..9bc686d44 100644
  #      '<!(pkg-config 2> /dev/null --libs <@(pkgconfig_libs))',
      ],
      'cflags_cc': [
-@@ -69,35 +47,23 @@
+@@ -70,35 +47,23 @@
        '-Wno-maybe-uninitialized',
      ],
      'ldflags': [

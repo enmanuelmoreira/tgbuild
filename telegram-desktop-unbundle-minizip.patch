@@ -1,4 +1,4 @@
-From 8e7b20ec9e0bf3db3f7b3561b2291e0d4a6f6817 Mon Sep 17 00:00:00 2001
+From b8fa792d2cc0ba4329bdfc04da9ef58f0883c09a Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Wed, 17 Oct 2018 17:57:59 +0200
 Subject: [PATCH 3/3] Use packaged version of minizip on Fedora <= 29.
