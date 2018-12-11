@@ -1,4 +1,4 @@
-From eb8103e2efc9040dccb2fe152d6d56ab71ebb21f Mon Sep 17 00:00:00 2001
+From 30296a0533fd023513846313167ece8e1b141a07 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Sun, 24 Jun 2018 22:59:34 +0200
 Subject: [PATCH 2/3] Backported and rebased patch from Debian maintainer
