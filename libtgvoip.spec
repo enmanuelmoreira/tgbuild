@@ -5,13 +5,16 @@ Summary: VoIP library for Telegram clients
 
 # Libtgvoip shared library - Public Domain.
 # Bundled webrtc library - BSD with patented echo cancellation algorithms.
-License: Public Domain and BSD
+# Bundled json11 library - MIT.
+License: Public Domain and BSD and MIT
 URL: https://github.com/grishka/%{name}
 
 Source0: %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 Patch0: %{name}-build-fixes.patch
 
 Provides: bundled(webrtc-audio-processing) = 0.3
+Provides: bundled(json11) = 1.0.0
+
 BuildRequires: pulseaudio-libs-devel
 BuildRequires: alsa-lib-devel
 BuildRequires: openssl-devel
@@ -57,6 +60,9 @@ mkdir -p "%{buildroot}%{_includedir}/%{name}/audio"
 find audio -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{buildroot}%{_includedir}/%{name}/audio \;
 mkdir -p "%{buildroot}%{_includedir}/%{name}/video"
 find video -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{buildroot}%{_includedir}/%{name}/video \;
+
+# Installing bundled library... TODO: unbundle it.
+install -m 0644 -p json11.hpp %{buildroot}%{_includedir}/%{name}
 
 %files
 %license UNLICENSE
