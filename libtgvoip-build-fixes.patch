@@ -1,17 +1,17 @@
-From 823155a5a50e0047b9f15cfb1063bcb8e41ba530 Mon Sep 17 00:00:00 2001
+From b5f964e08f39860ad5fdf033907564498ebbb852 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Thu, 6 Jul 2017 17:27:01 +0200
 Subject: [PATCH] Fixed build of libtgvoip under Fedora as shared library.
 
 ---
- libtgvoip.gyp                                |  7 ++--
- webrtc_dsp/webrtc/common_audio/wav_file.cc   | 20 +++++++++---
- webrtc_dsp/webrtc/common_audio/wav_header.cc | 34 +++++++++++++++++++-
- webrtc_dsp/webrtc/typedefs.h                 | 14 +++++++-
+ libtgvoip.gyp                         |  7 +++---
+ webrtc_dsp/common_audio/wav_file.cc   | 20 ++++++++++++----
+ webrtc_dsp/common_audio/wav_header.cc | 34 ++++++++++++++++++++++++++-
+ webrtc_dsp/typedefs.h                 | 14 ++++++++++-
  4 files changed, 65 insertions(+), 10 deletions(-)
 
 diff --git a/libtgvoip.gyp b/libtgvoip.gyp
-index 964a7bc..4d982dd 100644
+index 8c62b56..c362667 100644
 --- a/libtgvoip.gyp
 +++ b/libtgvoip.gyp
 @@ -4,7 +4,8 @@
@@ -24,7 +24,7 @@ index 964a7bc..4d982dd 100644
          'dependencies': [],
          'defines': [
            'WEBRTC_APM_DEBUG_DUMP=0',
-@@ -13,11 +14,11 @@
+@@ -14,11 +15,11 @@
          'variables': {
            'tgvoip_src_loc': '.',
            'official_build_target%': '',
@@ -38,11 +38,11 @@ index 964a7bc..4d982dd 100644
          ],
          'direct_dependent_settings': {
            'include_dirs': [
-diff --git a/webrtc_dsp/webrtc/common_audio/wav_file.cc b/webrtc_dsp/webrtc/common_audio/wav_file.cc
-index 2b9098a..4f99da7 100644
---- a/webrtc_dsp/webrtc/common_audio/wav_file.cc
-+++ b/webrtc_dsp/webrtc/common_audio/wav_file.cc
-@@ -77,9 +77,6 @@ size_t WavReader::num_samples() const {
+diff --git a/webrtc_dsp/common_audio/wav_file.cc b/webrtc_dsp/common_audio/wav_file.cc
+index 1b8bcbd..9ebf635 100644
+--- a/webrtc_dsp/common_audio/wav_file.cc
++++ b/webrtc_dsp/common_audio/wav_file.cc
+@@ -93,9 +93,6 @@ size_t WavReader::num_samples() const {
  }
  
  size_t WavReader::ReadSamples(size_t num_samples, int16_t* samples) {
@@ -52,7 +52,7 @@ index 2b9098a..4f99da7 100644
    // There could be metadata after the audio; ensure we don't read it.
    num_samples = std::min(num_samples, num_samples_remaining_);
    const size_t read =
-@@ -88,6 +85,12 @@ size_t WavReader::ReadSamples(size_t num_samples, int16_t* samples) {
+@@ -104,6 +101,12 @@ size_t WavReader::ReadSamples(size_t num_samples, int16_t* samples) {
    RTC_CHECK(read == num_samples || feof(file_handle_));
    RTC_CHECK_LE(read, num_samples_remaining_);
    num_samples_remaining_ -= read;
@@ -65,7 +65,7 @@ index 2b9098a..4f99da7 100644
    return read;
  }
  
-@@ -144,10 +147,17 @@ size_t WavWriter::num_samples() const {
+@@ -178,10 +181,17 @@ size_t WavWriter::num_samples() const {
  
  void WavWriter::WriteSamples(const int16_t* samples, size_t num_samples) {
  #ifndef WEBRTC_ARCH_LITTLE_ENDIAN
@@ -85,11 +85,11 @@ index 2b9098a..4f99da7 100644
    RTC_CHECK_EQ(num_samples, written);
    num_samples_ += written;
    RTC_CHECK(num_samples_ >= written);  // detect size_t overflow
-diff --git a/webrtc_dsp/webrtc/common_audio/wav_header.cc b/webrtc_dsp/webrtc/common_audio/wav_header.cc
-index 402ea17..b11ee58 100644
---- a/webrtc_dsp/webrtc/common_audio/wav_header.cc
-+++ b/webrtc_dsp/webrtc/common_audio/wav_header.cc
-@@ -127,7 +127,39 @@ static inline std::string ReadFourCC(uint32_t x) {
+diff --git a/webrtc_dsp/common_audio/wav_header.cc b/webrtc_dsp/common_audio/wav_header.cc
+index e49b748..68a2620 100644
+--- a/webrtc_dsp/common_audio/wav_header.cc
++++ b/webrtc_dsp/common_audio/wav_header.cc
+@@ -86,7 +86,39 @@ static inline std::string ReadFourCC(uint32_t x) {
    return std::string(reinterpret_cast<char*>(&x), 4);
  }
  #else
@@ -130,10 +130,10 @@ index 402ea17..b11ee58 100644
  #endif
  
  static inline uint32_t RiffChunkSize(size_t bytes_in_payload) {
-diff --git a/webrtc_dsp/webrtc/typedefs.h b/webrtc_dsp/webrtc/typedefs.h
+diff --git a/webrtc_dsp/typedefs.h b/webrtc_dsp/typedefs.h
 index c960d95..2252855 100644
---- a/webrtc_dsp/webrtc/typedefs.h
-+++ b/webrtc_dsp/webrtc/typedefs.h
+--- a/webrtc_dsp/typedefs.h
++++ b/webrtc_dsp/typedefs.h
 @@ -48,7 +48,19 @@
  #define WEBRTC_ARCH_32_BITS
  #define WEBRTC_ARCH_LITTLE_ENDIAN
@@ -156,5 +156,5 @@ index c960d95..2252855 100644
  
  #if !(defined(WEBRTC_ARCH_LITTLE_ENDIAN) ^ defined(WEBRTC_ARCH_BIG_ENDIAN))
 -- 
-2.19.1
+2.19.2
 
