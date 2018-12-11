@@ -1,4 +1,4 @@
-From b5f964e08f39860ad5fdf033907564498ebbb852 Mon Sep 17 00:00:00 2001
+From 79b9d100959fa31b8e5a744ab10171e70e687617 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Thu, 6 Jul 2017 17:27:01 +0200
 Subject: [PATCH] Fixed build of libtgvoip under Fedora as shared library.
@@ -7,8 +7,8 @@ Subject: [PATCH] Fixed build of libtgvoip under Fedora as shared library.
  libtgvoip.gyp                         |  7 +++---
  webrtc_dsp/common_audio/wav_file.cc   | 20 ++++++++++++----
  webrtc_dsp/common_audio/wav_header.cc | 34 ++++++++++++++++++++++++++-
- webrtc_dsp/typedefs.h                 | 14 ++++++++++-
- 4 files changed, 65 insertions(+), 10 deletions(-)
+ webrtc_dsp/typedefs.h                 | 23 +++++++++++++++++-
+ 4 files changed, 74 insertions(+), 10 deletions(-)
 
 diff --git a/libtgvoip.gyp b/libtgvoip.gyp
 index 8c62b56..c362667 100644
@@ -131,20 +131,30 @@ index e49b748..68a2620 100644
  
  static inline uint32_t RiffChunkSize(size_t bytes_in_payload) {
 diff --git a/webrtc_dsp/typedefs.h b/webrtc_dsp/typedefs.h
-index c960d95..2252855 100644
+index c960d95..93c863a 100644
 --- a/webrtc_dsp/typedefs.h
 +++ b/webrtc_dsp/typedefs.h
-@@ -48,7 +48,19 @@
+@@ -47,8 +47,29 @@
+ #elif defined(__pnacl__)
  #define WEBRTC_ARCH_32_BITS
  #define WEBRTC_ARCH_LITTLE_ENDIAN
- #else
--#error Please add support for your architecture in typedefs.h
++#elif defined(__powerpc64le__)
++#define WEBRTC_ARCH_LITTLE_ENDIAN
++#define WEBRTC_ARCH_64_BITS
++#elif defined(__powerpc64__)
++#define WEBRTC_ARCH_BIG_ENDIAN
++#define WEBRTC_ARCH_64_BITS
++#elif defined(__powerpc__)
++#define WEBRTC_ARCH_BIG_ENDIAN
++#define WEBRTC_ARCH_32_BITS
++#else
 +/* instead of failing, use typical unix defines... */
 +#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
 +#define WEBRTC_ARCH_LITTLE_ENDIAN
 +#elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 +#define WEBRTC_ARCH_BIG_ENDIAN
-+#else
+ #else
+-#error Please add support for your architecture in typedefs.h
 +#error __BYTE_ORDER__ is not defined
 +#endif
 +#if defined(__LP64__)
