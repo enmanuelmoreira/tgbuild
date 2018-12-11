@@ -1,5 +1,5 @@
 Name: libtgvoip
-Version: 2.3
+Version: 2.4
 Release: 1%{?dist}
 Summary: VoIP library for Telegram clients
 
@@ -67,6 +67,9 @@ find video -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{build
 %{_libdir}/%{name}.so
 
 %changelog
+* Tue Dec 11 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4-1
+- Updated to 2.4 (regular release).
+
 * Sat Nov 10 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.3-1
 - Updated to 2.3 (regular release).
 
