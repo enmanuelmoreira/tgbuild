@@ -16,6 +16,7 @@ Provides: bundled(webrtc-audio-processing) = 0.3
 BuildRequires: pulseaudio-libs-devel
 BuildRequires: alsa-lib-devel
 BuildRequires: openssl-devel
+BuildRequires: json11-devel
 BuildRequires: opus-devel
 BuildRequires: gcc-c++
 BuildRequires: cmake
