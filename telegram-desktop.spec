@@ -60,6 +60,7 @@ BuildRequires: libstdc++-devel
 BuildRequires: range-v3-devel
 BuildRequires: openssl-devel
 BuildRequires: xxhash-devel
+BuildRequires: json11-devel
 BuildRequires: opus-devel
 BuildRequires: gtk3-devel
 BuildRequires: dee-devel
