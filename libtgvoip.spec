@@ -23,6 +23,13 @@ BuildRequires: cmake
 BuildRequires: gcc
 BuildRequires: gyp
 
+# Temporary disabled ARMv7 due to GCC 9.0 regressions:
+# https://bugzilla.redhat.com/show_bug.cgi?id=1668323
+# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=87935
+%if 0%{?fedora} && 0%{?fedora} >= 30
+ExcludeArch: %{arm}
+%endif
+
 %description
 Provides VoIP library for Telegram clients.
 
