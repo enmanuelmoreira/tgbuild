@@ -1,6 +1,6 @@
 Name: libtgvoip
 Version: 2.4.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: VoIP library for Telegram clients
 
 # Libtgvoip shared library - Public Domain.
@@ -70,6 +70,9 @@ find video -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{build
 %{_libdir}/%{name}.so
 
 %changelog
+* Tue Jan 22 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.2-2
+- Rebuilt for Rawhide.
+
 * Sat Jan 12 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.2-1
 - Updated to 2.4.2 (regular release).
 
