@@ -84,6 +84,11 @@ popd
 %install
 %ninja_install -C %{_target_platform}
 
+%check
+pushd %{_target_platform}
+    ctest --output-on-failure
+popd
+
 %files
 %license LICENSE_1_0.txt
 %doc README.md CHANGELOG.md
