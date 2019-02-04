@@ -27,6 +27,7 @@ BuildRequires: cmake
 BuildRequires: gcc
 
 %if 0%{?clang}
+BuildRequires: compiler-rt
 BuildRequires: clang
 BuildRequires: llvm
 %endif
