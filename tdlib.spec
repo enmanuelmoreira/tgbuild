@@ -68,8 +68,10 @@ echo "set_property(TARGET tdjson PROPERTY SOVERSION \${TDLib_VERSION})" >> CMake
 sed -e 's@DESTINATION lib@DESTINATION %{_lib}@g' -e 's@lib/@%{_lib}/@g' -i CMakeLists.txt
 sed -i 's@DESTINATION lib@DESTINATION %{_lib}@g' {sqlite,tdactor,tddb,tdnet,tdutils}/CMakeLists.txt
 
-# Link with libatomic...
-echo "set(CMAKE_CXX_LINK_FLAGS \"${CMAKE_CXX_LINK_FLAGS} -latomic\")" >> CMakeLists.txt
+# Link with libatomic when using clang...
+%if 0%{?clang}
+echo "set(CMAKE_CXX_LINK_FLAGS \"\${CMAKE_CXX_LINK_FLAGS} -latomic\")" >> CMakeLists.txt
+%endif
 
 %build
 %if 0%{?clang}
