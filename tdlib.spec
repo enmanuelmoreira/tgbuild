@@ -1,14 +1,16 @@
-# Enable or disable clang compiler...
-%global clang 0
+# Use clang on Fedora 30+...
+%if 0%{?fedora} && 0%{?fedora} >= 30
+%global clang 1
+%endif
 
 # Applying workaround to RHBZ#1559007...
 %if 0%{?clang}
-%global optflags %(echo %{optflags} | sed -e 's/-mcet//g' -e 's/-fcf-protection//g')
+%global optflags %(echo %{optflags} | sed -e 's/-mcet//g' -e 's/-fcf-protection//g' -e 's/-fstack-clash-protection//g')
 %endif
 
 Name: tdlib
 Version: 1.3.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: Cross-platform library for building Telegram clients
 
 License: Boost
@@ -95,6 +97,9 @@ popd
 %{_libdir}/libtd*.a
 
 %changelog
+* Mon Feb 04 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3.0-4
+- Switched to clang on Fedora 30+.
+
 * Sun Feb 03 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
