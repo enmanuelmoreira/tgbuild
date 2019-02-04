@@ -21,7 +21,6 @@ Patch0: %{name}-system-crypto.patch
 BuildRequires: gperftools-devel
 BuildRequires: openssl-devel
 BuildRequires: ninja-build
-BuildRequires: libatomic
 BuildRequires: gcc-c++
 BuildRequires: gperf
 BuildRequires: cmake
