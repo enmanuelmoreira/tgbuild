@@ -6,6 +6,7 @@
 # Applying workaround to RHBZ#1559007...
 %if 0%{?clang}
 %global optflags %(echo %{optflags} | sed -e 's/-mcet//g' -e 's/-fcf-protection//g' -e 's/-fstack-clash-protection//g')
+%global __global_ldflags %(echo %{__global_ldflags} -latomic)
 %endif
 
 Name: tdlib
@@ -21,6 +22,7 @@ Patch0: %{name}-system-crypto.patch
 BuildRequires: gperftools-devel
 BuildRequires: openssl-devel
 BuildRequires: ninja-build
+BuildRequires: libatomic
 BuildRequires: gcc-c++
 BuildRequires: gperf
 BuildRequires: cmake
@@ -67,11 +69,6 @@ echo "set_property(TARGET tdjson PROPERTY SOVERSION \${TDLib_VERSION})" >> CMake
 # Patching LIBDIR path...
 sed -e 's@DESTINATION lib@DESTINATION %{_lib}@g' -e 's@lib/@%{_lib}/@g' -i CMakeLists.txt
 sed -i 's@DESTINATION lib@DESTINATION %{_lib}@g' {sqlite,tdactor,tddb,tdnet,tdutils}/CMakeLists.txt
-
-# Link with libatomic when using clang...
-%if 0%{?clang}
-echo "set(CMAKE_CXX_LINK_FLAGS \"\${CMAKE_CXX_LINK_FLAGS} -latomic\")" >> CMakeLists.txt
-%endif
 
 %build
 %if 0%{?clang}
