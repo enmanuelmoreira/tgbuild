@@ -6,7 +6,6 @@
 # Applying workaround to RHBZ#1559007...
 %if 0%{?clang}
 %global optflags %(echo %{optflags} | sed -e 's/-mcet//g' -e 's/-fcf-protection//g' -e 's/-fstack-clash-protection//g')
-%global __global_ldflags %(echo %{__global_ldflags} -latomic)
 %endif
 
 Name: tdlib
@@ -36,7 +35,7 @@ BuildRequires: llvm
 
 # Building with default settings require at least 16 GB of free RAM.
 # Builds on ARM and other low-memory architectures are failing.
-ExclusiveArch: %{ix86} x86_64
+ExclusiveArch: x86_64
 
 %description
 TDLib (Telegram Database library) is a cross-platform library for
