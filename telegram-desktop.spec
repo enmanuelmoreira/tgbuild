@@ -4,7 +4,7 @@
 %global apihash dfbe1bc42dc9d20507e17d1814cc2f0a
 
 # Git revision of crl...
-%global commit1 9b7c6b5d9f1b59d2160bf6e9c4e74510f955efe1
+%global commit1 40063abec74e560220891443f6d5157de15e1b62
 %global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
 
 # Decrease debuginfo verbosity to reduce memory consumption...
