@@ -114,7 +114,7 @@ popd
 LEN=$(($(wc -l < out/Release/CMakeLists.txt) - 2))
 sed -i "$LEN r Telegram/gyp/CMakeLists.inj" out/Release/CMakeLists.txt
 
-# Exporting correct paths to AR and RANLIB in order to use FLTO optimizations...
+# Exporting correct paths to AR and RANLIB in order to use LTO optimizations...
 %ifarch x86_64
 sed -e '/set(configuration "Release")/a\' -e 'set(CMAKE_AR "%{_bindir}/gcc-ar")\' -e 'set(CMAKE_RANLIB "%{_bindir}/gcc-ranlib")\' -e 'set(CMAKE_NM "%{_bindir}/gcc-nm")' -i out/Release/CMakeLists.txt
 %endif
