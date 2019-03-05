@@ -127,7 +127,7 @@ popd
 
 %install
 # Installing executables...
-mkdir -p "%{buildroot}%{_bindir}"
+%{__mkdir} -p "%{buildroot}%{_bindir}"
 %{__install} -m 0755 -p out/Release/Telegram "%{buildroot}%{_bindir}/%{name}"
 
 # Installing desktop shortcut...
