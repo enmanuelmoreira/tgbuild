@@ -128,7 +128,7 @@ popd
 %install
 # Installing executables...
 mkdir -p "%{buildroot}%{_bindir}"
-install -m 0755 -p out/Release/Telegram "%{buildroot}%{_bindir}/%{name}"
+%{__install} -m 0755 -p out/Release/Telegram "%{buildroot}%{_bindir}/%{name}"
 
 # Installing desktop shortcut...
 mv lib/xdg/telegramdesktop.desktop lib/xdg/%{name}.desktop
@@ -137,13 +137,13 @@ desktop-file-install --dir="%{buildroot}%{_datadir}/applications" lib/xdg/%{name
 # Installing icons...
 for size in 16 32 48 64 128 256 512; do
     dir="%{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps"
-    install -d "$dir"
-    install -m 0644 -p Telegram/Resources/art/icon${size}.png "$dir/%{name}.png"
+    %{__install} -d "$dir"
+    %{__install} -m 0644 -p Telegram/Resources/art/icon${size}.png "$dir/%{name}.png"
 done
 
 # Installing appdata for Gnome Software...
-install -d "%{buildroot}%{_datadir}/metainfo"
-install -m 0644 -p lib/xdg/telegramdesktop.appdata.xml "%{buildroot}%{_datadir}/metainfo/%{name}.appdata.xml"
+%{__install} -d "%{buildroot}%{_datadir}/metainfo"
+%{__install} -m 0644 -p lib/xdg/telegramdesktop.appdata.xml "%{buildroot}%{_datadir}/metainfo/%{name}.appdata.xml"
 
 %check
 appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/metainfo/%{name}.appdata.xml"
