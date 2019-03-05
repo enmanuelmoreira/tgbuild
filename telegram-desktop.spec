@@ -131,7 +131,7 @@ popd
 %{__install} -m 0755 -p out/Release/Telegram "%{buildroot}%{_bindir}/%{name}"
 
 # Installing desktop shortcut...
-mv lib/xdg/telegramdesktop.desktop lib/xdg/%{name}.desktop
+%{__mv} lib/xdg/telegramdesktop.desktop lib/xdg/%{name}.desktop
 desktop-file-install --dir="%{buildroot}%{_datadir}/applications" lib/xdg/%{name}.desktop
 
 # Installing icons...
