@@ -1,6 +1,6 @@
 Name: libtgvoip
 Version: 2.4.2
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: VoIP library for Telegram clients
 
 # Libtgvoip shared library - Public Domain.
@@ -22,13 +22,6 @@ BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: gcc
 BuildRequires: gyp
-
-# Temporary disabled ARMv7 due to GCC 9.0 regressions:
-# https://bugzilla.redhat.com/show_bug.cgi?id=1668323
-# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=87935
-%if 0%{?fedora} && 0%{?fedora} >= 30
-ExcludeArch: %{arm}
-%endif
 
 %description
 Provides VoIP library for Telegram clients.
@@ -77,6 +70,10 @@ find video -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{build
 %{_libdir}/%{name}.so
 
 %changelog
+* Sat Mar 09 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.2-4
+- Enabled ARM builds again.
+- Minor SPEC fixes.
+
 * Mon Mar 04 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.4.2-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
