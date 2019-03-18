@@ -1,4 +1,4 @@
-From 69a4a4c8744b0c73f192d0b20c30bebf13a26efa Mon Sep 17 00:00:00 2001
+From 4d0a403c58f9f3bbc8704ba595cec175623f7410 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Thu, 6 Jul 2017 17:27:01 +0200
 Subject: [PATCH] Fixed build of libtgvoip under Fedora as shared library.
@@ -8,7 +8,7 @@ Subject: [PATCH] Fixed build of libtgvoip under Fedora as shared library.
  1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/libtgvoip.gyp b/libtgvoip.gyp
-index 95b6ed1..c9535f9 100644
+index ec86cbf..c424dbe 100644
 --- a/libtgvoip.gyp
 +++ b/libtgvoip.gyp
 @@ -4,7 +4,8 @@
@@ -44,7 +44,7 @@ index 95b6ed1..c9535f9 100644
  
            # Windows
            '<(tgvoip_src_loc)/os/windows/NetworkSocketWinsock.cpp',
-@@ -732,7 +731,9 @@
+@@ -724,7 +723,9 @@
  
  
          ],
