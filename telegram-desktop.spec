@@ -15,7 +15,7 @@
 
 Summary: Telegram Desktop official messaging app
 Name: telegram-desktop
-Version: 1.6.3
+Version: 1.6.5
 Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
@@ -167,6 +167,9 @@ appstream-util validate-relax --nonet "%{buildroot}%{_datadir}/metainfo/%{name}.
 %{_datadir}/metainfo/%{name}.appdata.xml
 
 %changelog
+* Sat Apr 06 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.6.5-1
+- Updated to 1.6.5 (beta).
+
 * Tue Mar 26 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.6.3-1
 - Updated to 1.6.3.
 
