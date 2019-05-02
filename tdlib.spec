@@ -9,8 +9,8 @@
 %endif
 
 Name: tdlib
-Version: 1.3.0
-Release: 4%{?dist}
+Version: 1.4.0
+Release: 1%{?dist}
 Summary: Cross-platform library for building Telegram clients
 
 License: Boost
@@ -103,6 +103,9 @@ popd
 %{_libdir}/libtd*.a
 
 %changelog
+* Thu May 02 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.4.0-1
+- Updated to version 1.4.0.
+
 * Mon Feb 04 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3.0-4
 - Switched to clang on Fedora 30+.
 
