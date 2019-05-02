@@ -21,6 +21,7 @@ Patch0: %{name}-system-crypto.patch
 BuildRequires: gperftools-devel
 BuildRequires: openssl-devel
 BuildRequires: ninja-build
+BuildRequires: zlib-devel
 BuildRequires: gcc-c++
 BuildRequires: gperf
 BuildRequires: cmake
@@ -79,11 +80,6 @@ popd
 
 %install
 %ninja_install -C %{_target_platform}
-
-%check
-pushd %{_target_platform}
-    ctest --output-on-failure
-popd
 
 %files
 %license LICENSE_1_0.txt
