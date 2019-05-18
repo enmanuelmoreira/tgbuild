@@ -1,5 +1,6 @@
 # Build conditionals...
 %bcond_without gtk3
+%bcond_without clang
 
 # Telegram Desktop's constants...
 %global appname tdesktop
@@ -12,6 +13,11 @@
 
 # Decrease debuginfo verbosity to reduce memory consumption...
 %global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
+
+# Applying workaround to RHBZ#1559007...
+%if %{with clang}
+%global optflags %(echo %{optflags} | sed -e 's/-mcet//g' -e 's/-fcf-protection//g' -e 's/-fstack-clash-protection//g')
+%endif
 
 Summary: Telegram Desktop official messaging app
 Name: telegram-desktop
@@ -74,6 +80,12 @@ BuildRequires: dee-devel
 Requires: gtk3%{?_isa}
 %endif
 
+%if %{with clang}
+BuildRequires: compiler-rt
+BuildRequires: clang
+BuildRequires: llvm
+%endif
+
 %if 0%{?fedora} >= 30
 BuildRequires: minizip-compat-devel
 %else
@@ -129,12 +141,21 @@ sed -i "$LEN r Telegram/gyp/CMakeLists.inj" out/Release/CMakeLists.txt
 
 # Exporting correct paths to AR and RANLIB in order to use LTO optimizations...
 %ifarch x86_64
+%if %{with clang}
+sed -e '/set(configuration "Release")/a\' -e 'set(CMAKE_AR "%{_bindir}/llvm-ar")\' -e 'set(CMAKE_RANLIB "%{_bindir}/llvm-ranlib")\' -e 'set(CMAKE_LINKER "%{_bindir}/llvm-ld")\' -e 'set(CMAKE_OBJDUMP "%{_bindir}/llvm-objdump")\' -e 'set(CMAKE_NM "%{_bindir}/llvm-nm")' -i out/Release/CMakeLists.txt
+%else
 sed -e '/set(configuration "Release")/a\' -e 'set(CMAKE_AR "%{_bindir}/gcc-ar")\' -e 'set(CMAKE_RANLIB "%{_bindir}/gcc-ranlib")\' -e 'set(CMAKE_NM "%{_bindir}/gcc-nm")' -i out/Release/CMakeLists.txt
+%endif
 %endif
 
 # Building Telegram Desktop using cmake...
 pushd out/Release
-    %cmake .
+    %cmake \
+%if %{with clang}
+    -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++ \
+%endif
+    .
     %make_build
 popd
 
