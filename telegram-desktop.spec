@@ -22,7 +22,7 @@
 Summary: Telegram Desktop official messaging app
 Name: telegram-desktop
 Version: 1.7.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 # Application and 3rd-party modules licensing:
 # * S0 (Telegram Desktop) - GPLv3+ with OpenSSL exception -- main source;
@@ -194,6 +194,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{name}.appdat
 %{_metainfodir}/%{name}.appdata.xml
 
 %changelog
+* Sat May 18 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.7.0-2
+- Switched to clang as temporary workaround.
+
 * Thu May 09 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.7.0-1
 - Updated to 1.7.0.
 
