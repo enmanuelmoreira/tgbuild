@@ -12,10 +12,15 @@
 %global appname tdesktop
 %global apiid 208164
 %global apihash dfbe1bc42dc9d20507e17d1814cc2f0a
+%global upstreambase https://github.com/telegramdesktop
 
 # Git revision of crl...
 %global commit1 84072fba75f14620935e5e91788ce603daeb1988
 %global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
+
+# Git revision of qtlottie...
+%global commit2 6cd5e323645746620f96450487e05900a0fbc7ce
+%global shortcommit2 %(c=%{commit2}; echo ${c:0:7})
 
 # Decrease debuginfo verbosity to reduce memory consumption...
 %global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
@@ -35,14 +40,12 @@ Release: 2%{?dist}
 # * S1 (crl) - GPLv3+ -- build-time dependency;
 # * P0 (qt_functions.cpp) - LGPLv3 -- build-time dependency.
 License: GPLv3+ and LGPLv3
-URL: https://github.com/telegramdesktop/%{appname}
-
-# Warning! Builds on i686 may fail due to technical limitations of this
-# architecture: https://github.com/telegramdesktop/tdesktop/issues/4101
+URL: %{upstreambase}/%{appname}
 ExclusiveArch: i686 x86_64
 
 Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
-Source1: https://github.com/telegramdesktop/crl/archive/%{commit1}.tar.gz#/crl-%{shortcommit1}.tar.gz
+Source1: %{upstreambase}/crl/archive/%{commit1}.tar.gz#/crl-%{shortcommit1}.tar.gz
+Source2: %{upstreambase}/qtlottie/archive/%{commit2}.tar.gz#/qtlottie-%{shortcommit2}.tar.gz
 Patch0: %{name}-build-fixes.patch
 Patch1: %{name}-system-fonts.patch
 Patch2: %{name}-unbundle-minizip.patch
@@ -121,6 +124,13 @@ pushd Telegram/ThirdParty
     rm -rf crl
     tar -xf %{SOURCE1}
     mv crl-%{commit1} crl
+popd
+
+# Unpacking qtlottie...
+pushd Telegram/ThirdParty
+    rm -rf qtlottie
+    tar -xf %{SOURCE2}
+    mv qtlottie-%{commit2} qtlottie
 popd
 
 %build
