@@ -15,7 +15,7 @@
 %global upstreambase https://github.com/telegramdesktop
 
 # Git revision of crl...
-%global commit1 84072fba75f14620935e5e91788ce603daeb1988
+%global commit1 d259aebc11df52cb6ff8c738580dc4d8f245d681
 %global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
 
 # Git revision of qtlottie...
