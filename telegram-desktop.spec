@@ -47,9 +47,6 @@ Patch0: %{name}-build-fixes.patch
 Patch1: %{name}-system-fonts.patch
 Patch2: %{name}-unbundle-minizip.patch
 
-Patch100: %{name}-pr-6025.patch
-Patch101: %{name}-rr-ddb9c8.patch
-
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
