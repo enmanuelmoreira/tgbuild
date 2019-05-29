@@ -69,6 +69,7 @@ BuildRequires: ffmpeg-devel >= 3.1
 BuildRequires: openal-soft-devel
 BuildRequires: qt5-qtbase-devel
 BuildRequires: libstdc++-devel
+BuildRequires: rapidjson-devel
 BuildRequires: range-v3-devel
 BuildRequires: openssl-devel
 BuildRequires: xxhash-devel
