@@ -38,6 +38,7 @@ Release: 1%{?dist}
 # Application and 3rd-party modules licensing:
 # * S0 (Telegram Desktop) - GPLv3+ with OpenSSL exception -- main source;
 # * S1 (crl) - GPLv3+ -- build-time dependency;
+# * S2 qtlottie - GPLv3+ -- build-time dependency;
 # * P0 (qt_functions.cpp) - LGPLv3 -- build-time dependency.
 License: GPLv3+ and LGPLv3
 URL: %{upstreambase}/%{appname}
@@ -54,6 +55,9 @@ Patch2: %{name}-unbundle-minizip.patch
 Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
 Requires: open-sans-fonts
+
+# Telegram Desktop require their own patched version of qtlottie.
+Provides: bundled(qtlottie) = 0
 
 # Compilers and tools...
 BuildRequires: desktop-file-utils
