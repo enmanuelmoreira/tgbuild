@@ -44,9 +44,12 @@ License: GPLv3+ and LGPLv3
 URL: %{upstreambase}/%{appname}
 ExclusiveArch: i686 x86_64
 
+# Source files...
 Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
 Source1: %{upstreambase}/crl/archive/%{commit1}.tar.gz#/crl-%{shortcommit1}.tar.gz
 Source2: %{upstreambase}/qtlottie/archive/%{commit2}.tar.gz#/qtlottie-%{shortcommit2}.tar.gz
+
+# Downstream patches...
 Patch0: %{name}-build-fixes.patch
 Patch1: %{name}-system-fonts.patch
 Patch2: %{name}-unbundle-minizip.patch
@@ -56,7 +59,7 @@ Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
 Requires: open-sans-fonts
 
-# Telegram Desktop require their own patched version of qtlottie.
+# Special patched version of qtlottie required.
 Provides: bundled(qtlottie) = 0
 
 # Compilers and tools...
