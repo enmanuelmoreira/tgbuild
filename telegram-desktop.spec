@@ -32,7 +32,7 @@
 
 Summary: Telegram Desktop official messaging app
 Name: telegram-desktop
-Version: 1.7.8
+Version: 1.7.9
 Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
@@ -215,6 +215,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{name}.appdat
 %{_metainfodir}/%{name}.appdata.xml
 
 %changelog
+* Mon Jun 24 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.7.9-1
+- Updated to 1.7.9.
+
 * Tue Jun 18 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.7.8-1
 - Updated to 1.7.8 (beta).
 
