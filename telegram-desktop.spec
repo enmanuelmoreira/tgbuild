@@ -55,9 +55,9 @@ Patch1: %{name}-system-fonts.patch
 Patch2: %{name}-unbundle-minizip.patch
 
 # Upstream patches...
-Patch100: telegram-desktop-upstream-5c49701.patch
-Patch101: telegram-desktop-upstream-e5cfa3f.patch
-Patch102: telegram-desktop-upstream-9c85d58.patch
+Patch100: %{name}-upstream-5c49701.patch
+Patch101: %{name}-upstream-e5cfa3f.patch
+Patch102: %{name}-upstream-9c85d58.patch
 
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 Requires: qt5-qtimageformats%{?_isa}
