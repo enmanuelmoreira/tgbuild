@@ -73,6 +73,7 @@ BuildRequires: qt5-qtbase-devel
 BuildRequires: libstdc++-devel
 BuildRequires: range-v3-devel
 BuildRequires: openssl-devel
+BuildRequires: rlottie-devel
 BuildRequires: xxhash-devel
 BuildRequires: json11-devel
 BuildRequires: glib2-devel
