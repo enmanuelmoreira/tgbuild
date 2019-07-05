@@ -18,10 +18,6 @@
 %global commit1 d259aebc11df52cb6ff8c738580dc4d8f245d681
 %global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
 
-# Git revision of qtlottie...
-%global commit2 eeeb4edb2a087c3f8175dafafcad330864d3efc0
-%global shortcommit2 %(c=%{commit2}; echo ${c:0:7})
-
 # Decrease debuginfo verbosity to reduce memory consumption...
 %global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
 
@@ -47,7 +43,6 @@ ExclusiveArch: i686 x86_64
 # Source files...
 Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
 Source1: %{upstreambase}/crl/archive/%{commit1}.tar.gz#/crl-%{shortcommit1}.tar.gz
-Source2: %{upstreambase}/qtlottie/archive/%{commit2}.tar.gz#/qtlottie-%{shortcommit2}.tar.gz
 
 # Downstream patches...
 Patch0: %{name}-build-fixes.patch
@@ -79,7 +74,6 @@ BuildRequires: ffmpeg-devel >= 3.1
 BuildRequires: openal-soft-devel
 BuildRequires: qt5-qtbase-devel
 BuildRequires: libstdc++-devel
-BuildRequires: rapidjson-devel
 BuildRequires: range-v3-devel
 BuildRequires: openssl-devel
 BuildRequires: xxhash-devel
@@ -131,13 +125,6 @@ pushd Telegram/ThirdParty
     rm -rf crl
     tar -xf %{SOURCE1}
     mv crl-%{commit1} crl
-popd
-
-# Unpacking qtlottie...
-pushd Telegram/ThirdParty
-    rm -rf qtlottie
-    tar -xf %{SOURCE2}
-    mv qtlottie-%{commit2} qtlottie
 popd
 
 %build
