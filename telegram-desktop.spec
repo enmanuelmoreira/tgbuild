@@ -54,9 +54,6 @@ Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
 Requires: open-sans-fonts
 
-# Special patched version of qtlottie required.
-Provides: bundled(qtlottie) = 0
-
 # Compilers and tools...
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
