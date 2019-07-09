@@ -15,7 +15,7 @@
 %global upstreambase https://github.com/telegramdesktop
 
 # Git revision of crl...
-%global commit1 d259aebc11df52cb6ff8c738580dc4d8f245d681
+%global commit1 9ea870038a2a667add7f621be6252db909068386
 %global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
 
 # Decrease debuginfo verbosity to reduce memory consumption...
@@ -82,6 +82,7 @@ BuildRequires: xxhash-devel
 BuildRequires: json11-devel
 BuildRequires: glib2-devel
 BuildRequires: opus-devel
+BuildRequires: lz4-devel
 BuildRequires: xz-devel
 BuildRequires: python3
 
