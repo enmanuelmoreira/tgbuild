@@ -203,6 +203,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{name}.appdat
 * Fri Jul 05 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.7.11-1
 - Updated to 1.7.11 (beta).
 
+* Wed Jul 03 2019 Vasiliy Glazov <vascom2@gmail.com> - 1.7.10-2
+- Rebuild for new Qt5
+
 * Mon Jun 24 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.7.10-1
 - Updated to 1.7.10.
 
