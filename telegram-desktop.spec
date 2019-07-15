@@ -38,7 +38,12 @@ Release: 1%{?dist}
 # * P0 (qt_functions.cpp) - LGPLv3 -- build-time dependency.
 License: GPLv3+ and LGPLv3
 URL: %{upstreambase}/%{appname}
+
+%if 0%{?fedora} && 0%{?fedora} < 31
 ExclusiveArch: i686 x86_64
+%else
+ExclusiveArch: x86_64
+%endif
 
 # Source files...
 Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
