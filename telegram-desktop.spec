@@ -54,10 +54,6 @@ Patch0: %{name}-build-fixes.patch
 Patch1: %{name}-system-fonts.patch
 Patch2: %{name}-unbundle-minizip.patch
 
-# Upstream patches...
-Patch100: %{name}-upstream-0710dde.patch
-Patch101: %{name}-upstream-9c909c8.patch
-
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
