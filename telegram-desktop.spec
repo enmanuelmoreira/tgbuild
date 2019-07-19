@@ -15,7 +15,7 @@
 %global upstreambase https://github.com/telegramdesktop
 
 # Git revision of crl...
-%global commit1 9ea870038a2a667add7f621be6252db909068386
+%global commit1 52baf11aaeb7f5ea6955a438abaa1aee4c4308d8
 %global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
 
 # Decrease debuginfo verbosity to reduce memory consumption...
