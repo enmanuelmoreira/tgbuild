@@ -18,6 +18,10 @@
 %global commit1 52baf11aaeb7f5ea6955a438abaa1aee4c4308d8
 %global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
 
+# Git revision of patched rlottie...
+%global commit2 d08a03b6508b390af20491f2dbeee3453594afc8
+%global shortcommit2 %(c=%{commit2}; echo ${c:0:7})
+
 # Decrease debuginfo verbosity to reduce memory consumption...
 %global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
 
@@ -48,6 +52,7 @@ ExclusiveArch: x86_64
 # Source files...
 Source0: %{url}/archive/v%{version}.tar.gz#/%{appname}-%{version}.tar.gz
 Source1: %{upstreambase}/crl/archive/%{commit1}.tar.gz#/crl-%{shortcommit1}.tar.gz
+Source2: https://github.com/john-preston/rlottie/archive/%{commit2}.tar.gz#/rlottie-%{shortcommit2}.tar.gz
 
 # Downstream patches...
 Patch0: %{name}-build-fixes.patch
@@ -129,6 +134,13 @@ pushd Telegram/ThirdParty
     rm -rf crl
     tar -xf %{SOURCE1}
     mv crl-%{commit1} crl
+popd
+
+# Unpacking patched rlottie...
+pushd Telegram/ThirdParty
+    rm -rf rlottie
+    tar -xf %{SOURCE2}
+    mv rlottie-%{commit2} rlottie
 popd
 
 %build
