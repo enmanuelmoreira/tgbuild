@@ -38,7 +38,7 @@ Release: 1%{?dist}
 # Application and 3rd-party modules licensing:
 # * S0 (Telegram Desktop) - GPLv3+ with OpenSSL exception -- main source;
 # * S1 (crl) - GPLv3+ -- build-time dependency;
-# * S2 (qtlottie) - GPLv3+ -- build-time dependency;
+# * S2 (rlottie) - LGPLv2+ -- static dependency;
 # * P0 (qt_functions.cpp) - LGPLv3 -- build-time dependency.
 License: GPLv3+ and LGPLv3
 URL: %{upstreambase}/%{appname}
@@ -64,6 +64,10 @@ Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
 Requires: open-sans-fonts
 
+# Telegram Desktop require patched version of rlottie since 1.8.0.
+# Pull Request pending: https://github.com/Samsung/rlottie/pull/252
+Provides: bundled(rlottie) = 0~git%{shortcommit2}
+
 # Compilers and tools...
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
@@ -83,7 +87,6 @@ BuildRequires: qt5-qtbase-devel
 BuildRequires: libstdc++-devel
 BuildRequires: range-v3-devel
 BuildRequires: openssl-devel
-BuildRequires: rlottie-devel
 BuildRequires: xxhash-devel
 BuildRequires: json11-devel
 BuildRequires: glib2-devel
