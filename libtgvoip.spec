@@ -1,6 +1,6 @@
 Name: libtgvoip
 Version: 2.4.4
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: VoIP library for Telegram clients
 
 # Libtgvoip shared library - Public Domain.
@@ -70,6 +70,9 @@ find video -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{build
 %{_libdir}/%{name}.so
 
 %changelog
+* Fri Aug 09 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.4.4-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
 * Tue Mar 12 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.4-1
 - Updated to 2.4.4 (regular release).
 
