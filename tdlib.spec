@@ -84,6 +84,9 @@ pushd %{_target_platform}
     -DCMAKE_NM=%{_bindir}/gcc-nm \
 %endif
     -DCMAKE_BUILD_TYPE=Release \
+    -DTD_ENABLE_JNI=OFF \
+    -DTD_ENABLE_DOTNET=OFF \
+    -DTD_ENABLE_LTO=OFF \
     ..
 popd
 %ninja_build -C %{_target_platform}
