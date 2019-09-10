@@ -11,8 +11,8 @@
 %endif
 
 Name: tdlib
-Version: 1.4.0
-Release: 2%{?dist}
+Version: 1.5.0
+Release: 1%{?dist}
 Summary: Cross-platform library for building Telegram clients
 
 License: Boost
@@ -105,6 +105,9 @@ popd
 %{_libdir}/libtd*.a
 
 %changelog
+* Tue Sep 10 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.5.0-1
+- Updated to version 1.5.0.
+
 * Sat Jul 27 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
