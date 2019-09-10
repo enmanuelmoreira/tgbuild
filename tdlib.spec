@@ -1,11 +1,13 @@
 # Use clang on Fedora 30+...
 %if 0%{?fedora} && 0%{?fedora} >= 30
-%global clang 1
+%bcond_without clang
+%else
+%bcond_with clang
 %endif
 
 # Applying workaround to RHBZ#1559007...
-%if 0%{?clang}
-%global optflags %(echo %{optflags} | sed -e 's/-mcet//g' -e 's/-fcf-protection//g' -e 's/-fstack-clash-protection//g')
+%if %{with clang}
+%global optflags %(echo %{optflags} | sed -e 's/-mcet//g' -e 's/-fcf-protection//g' -e 's/-fstack-clash-protection//g' -e 's/$/-Qunused-arguments -Wno-unknown-warning-option/')
 %endif
 
 Name: tdlib
@@ -27,7 +29,7 @@ BuildRequires: gperf
 BuildRequires: cmake
 BuildRequires: gcc
 
-%if 0%{?clang}
+%if %{with clang}
 BuildRequires: compiler-rt
 BuildRequires: clang
 BuildRequires: llvm
@@ -66,13 +68,21 @@ sed -e 's@DESTINATION lib@DESTINATION %{_lib}@g' -e 's@lib/@%{_lib}/@g' -i CMake
 sed -i 's@DESTINATION lib@DESTINATION %{_lib}@g' {sqlite,tdactor,tddb,tdnet,tdutils}/CMakeLists.txt
 
 %build
-%if 0%{?clang}
-export CC=clang
-export CXX=clang++
-%endif
-
 pushd %{_target_platform}
     %cmake -G Ninja \
+%if %{with clang}
+    -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++ \
+    -DCMAKE_AR=%{_bindir}/llvm-ar \
+    -DCMAKE_RANLIB=%{_bindir}/llvm-ranlib \
+    -DCMAKE_LINKER=%{_bindir}/llvm-ld \
+    -DCMAKE_OBJDUMP=%{_bindir}/llvm-objdump \
+    -DCMAKE_NM=%{_bindir}/llvm-nm \
+%else
+    -DCMAKE_AR=%{_bindir}/gcc-ar \
+    -DCMAKE_RANLIB=%{_bindir}/gcc-ranlib \
+    -DCMAKE_NM=%{_bindir}/gcc-nm \
+%endif
     -DCMAKE_BUILD_TYPE=Release \
     ..
 popd
