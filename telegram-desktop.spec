@@ -2,11 +2,7 @@
 %bcond_without gtk3
 
 # Enable or disable build using clang instead of gcc...
-%if 0%{?fedora} && 0%{?fedora} == 31
-%bcond_without clang
-%else
 %bcond_with clang
-%endif
 
 # Telegram Desktop's constants...
 %global appname tdesktop
