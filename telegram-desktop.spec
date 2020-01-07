@@ -246,30 +246,14 @@ pushd Telegram
 popd
 
 %build
-# Setting build definitions...
-%if %{without gtk3}
-TDESKTOP_BUILD_DEFINES+='TDESKTOP_DISABLE_GTK_INTEGRATION,'
-%endif
-%if 0%{?fedora} && 0%{?fedora} < 30
-TDESKTOP_BUILD_DEFINES+='TDESKTOP_DISABLE_OPENAL_EFFECTS,'
-%endif
-TDESKTOP_BUILD_DEFINES+='TDESKTOP_DISABLE_AUTOUPDATE,'
-TDESKTOP_BUILD_DEFINES+='TDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME,'
-TDESKTOP_BUILD_DEFINES+='TDESKTOP_DISABLE_DESKTOP_FILE_GENERATION,'
-TDESKTOP_BUILD_DEFINES+='TDESKTOP_DISABLE_CRASH_REPORTS,'
-TDESKTOP_BUILD_DEFINES+='TDESKTOP_LAUNCHER_FILENAME=%{name}.desktop,'
-
-# Generating cmake script using GYP...
-pushd Telegram/gyp
-    gyp --depth=. --generator-output=../.. -Goutput_dir=out -Dapi_id=%{apiid} -Dapi_hash=%{apihash} -Dbuild_defines=$TDESKTOP_BUILD_DEFINES Telegram.gyp --format=cmake
-popd
-
-# Patching generated cmake script...
-sed -i "$(($(wc -l < out/Release/CMakeLists.txt) - 2)) r Telegram/gyp/CMakeLists.inj" out/Release/CMakeLists.txt
-
 # Building Telegram Desktop using cmake...
-pushd out/Release
-    %cmake \
+%cmake \
+%if %{without gtk3}
+    -DTDESKTOP_DISABLE_GTK_INTEGRATION:BOOL=ON \
+%endif
+%if %{without spellcheck}
+    -DESKTOP_APP_DISABLE_SPELLCHECK:BOOL=ON \
+%endif
 %if %{with clang}
     -DCMAKE_C_COMPILER=clang \
     -DCMAKE_CXX_COMPILER=clang++ \
@@ -283,9 +267,14 @@ pushd out/Release
     -DCMAKE_RANLIB=%{_bindir}/gcc-ranlib \
     -DCMAKE_NM=%{_bindir}/gcc-nm \
 %endif
+    -DDESKTOP_APP_USE_PACKAGED:BOOL=ON \
+    -DTDESKTOP_DISABLE_AUTOUPDATE:BOOL=ON \
+    -DTDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME:BOOL=ON \
+    -DTDESKTOP_DISABLE_DESKTOP_FILE_GENERATION:BOOL=ON \
+    -DTDESKTOP_DISABLE_CRASH_REPORTS:BOOL=ON \
+    -DTDESKTOP_LAUNCHER_FILENAME=%{name}.desktop \
     .
-    %make_build
-popd
+%make_build
 
 %install
 # Installing executables...
