@@ -1,8 +1,7 @@
-# Enable or disable build with GTK support...
+# Build conditionals...
 %bcond_with gtk3
-
-# Enable or disable build using clang instead of gcc...
 %bcond_with clang
+%bcond_with spellcheck
 
 # Telegram Desktop's constants...
 %global appname tdesktop
@@ -134,6 +133,12 @@ BuildRequires: glib2-devel
 BuildRequires: gtk3-devel
 Recommends: libappindicator-gtk3%{?_isa}
 Requires: gtk3%{?_isa}
+%endif
+
+%if %{with spellcheck}
+BuildRequires: enchant2-devel
+BuildRequires: glib2-devel
+Requires: enchant2%{?_isa}
 %endif
 
 %if %{with clang}
