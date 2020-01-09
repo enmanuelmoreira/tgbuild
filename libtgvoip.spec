@@ -25,10 +25,10 @@ BuildRequires: alsa-lib-devel
 BuildRequires: openssl-devel
 BuildRequires: json11-devel
 BuildRequires: opus-devel
-BuildRequires: libtool
-BuildRequires: gcc-c++
 BuildRequires: automake
 BuildRequires: autoconf
+BuildRequires: gcc-c++
+BuildRequires: libtool
 BuildRequires: gcc
 
 %description
