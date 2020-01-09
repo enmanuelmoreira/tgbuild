@@ -72,7 +72,7 @@ Release: 1%{?dist}
 # * S2 (rlottie) - LGPLv2+ -- static dependency;
 # * P0 (qt_functions.cpp) - LGPLv3 -- build-time dependency.
 License: GPLv3+ and LGPLv3
-URL: %{upstreambase}/%{appname}
+URL: https://github.com/telegramdesktop/%{appname}
 
 %if 0%{?fedora} && 0%{?fedora} < 31
 ExclusiveArch: i686 x86_64
@@ -188,21 +188,11 @@ business messaging needs.
 %prep
 # Unpacking Telegram Desktop source archive...
 %setup -q -n %{appname}-%{version}
-%patch0 -p1 -b .desktop
-%patch1 -p1 -b .appdata
-%patch102 -p1 -b .commit-100fed3
-%patch103 -p1 -b .commit-322367c
-%patch100 -p1 -b .pr6956
 
 # Unpacking cmake_helpers...
 rm -rf cmake
 tar -xf %{SOURCE1}
 mv cmake_helpers-%{commit1} cmake
-%patch101 -d cmake -p1 -b .system-libraries
-%patch10 -d cmake -p1 -b .system-expected
-%patch11 -d cmake -p1 -b .system-gsl
-%patch12 -d cmake -p1 -b .system-qrcode
-%patch13 -d cmake -p1 -b .system-variant
 
 # Unpacking patched rlottie...
 pushd Telegram/ThirdParty
@@ -272,7 +262,6 @@ pushd Telegram
     rm -rf lib_ui
     tar -xf %{SOURCE11}
     mv lib_ui-%{commit11} lib_ui
-    %patch20 -d lib_ui -p1 -b .remove-configs
 popd
 
 # Unpacking codegen...
@@ -281,6 +270,23 @@ pushd Telegram
     tar -xf %{SOURCE12}
     mv codegen-%{commit12} codegen
 popd
+
+# Applying patches for core application...
+%patch0 -p1 -b .desktop
+%patch1 -p1 -b .appdata
+%patch102 -p1 -b .commit-100fed3
+%patch103 -p1 -b .commit-322367c
+%patch100 -p1 -b .pr6956
+
+# Applying patches for build system...
+%patch101 -d cmake -p1 -b .system-libraries
+%patch10 -d cmake -p1 -b .system-expected
+%patch11 -d cmake -p1 -b .system-gsl
+%patch12 -d cmake -p1 -b .system-qrcode
+%patch13 -d cmake -p1 -b .system-variant
+
+# Applying patches for lib_ui...
+%patch20 -d Telegram/lib_ui -p1 -b .remove-configs
 
 %build
 # Building Telegram Desktop using cmake...
