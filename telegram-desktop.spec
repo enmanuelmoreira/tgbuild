@@ -56,9 +56,6 @@
 %global commit12 d14ae77ad5ed27ca6ddbc9579c0c5e0afa18ffca
 %global shortcommit12 %(c=%{commit12}; echo ${c:0:7})
 
-# Decrease debuginfo verbosity to reduce memory consumption...
-%global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
-
 # Applying workaround to RHBZ#1559007...
 %if %{with clang}
 %global optflags %(echo %{optflags} | sed -e 's/-mcet//g' -e 's/-fcf-protection//g' -e 's/-fstack-clash-protection//g' -e 's/$/-Qunused-arguments -Wno-unknown-warning-option/')
