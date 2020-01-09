@@ -115,10 +115,12 @@ BuildRequires: mapbox-variant-devel >= 0.3.6
 BuildRequires: qt5-qtbase-private-devel
 BuildRequires: libtgvoip-devel >= 2.4.4
 BuildRequires: range-v3-devel >= 0.9.1
+BuildRequires: libqrcodegencpp-devel
 BuildRequires: ffmpeg-devel >= 3.1
 BuildRequires: openal-soft-devel
 BuildRequires: qt5-qtbase-devel
 BuildRequires: libstdc++-devel
+BuildRequires: expected-devel
 BuildRequires: openssl-devel
 BuildRequires: xxhash-devel
 BuildRequires: json11-devel
