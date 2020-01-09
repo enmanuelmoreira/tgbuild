@@ -52,6 +52,10 @@
 %global commit11 4ec9e32f8f5f6b8192fd60d73ae0b575e82c1c60
 %global shortcommit11 %(c=%{commit11}; echo ${c:0:7})
 
+# Git revision of codegen...
+%global commit12 d14ae77ad5ed27ca6ddbc9579c0c5e0afa18ffca
+%global shortcommit12 %(c=%{commit12}; echo ${c:0:7})
+
 # Decrease debuginfo verbosity to reduce memory consumption...
 %global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
 
@@ -92,6 +96,17 @@ Source8: https://github.com/desktop-app/lib_spellcheck/archive/%{commit8}/lib_sp
 Source9: https://github.com/desktop-app/lib_storage/archive/%{commit9}/lib_storage-%{shortcommit9}.tar.gz
 Source10: https://github.com/desktop-app/lib_tl/archive/%{commit10}/lib_storage-%{shortcommit10}.tar.gz
 Source11: https://github.com/desktop-app/lib_ui/archive/%{commit11}/lib_ui-%{shortcommit11}.tar.gz
+Source12: https://github.com/desktop-app/codegen/archive/%{commit12}/codegen-%{shortcommit12}.tar.gz
+
+# Permanent downstream patches...
+Patch10: cmake_helpers-system-expected.patch
+Patch11: cmake_helpers-system-gsl.patch
+Patch12: cmake_helpers-system-qrcode.patch
+Patch13: cmake_helpers-system-variant.patch
+
+# Temporary upstream and proposed to upstream patches...
+Patch100: telegram-desktop-pr6956.patch
+Patch101: cmake_helpers-system-libraries.patch
 
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 Requires: qt5-qtimageformats%{?_isa}
@@ -171,11 +186,17 @@ business messaging needs.
 %prep
 # Unpacking Telegram Desktop source archive...
 %setup -q -n %{appname}-%{version}
+%patch100 -p1
 
 # Unpacking cmake_helpers...
 rm -rf cmake
 tar -xf %{SOURCE1}
 mv cmake_helpers-%{commit1} cmake
+%patch101 -d cmake -p1
+%patch10 -d cmake -p1
+%patch11 -d cmake -p1
+%patch12 -d cmake -p1
+%patch13 -d cmake -p1
 
 # Unpacking patched rlottie...
 pushd Telegram/ThirdParty
@@ -247,6 +268,13 @@ pushd Telegram
     mv lib_ui-%{commit11} lib_ui
 popd
 
+# Unpacking codegen...
+pushd Telegram
+    rm -rf codegen
+    tar -xf %{SOURCE12}
+    mv codegen-%{commit12} codegen
+popd
+
 %build
 # Building Telegram Desktop using cmake...
 %cmake \
@@ -254,7 +282,7 @@ popd
     -DTDESKTOP_DISABLE_GTK_INTEGRATION:BOOL=ON \
 %endif
 %if %{without spellcheck}
-    -DESKTOP_APP_DISABLE_SPELLCHECK:BOOL=ON \
+    -DDESKTOP_APP_DISABLE_SPELLCHECK:BOOL=ON \
 %endif
 %if %{with clang}
     -DCMAKE_C_COMPILER=clang \
@@ -269,11 +297,16 @@ popd
     -DCMAKE_RANLIB=%{_bindir}/gcc-ranlib \
     -DCMAKE_NM=%{_bindir}/gcc-nm \
 %endif
+    -DTDESKTOP_API_ID=%{apiid} \
+    -DTDESKTOP_API_HASH=%{apihash} \
     -DDESKTOP_APP_USE_PACKAGED:BOOL=ON \
+    -DDESKTOP_APP_USE_PACKAGED_RLOTTIE:BOOL=FALSE \
+    -DDESKTOP_APP_USE_GLIBC_WRAPS:BOOL=OFF \
+    -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
+    -DTDESKTOP_USE_PACKAGED_TGVOIP:BOOL=TRUE \
     -DTDESKTOP_DISABLE_AUTOUPDATE:BOOL=ON \
     -DTDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME:BOOL=ON \
     -DTDESKTOP_DISABLE_DESKTOP_FILE_GENERATION:BOOL=ON \
-    -DTDESKTOP_DISABLE_CRASH_REPORTS:BOOL=ON \
     -DTDESKTOP_LAUNCHER_FILENAME=%{name}.desktop \
     .
 %make_build
@@ -281,7 +314,7 @@ popd
 %install
 # Installing executables...
 mkdir -p %{buildroot}%{_bindir}
-install -m 0755 -p out/Release/Telegram %{buildroot}%{_bindir}/%{name}
+install -m 0755 -p bin/Telegram %{buildroot}%{_bindir}/%{name}
 
 # Installing desktop shortcut...
 mv lib/xdg/telegramdesktop.desktop lib/xdg/%{name}.desktop
