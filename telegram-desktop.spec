@@ -137,6 +137,7 @@ BuildRequires: expected-devel
 BuildRequires: openssl-devel
 BuildRequires: xxhash-devel
 BuildRequires: json11-devel
+BuildRequires: ninja-build
 BuildRequires: opus-devel
 BuildRequires: lz4-devel
 BuildRequires: xz-devel
@@ -184,6 +185,7 @@ business messaging needs.
 %prep
 # Unpacking Telegram Desktop source archive...
 %setup -q -n %{appname}-%{version}
+mkdir -p %{_target_platform}
 
 # Unpacking cmake_helpers...
 rm -rf cmake
@@ -287,7 +289,9 @@ popd
 
 %build
 # Building Telegram Desktop using cmake...
-%cmake \
+pushd %{_target_platform}
+    %cmake -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
 %if %{without gtk3}
     -DTDESKTOP_DISABLE_GTK_INTEGRATION:BOOL=ON \
 %endif
@@ -318,13 +322,14 @@ popd
     -DTDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME:BOOL=ON \
     -DTDESKTOP_DISABLE_DESKTOP_FILE_GENERATION:BOOL=ON \
     -DTDESKTOP_LAUNCHER_FILENAME=%{name}.desktop \
-    .
-%make_build
+    ..
+popd
+%ninja_build -C %{_target_platform}
 
 %install
 # Installing executables...
 mkdir -p %{buildroot}%{_bindir}
-install -m 0755 -p bin/Telegram %{buildroot}%{_bindir}/%{name}
+install -m 0755 -p %{_target_platform}/bin/Telegram %{buildroot}%{_bindir}/%{name}
 
 # Installing desktop shortcut...
 mv lib/xdg/telegramdesktop.desktop lib/xdg/%{name}.desktop
