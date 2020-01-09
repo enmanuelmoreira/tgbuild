@@ -96,10 +96,13 @@ Source11: https://github.com/desktop-app/lib_ui/archive/%{commit11}/lib_ui-%{sho
 Source12: https://github.com/desktop-app/codegen/archive/%{commit12}/codegen-%{shortcommit12}.tar.gz
 
 # Permanent downstream patches...
+Patch0: %{name}-fix-desktop.patch
+Patch1: %{name}-fix-appdata.patch
 Patch10: cmake_helpers-system-expected.patch
 Patch11: cmake_helpers-system-gsl.patch
 Patch12: cmake_helpers-system-qrcode.patch
 Patch13: cmake_helpers-system-variant.patch
+Patch20: lib_ui-remove-configs.patch
 
 # Temporary upstream and proposed to upstream patches...
 Patch100: telegram-desktop-pr6956.patch
@@ -183,17 +186,19 @@ business messaging needs.
 %prep
 # Unpacking Telegram Desktop source archive...
 %setup -q -n %{appname}-%{version}
-%patch100 -p1
+%patch0 -p1 -b .desktop
+%patch1 -p1 -b .appdata
+%patch100 -p1 -b .pr6956
 
 # Unpacking cmake_helpers...
 rm -rf cmake
 tar -xf %{SOURCE1}
 mv cmake_helpers-%{commit1} cmake
-%patch101 -d cmake -p1
-%patch10 -d cmake -p1
-%patch11 -d cmake -p1
-%patch12 -d cmake -p1
-%patch13 -d cmake -p1
+%patch101 -d cmake -p1 -b .system-libraries
+%patch10 -d cmake -p1 -b .system-expected
+%patch11 -d cmake -p1 -b .system-gsl
+%patch12 -d cmake -p1 -b .system-qrcode
+%patch13 -d cmake -p1 -b .system-variant
 
 # Unpacking patched rlottie...
 pushd Telegram/ThirdParty
@@ -263,6 +268,7 @@ pushd Telegram
     rm -rf lib_ui
     tar -xf %{SOURCE11}
     mv lib_ui-%{commit11} lib_ui
+    %patch20 -d lib_ui -p1 -b .remove-configs
 popd
 
 # Unpacking codegen...
@@ -340,7 +346,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{name}.appdat
 %{_metainfodir}/%{name}.appdata.xml
 
 %changelog
-* Tue Jan 07 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.3-1
+* Thu Jan 09 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.3-1
 - Updated to version 1.9.3.
 
 * Tue Dec 24 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.8.15-3
