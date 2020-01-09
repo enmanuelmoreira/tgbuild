@@ -61,7 +61,6 @@
 %global optflags %(echo %{optflags} | sed -e 's/-mcet//g' -e 's/-fcf-protection//g' -e 's/-fstack-clash-protection//g' -e 's/$/-Qunused-arguments -Wno-unknown-warning-option/')
 %endif
 
-Summary: Telegram Desktop official messaging app
 Name: telegram-desktop
 Version: 1.9.3
 Release: 1%{?dist}
@@ -73,12 +72,8 @@ Release: 1%{?dist}
 # * P0 (qt_functions.cpp) - LGPLv3 -- build-time dependency.
 License: GPLv3+ and LGPLv3
 URL: https://github.com/telegramdesktop/%{appname}
-
-%if 0%{?fedora} && 0%{?fedora} < 31
-ExclusiveArch: i686 x86_64
-%else
+Summary: Telegram Desktop official messaging app
 ExclusiveArch: x86_64
-%endif
 
 # Source files...
 Source0: %{url}/archive/v%{version}/%{appname}-%{version}.tar.gz
