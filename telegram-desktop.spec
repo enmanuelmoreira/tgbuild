@@ -109,6 +109,7 @@ Patch100: %{name}-pr6956.patch
 Patch101: cmake_helpers-system-libraries.patch
 Patch102: %{name}-commit-100fed3.patch
 Patch103: %{name}-commit-322367c.patch
+Patch104: %{name}-pr6985.patch
 
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 Requires: qt5-qtimageformats%{?_isa}
@@ -277,6 +278,7 @@ popd
 %patch102 -p1 -b .commit-100fed3
 %patch103 -p1 -b .commit-322367c
 %patch100 -p1 -b .pr6956
+%patch104 -p1 -b .pr6985
 
 # Applying patches for build system...
 %patch101 -d cmake -p1 -b .system-libraries
