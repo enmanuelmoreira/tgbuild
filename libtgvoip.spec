@@ -1,15 +1,22 @@
+%global commit0 88b47b6f808f2573d4eaf37e1463ecd59c43deda
+%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+%global date 20191230
+
 Name: libtgvoip
 Version: 2.4.4
-Release: 2%{?dist}
-Summary: VoIP library for Telegram clients
+Release: 3.%{date}git%{shortcommit0}%{?dist}
 
 # Libtgvoip shared library - Public Domain.
 # Bundled webrtc library - BSD with patented echo cancellation algorithms.
 License: Public Domain and BSD
-URL: https://github.com/grishka/%{name}
+URL: https://github.com/telegramdesktop/%{name}
+Summary: VoIP library for Telegram clients
 
-Source0: %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0: %{url}/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
 Patch0: %{name}-build-fixes.patch
+
+# https://github.com/telegramdesktop/libtgvoip/pull/6
+Patch100: %{name}-pr6.patch
 
 Provides: bundled(webrtc-audio-processing) = 0.3
 
@@ -18,10 +25,11 @@ BuildRequires: alsa-lib-devel
 BuildRequires: openssl-devel
 BuildRequires: json11-devel
 BuildRequires: opus-devel
+BuildRequires: libtool
 BuildRequires: gcc-c++
-BuildRequires: cmake
+BuildRequires: automake
+BuildRequires: autoconf
 BuildRequires: gcc
-BuildRequires: gyp
 
 %description
 Provides VoIP library for Telegram clients.
@@ -34,111 +42,33 @@ Requires: %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 %{summary}.
 
 %prep
-%autosetup -p1
+%autosetup -n %{name}-%{commit0} -p1
+rm -f json11.*
 
 %build
-export VOIPVER="%{version}"
-gyp --format=cmake --depth=. --generator-output=. -Goutput_dir=out -Gconfig=Release %{name}.gyp
-
-pushd out/Release
-    %cmake .
-    %make_build
-popd
+autoreconf --force --install
+%configure --disable-static
+%make_build
 
 %install
-# Installing shared library...
-%{__mkdir_p} "%{buildroot}%{_libdir}"
-%{__install} -m 0755 -p out/Release/lib.target/%{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so.%{version}"
-%{__ln_s} %{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so.2.4"
-%{__ln_s} %{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so.2"
-%{__ln_s} %{name}.so.%{version} "%{buildroot}%{_libdir}/%{name}.so"
-
-# Installing additional development files...
-%{__mkdir_p} "%{buildroot}%{_includedir}/%{name}"
-find . -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{buildroot}%{_includedir}/%{name} \;
-%{__mkdir_p} "%{buildroot}%{_includedir}/%{name}/audio"
-find audio -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{buildroot}%{_includedir}/%{name}/audio \;
-%{__mkdir_p} "%{buildroot}%{_includedir}/%{name}/video"
-find video -maxdepth 1 -type f -name "*.h" -exec install -m 0644 -p '{}' %{buildroot}%{_includedir}/%{name}/video \;
+%make_install
+rm -f %{buildroot}%{_libdir}/*.la
 
 %files
 %license UNLICENSE
 %{_libdir}/%{name}.so.*
 
 %files devel
-%{_includedir}/%{name}
+%{_includedir}/tgvoip/
 %{_libdir}/%{name}.so
+%{_libdir}/pkgconfig/tgvoip.pc
 
 %changelog
+* Thu Jan 09 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.4-3.20191230git88b47b6
+- Switched to supported fork.
+
 * Fri Aug 09 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.4.4-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
 * Tue Mar 12 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.4-1
 - Updated to 2.4.4 (regular release).
-
-* Sat Mar 09 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.2-4
-- Enabled ARM builds again.
-- Minor SPEC fixes.
-
-* Mon Mar 04 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.4.2-3
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
-
-* Tue Jan 22 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.2-2
-- Rebuilt for Rawhide.
-
-* Sat Jan 12 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.2-1
-- Updated to 2.4.2 (regular release).
-
-* Tue Dec 11 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4-2
-- Backported upstream patch with crash and build fixes.
-
-* Tue Dec 11 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4-1
-- Updated to 2.4 (regular release).
-
-* Sat Nov 10 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.3-1
-- Updated to 2.3 (regular release).
-
-* Sun Sep 02 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.2.4-1
-- Updated to 2.2.4 (regular release).
-
-* Mon Aug 27 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.2.3-2
-- Added upstream patch with proxy fix.
-
-* Fri Aug 24 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.2.3-1
-- Updated to 2.2.3 (regular release).
-
-* Fri Jul 20 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.2-1
-- Updated to 2.2 (regular release).
-
-* Mon Jul 02 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.1.1-1
-- Updated to 2.1.1 (regular release).
-
-* Tue Jun 05 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.1-0.1.20180604git6a8f543
-- Updated to 2.1 (snapshot).
-
-* Tue May 29 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.0-0.3.20180528git83ac2c6
-- Updated to latest snapshot.
-
-* Sun May 27 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.0-0.2.20180525gitd2453dd
-- Updated to latest snapshot.
-
-* Thu May 24 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 2.0-0.1.20180515gitb52eb58
-- Updated to 2.0-alpha4 (snapshot).
-
-* Fri Dec 29 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.3-1
-- Updated to 1.0.3 (regular release).
-
-* Sat Nov 18 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.1-2.20171111git6a0b3b2
-- Provide compactibility with 1.0.
-
-* Sat Nov 18 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0.1-1.20171111git6a0b3b2
-- Updated to 1.0.1-git.
-
-* Fri Aug 04 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0-3.20170801gitbfd5cfe
-- Fixed build on other architectures. Build against regular OpenSSL.
-
-* Wed Aug 02 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0-2.20170801gitbfd5cfe
-- Updated to latest snapshot. Small SPEC fixes. Added virtual provides.
-
-* Tue Aug 01 2017 Vitaly Zaitsev <vitaly@easycoding.org> - 1.0-1.20170727git01f2701
-- Initial release.

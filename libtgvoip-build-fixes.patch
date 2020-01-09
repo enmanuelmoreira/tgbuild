@@ -1,60 +1,85 @@
-From 4d0a403c58f9f3bbc8704ba595cec175623f7410 Mon Sep 17 00:00:00 2001
+From e0e347b3c1a26754b250d02a78488cf9093a6d7b Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
-Date: Thu, 6 Jul 2017 17:27:01 +0200
+Date: Thu, 9 Jan 2020 13:18:09 +0100
 Subject: [PATCH] Fixed build of libtgvoip under Fedora as shared library.
 
 ---
- libtgvoip.gyp | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ Makefile.am  |  7 +++----
+ configure.ac | 13 ++++++++++++-
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/libtgvoip.gyp b/libtgvoip.gyp
-index ec86cbf..c424dbe 100644
---- a/libtgvoip.gyp
-+++ b/libtgvoip.gyp
-@@ -4,7 +4,8 @@
-     'targets': [
-       {
-         'target_name': 'libtgvoip',
--        'type': 'static_library',
-+        'type': 'shared_library',
-+        'product_extension': 'so.<!(echo -n "$VOIPVER")',
-         'dependencies': [],
-         'defines': [
-           'WEBRTC_APM_DEBUG_DUMP=0',
-@@ -14,11 +15,11 @@
-         'variables': {
-           'tgvoip_src_loc': '.',
-           'official_build_target%': '',
--          'linux_path_opus_include%': '<(DEPTH)/../../../Libraries/opus/include',
-         },
-         'include_dirs': [
-           '<(tgvoip_src_loc)/webrtc_dsp',
--          '<(linux_path_opus_include)',
-+          '<!(rpm --eval "%{_includedir}")',
-+          '<!(rpm --eval "%{_includedir}/opus")',
-         ],
-         'direct_dependent_settings': {
-           'include_dirs': [
-@@ -72,8 +73,6 @@
-           '<(tgvoip_src_loc)/video/VideoSource.h',
-           '<(tgvoip_src_loc)/video/VideoRenderer.cpp',
-           '<(tgvoip_src_loc)/video/VideoRenderer.h',
--          '<(tgvoip_src_loc)/json11.cpp',
--          '<(tgvoip_src_loc)/json11.hpp',
+diff --git a/Makefile.am b/Makefile.am
+index 03c8866..0320457 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -26,8 +26,7 @@ audio/Resampler.cpp \
+ os/posix/NetworkSocketPosix.cpp \
+ video/VideoSource.cpp \
+ video/VideoRenderer.cpp \
+-video/ScreamCongestionController.cpp \
+-json11.cpp
++video/ScreamCongestionController.cpp
  
-           # Windows
-           '<(tgvoip_src_loc)/os/windows/NetworkSocketWinsock.cpp',
-@@ -724,7 +723,9 @@
+ TGVOIP_HDRS = \
+ TgVoip.h \
+@@ -55,7 +54,6 @@ os/posix/NetworkSocketPosix.h \
+ video/VideoSource.h \
+ video/VideoRenderer.h \
+ video/ScreamCongestionController.h \
+-json11.hpp \
+ utils.h
  
+ if TARGET_OS_OSX
+@@ -751,6 +749,7 @@ else
+ CFLAGS += -DTGVOIP_NO_DSP
+ endif
  
-         ],
--        'libraries': [],
-+        'libraries': [
-+            'json11',
-+        ],
-         'configurations': {
-           'Debug': {},
-           'Release': {},
++libtgvoip_la_LDFLAGS = -version-number @LIBTGVOIP_MAJOR_VERSION@:@LIBTGVOIP_MINOR_VERSION@:@LIBTGVOIP_PATCH_VERSION@
+ libtgvoip_la_SOURCES = $(SRC) $(TGVOIP_HDRS)
+ tgvoipincludedir = $(includedir)/tgvoip
+ nobase_tgvoipinclude_HEADERS = $(TGVOIP_HDRS)
+@@ -759,4 +758,4 @@ CXXFLAGS += -std=gnu++0x $(CFLAGS)
+ if TARGET_OS_OSX
+ OBJCFLAGS = $(CFLAGS)
+ OBJCXXFLAGS += -std=gnu++0x $(CFLAGS)
+-endif
+\ No newline at end of file
++endif
+diff --git a/configure.ac b/configure.ac
+index 222f541..cfad4ef 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1,8 +1,14 @@
+ #                                               -*- Autoconf -*-
+ # Process this file with autoconf to produce a configure script.
+ 
++# Define version information
++m4_define([libtgvoip_major_version], 2)
++m4_define([libtgvoip_minor_version], 4)
++m4_define([libtgvoip_patch_version], 4)
++m4_define([libtgvoip_version],[libtgvoip_major_version.libtgvoip_minor_version.libtgvoip_patch_version])
++
+ AC_PREREQ([2.69])
+-AC_INIT([libtgvoip], [2.4.4], [https://github.com/grishka/libtgvoip/issues])
++AC_INIT([libtgvoip], [libtgvoip_version], [https://github.com/grishka/libtgvoip/issues])
+ AC_CONFIG_SRCDIR([config.h.in])
+ AC_CONFIG_HEADERS([config.h])
+ AM_INIT_AUTOMAKE([subdir-objects])
+@@ -21,9 +27,14 @@ AC_CHECK_LIB([crypto], [SHA1], [], [AC_MSG_FAILURE([libssl-dev is required but n
+ AC_CHECK_LIB([m], [floorf])
+ AC_CHECK_LIB([opus], [opus_decoder_create], [], [AC_MSG_FAILURE([libopus-dev is required but not found])])
+ AC_CHECK_LIB([pthread], [pthread_create])
++AC_CHECK_LIB([json11], [main], [], [AC_MSG_FAILURE([json11-dev is required but not found])])
+ 
+ AC_CANONICAL_HOST
+ 
++AC_SUBST(LIBTGVOIP_MAJOR_VERSION, libtgvoip_major_version)
++AC_SUBST(LIBTGVOIP_MINOR_VERSION, libtgvoip_minor_version)
++AC_SUBST(LIBTGVOIP_PATCH_VERSION, libtgvoip_patch_version)
++
+ AS_CASE([$host_cpu],
+ 	[i?86], [cpu_x86=yes],
+ 	[x86_64], [cpu_x86=yes],
 -- 
-2.20.1
+2.24.1
 
