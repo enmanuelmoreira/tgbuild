@@ -102,10 +102,3 @@ index d281aff339..a6e4c8da99 100644
  	}
  }
  
-diff --git a/Telegram/lib_ui b/Telegram/lib_ui
-index d30d361609..0aadf4ca7d 160000
---- a/Telegram/lib_ui
-+++ b/Telegram/lib_ui
-@@ -1 +1 @@
--Subproject commit d30d361609d4b76d3a55b1329642caee30b82264
-+Subproject commit 0aadf4ca7d483600122bacac1bf24bb6cfe7e448
