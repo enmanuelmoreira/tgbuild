@@ -119,7 +119,7 @@ BuildRequires: guidelines-support-library-devel >= 1.0.0
 BuildRequires: mapbox-variant-devel >= 0.3.6
 BuildRequires: qt5-qtbase-private-devel
 BuildRequires: libtgvoip-devel >= 2.4.4
-BuildRequires: range-v3-devel >= 0.9.1
+BuildRequires: range-v3-devel >= 0.10.0
 BuildRequires: libqrcodegencpp-devel
 BuildRequires: ffmpeg-devel >= 3.1
 BuildRequires: openal-soft-devel
@@ -252,7 +252,7 @@ pushd Telegram
     rm -rf lib_ui
     tar -xf %{SOURCE11}
     mv lib_ui-%{commit11} lib_ui
-    rm -f lib_ui/linux.qrc
+    rm -f lib_ui/qt_conf/linux.qrc
 popd
 
 # Unpacking codegen...
