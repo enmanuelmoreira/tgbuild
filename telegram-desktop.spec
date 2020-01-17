@@ -62,7 +62,7 @@
 %endif
 
 Name: telegram-desktop
-Version: 1.9.3
+Version: 1.9.4
 Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
@@ -358,12 +358,11 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{name}.appdat
 %{_metainfodir}/%{name}.appdata.xml
 
 %changelog
+* Fri Jan 17 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.4-1
+- Updated to version 1.9.4.
+
 * Thu Jan 09 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.3-1
 - Updated to version 1.9.3.
 
 * Tue Dec 24 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.8.15-3
 - Removed GTK2 from build requirements.
-
-* Tue Dec 17 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.8.15-2
-- Fixed issue with menu bar on Gnome.
-- Rebuilt due to Qt 5.13.2 update on Rawhide.
