@@ -9,7 +9,7 @@
 %global apihash dfbe1bc42dc9d20507e17d1814cc2f0a
 
 # Git revision of cmake_helpers...
-%global commit1 652bbaf002546ae1822fff4474ffe95091bfc2e4
+%global commit1 458fec94999b82145bffaaab114ee9baa8708dd3
 %global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
 
 # Git revision of patched rlottie...
@@ -21,7 +21,7 @@
 %global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
 
 # Git revision of lib_base...
-%global commit4 baae6cdd9ba5216732222e7dec9a76b9ea3a7c83
+%global commit4 8ba86078fbe71ab857ee1b6e35acc4def4cc0d1c
 %global shortcommit4 %(c=%{commit4}; echo ${c:0:7})
 
 # Git revision of lib_lottie...
@@ -37,7 +37,7 @@
 %global shortcommit7 %(c=%{commit7}; echo ${c:0:7})
 
 # Git revision of lib_spellcheck...
-%global commit8 d305de6d67ca4f3891bad96a0e49e40f5c904189
+%global commit8 47847963bf491dfd266da916478de5cc479342f6
 %global shortcommit8 %(c=%{commit8}; echo ${c:0:7})
 
 # Git revision of lib_storage...
@@ -49,7 +49,7 @@
 %global shortcommit10 %(c=%{commit10}; echo ${c:0:7})
 
 # Git revision of lib_ui...
-%global commit11 4ec9e32f8f5f6b8192fd60d73ae0b575e82c1c60
+%global commit11 c0b07457fa5df905f7926025302f66065dc4d52b
 %global shortcommit11 %(c=%{commit11}; echo ${c:0:7})
 
 # Git revision of codegen...
