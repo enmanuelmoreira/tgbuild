@@ -97,7 +97,6 @@ Patch10: cmake_helpers-system-expected.patch
 Patch11: cmake_helpers-system-gsl.patch
 Patch12: cmake_helpers-system-qrcode.patch
 Patch13: cmake_helpers-system-variant.patch
-Patch20: lib_ui-remove-configs.patch
 
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 Requires: qt5-qtimageformats%{?_isa}
@@ -253,6 +252,7 @@ pushd Telegram
     rm -rf lib_ui
     tar -xf %{SOURCE11}
     mv lib_ui-%{commit11} lib_ui
+    rm -f lib_ui/linux.qrc
 popd
 
 # Unpacking codegen...
@@ -271,9 +271,6 @@ popd
 %patch11 -d cmake -p1 -b .system-gsl
 %patch12 -d cmake -p1 -b .system-qrcode
 %patch13 -d cmake -p1 -b .system-variant
-
-# Applying patches for lib_ui...
-%patch20 -d Telegram/lib_ui -p1 -b .remove-configs
 
 %build
 # Building Telegram Desktop using cmake...
