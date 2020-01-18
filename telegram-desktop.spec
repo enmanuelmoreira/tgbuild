@@ -311,8 +311,7 @@ mkdir -p %{buildroot}%{_bindir}
 install -m 0755 -p %{_target_platform}/bin/Telegram %{buildroot}%{_bindir}/%{name}
 
 # Installing desktop shortcut...
-mv lib/xdg/telegramdesktop.desktop lib/xdg/%{name}.desktop
-desktop-file-install --copy-name-to-generic-name --dir=%{buildroot}%{_datadir}/applications lib/xdg/%{name}.desktop
+desktop-file-install --copy-name-to-generic-name --dir=%{buildroot}%{_datadir}/applications lib/xdg/telegramdesktop.desktop
 
 # Installing icons...
 for size in 16 32 48 64 128 256 512; do
@@ -323,22 +322,23 @@ done
 
 # Installing appdata for Gnome Software...
 install -d %{buildroot}%{_metainfodir}
-install -m 0644 -p lib/xdg/telegramdesktop.appdata.xml %{buildroot}%{_metainfodir}/%{name}.appdata.xml
+install -m 0644 -p lib/xdg/telegramdesktop.appdata.xml %{buildroot}%{_metainfodir}
 
 %check
-appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{name}.appdata.xml
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 
 %files
 %doc README.md changelog.txt
 %license LICENSE LEGAL
 %{_bindir}/%{name}
-%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/*/apps/*.png
-%{_metainfodir}/%{name}.appdata.xml
+%{_metainfodir}/*.appdata.xml
 
 %changelog
 * Fri Jan 17 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.4-1
 - Updated to version 1.9.4.
+- Removed obsolete downstream patches.
 
 * Thu Jan 09 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.3-1
 - Updated to version 1.9.3.
