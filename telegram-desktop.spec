@@ -12,7 +12,7 @@
 %global apihash dfbe1bc42dc9d20507e17d1814cc2f0a
 
 # Git revision of cmake_helpers...
-%global commit1 458fec94999b82145bffaaab114ee9baa8708dd3
+%global commit1 b2eb74be1d4c80c4d725f7f9daa0fca8f16672b8
 %global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
 
 # Git revision of patched rlottie...
@@ -20,15 +20,15 @@
 %global shortcommit2 %(c=%{commit2}; echo ${c:0:7})
 
 # Git revision of lib_crl...
-%global commit3 5a740bf0b7fe8f1f9a7f3e0878d5238f56502da1
+%global commit3 83ce48f25b3056a1bdbbea64244e3d8f997f51c6
 %global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
 
 # Git revision of lib_base...
-%global commit4 8ba86078fbe71ab857ee1b6e35acc4def4cc0d1c
+%global commit4 db99f556f328f8e1fdc44ab30041f655b68b8312
 %global shortcommit4 %(c=%{commit4}; echo ${c:0:7})
 
 # Git revision of lib_lottie...
-%global commit5 a0a0269ffa44d1e23f0911eaeb286004a075b089
+%global commit5 2d75b1a35a984f2a0379acbd0869b50b66acdf3c
 %global shortcommit5 %(c=%{commit5}; echo ${c:0:7})
 
 # Git revision of lib_qr...
@@ -40,23 +40,23 @@
 %global shortcommit7 %(c=%{commit7}; echo ${c:0:7})
 
 # Git revision of lib_spellcheck...
-%global commit8 47847963bf491dfd266da916478de5cc479342f6
+%global commit8 b1d635f9271040ae57c999fe9436c44470484372
 %global shortcommit8 %(c=%{commit8}; echo ${c:0:7})
 
 # Git revision of lib_storage...
-%global commit9 cb56ad46ca1bee22570a7f3f64d21531283ad84d
+%global commit9 57027c7d6c071f0d958576a530c7c0411d8d4274
 %global shortcommit9 %(c=%{commit9}; echo ${c:0:7})
 
 # Git revision of lib_tl...
-%global commit10 b0388a1a02b3f035f1486a6b66a01522c290b198
+%global commit10 404c83d77e5edb8a39f8e9f56a6340960fe5070e
 %global shortcommit10 %(c=%{commit10}; echo ${c:0:7})
 
 # Git revision of lib_ui...
-%global commit11 c0b07457fa5df905f7926025302f66065dc4d52b
+%global commit11 3b6a44c4f8f407089a6e82adfcc2aa419a91c165
 %global shortcommit11 %(c=%{commit11}; echo ${c:0:7})
 
 # Git revision of codegen...
-%global commit12 d14ae77ad5ed27ca6ddbc9579c0c5e0afa18ffca
+%global commit12 d3cc394974bbaa48159261786edd2e543216c84b
 %global shortcommit12 %(c=%{commit12}; echo ${c:0:7})
 
 # Applying workaround to RHBZ#1559007...
