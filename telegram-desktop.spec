@@ -65,7 +65,7 @@
 %endif
 
 Name: telegram-desktop
-Version: 1.9.4
+Version: 1.9.6
 Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
@@ -339,12 +339,12 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{launcher}.ap
 %{_metainfodir}/%{launcher}.appdata.xml
 
 %changelog
+* Wed Jan 22 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.6-1
+- Updated to version 1.9.6.
+
 * Fri Jan 17 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.4-1
 - Updated to version 1.9.4.
 - Removed obsolete downstream patches.
 
 * Thu Jan 09 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.3-1
 - Updated to version 1.9.3.
-
-* Tue Dec 24 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.8.15-3
-- Removed GTK2 from build requirements.
