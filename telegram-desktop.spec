@@ -99,6 +99,9 @@ Patch11: cmake_helpers-system-gsl.patch
 Patch12: cmake_helpers-system-qrcode.patch
 Patch13: cmake_helpers-system-variant.patch
 
+# https://github.com/telegramdesktop/tdesktop/pull/7046
+Patch100: %{name}-pr7046.patch
+
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
@@ -269,6 +272,12 @@ popd
 %patch12 -d cmake -p1 -b .system-qrcode
 %patch13 -d cmake -p1 -b .system-variant
 
+# # Applying patches for core project...
+%patch100 -p1 -b .cmake-install
+
+# Patching default desktop file...
+desktop-file-edit --set-key=Exec --set-value=%{_bindir}/%{name} --copy-name-to-generic-name lib/xdg/telegramdesktop.desktop
+
 %build
 # Building Telegram Desktop using cmake...
 pushd %{_target_platform}
@@ -309,26 +318,11 @@ popd
 %ninja_build -C %{_target_platform}
 
 %install
-# Installing executables...
-mkdir -p %{buildroot}%{_bindir}
-install -m 0755 -p %{_target_platform}/bin/Telegram %{buildroot}%{_bindir}/%{name}
-
-# Installing desktop shortcut...
-desktop-file-install --set-key=Exec --set-value=%{_bindir}/%{name} --copy-name-to-generic-name --dir=%{buildroot}%{_datadir}/applications lib/xdg/%{launcher}.desktop
-
-# Installing icons...
-for size in 16 32 48 64 128 256 512; do
-    dir=%{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps
-    install -d $dir
-    install -m 0644 -p Telegram/Resources/art/icon${size}.png $dir/telegram.png
-done
-
-# Installing appdata for Gnome Software...
-install -d %{buildroot}%{_metainfodir}
-install -m 0644 -p lib/xdg/telegramdesktop.appdata.xml %{buildroot}%{_metainfodir}/%{launcher}.appdata.xml
+%ninja_install -C %{_target_platform}
 
 %check
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{launcher}.appdata.xml
+desktop-file-validate %{buildroot}%{_datadir}/applications/%{launcher}.desktop
 
 %files
 %doc README.md changelog.txt
