@@ -2,6 +2,7 @@
 %bcond_with gtk3
 %bcond_with clang
 %bcond_with spellcheck
+%bcond_without fonts
 
 # Telegram Desktop's constants...
 %global appname tdesktop
@@ -42,7 +43,6 @@ Patch13: cmake_helpers-system-variant.patch
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
-Requires: open-sans-fonts
 
 # Telegram Desktop require patched version of rlottie since 1.8.0.
 # Pull Request pending: https://github.com/Samsung/rlottie/pull/252
@@ -96,6 +96,10 @@ BuildRequires: clang
 BuildRequires: llvm
 %endif
 
+%if %{with fonts}
+Requires: open-sans-fonts
+%endif
+
 %if 0%{?fedora} && 0%{?fedora} >= 30
 BuildRequires: minizip-compat-devel
 %else
@@ -136,6 +140,9 @@ pushd %{_target_platform}
 %endif
 %if %{without spellcheck}
     -DDESKTOP_APP_DISABLE_SPELLCHECK:BOOL=ON \
+%endif
+%if %{without fonts}
+    -DDESKTOP_APP_USE_PACKAGED_FONTS:BOOL=OFF \
 %endif
 %if %{with clang}
     -DCMAKE_C_COMPILER=clang \
