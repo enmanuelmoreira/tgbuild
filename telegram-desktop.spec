@@ -6,6 +6,7 @@
 # Telegram Desktop's constants...
 %global appname tdesktop
 %global launcher telegramdesktop
+%global tarsuffix -full
 
 # Telegram API tokens...
 %global apiid 208164
@@ -21,17 +22,16 @@ Version: 1.9.7
 Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
-# * S0 (Telegram Desktop) - GPLv3+ with OpenSSL exception -- main source;
-# * S1 (crl) - GPLv3+ -- build-time dependency;
-# * S2 (rlottie) - LGPLv2+ -- static dependency;
-# * P0 (qt_functions.cpp) - LGPLv3 -- build-time dependency.
-License: GPLv3+ and LGPLv3
+# * Telegram Desktop - GPLv3+ with OpenSSL exception -- main tarball;
+# * rlottie - LGPLv2+ -- static dependency;
+# * qt_functions.cpp - LGPLv3 -- build-time dependency.
+License: GPLv3+ and LGPLv2+ and LGPLv3
 URL: https://github.com/telegramdesktop/%{appname}
 Summary: Telegram Desktop official messaging app
 ExclusiveArch: x86_64
 
 # Source files...
-Source0: %{url}/releases/download/v%{version}/%{appname}-%{version}-full.tar.gz
+Source0: %{url}/releases/download/v%{version}/%{appname}-%{version}%{tarsuffix}.tar.gz
 
 # Permanent downstream patches...
 Patch10: cmake_helpers-system-expected.patch
@@ -46,7 +46,7 @@ Requires: open-sans-fonts
 
 # Telegram Desktop require patched version of rlottie since 1.8.0.
 # Pull Request pending: https://github.com/Samsung/rlottie/pull/252
-Provides: bundled(rlottie) = 0~git%{shortcommit2}
+Provides: bundled(rlottie) = 0~git
 
 # Compilers and tools...
 BuildRequires: desktop-file-utils
@@ -117,7 +117,7 @@ business messaging needs.
 
 %prep
 # Unpacking Telegram Desktop source archive...
-%autosetup -n %{appname}-%{version}
+%autosetup -n %{appname}-%{version}%{tarsuffix} -p1
 mkdir -p %{_target_platform}
 
 # Unbundling libraries...

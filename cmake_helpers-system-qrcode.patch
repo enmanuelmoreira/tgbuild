@@ -1,4 +1,4 @@
-From fee202d3b1f86a2a1d63c8f7eb828deb439a3d85 Mon Sep 17 00:00:00 2001
+From a0be7c6238a051b2cb8a09100a963d0ecb0e33a7 Mon Sep 17 00:00:00 2001
 From: Vitaly Zaitsev <vitaly@easycoding.org>
 Date: Thu, 9 Jan 2020 14:44:11 +0100
 Subject: [PATCH 3/4] Use packaged version of qr-code-generator library.
