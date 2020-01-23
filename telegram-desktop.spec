@@ -11,54 +11,6 @@
 %global apiid 208164
 %global apihash dfbe1bc42dc9d20507e17d1814cc2f0a
 
-# Git revision of cmake_helpers...
-%global commit1 b2eb74be1d4c80c4d725f7f9daa0fca8f16672b8
-%global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
-
-# Git revision of patched rlottie...
-%global commit2 c490c7a098b9b3cbc3195b00e90d6fc3989e2ba2
-%global shortcommit2 %(c=%{commit2}; echo ${c:0:7})
-
-# Git revision of lib_crl...
-%global commit3 83ce48f25b3056a1bdbbea64244e3d8f997f51c6
-%global shortcommit3 %(c=%{commit3}; echo ${c:0:7})
-
-# Git revision of lib_base...
-%global commit4 db99f556f328f8e1fdc44ab30041f655b68b8312
-%global shortcommit4 %(c=%{commit4}; echo ${c:0:7})
-
-# Git revision of lib_lottie...
-%global commit5 2d75b1a35a984f2a0379acbd0869b50b66acdf3c
-%global shortcommit5 %(c=%{commit5}; echo ${c:0:7})
-
-# Git revision of lib_qr...
-%global commit6 9877397dbf97b7198d539a3994bf0e9619cf653c
-%global shortcommit6 %(c=%{commit6}; echo ${c:0:7})
-
-# Git revision of lib_rpl...
-%global commit7 2888aabf28bf9ca89f3d6d67a523bc5f2ce802ce
-%global shortcommit7 %(c=%{commit7}; echo ${c:0:7})
-
-# Git revision of lib_spellcheck...
-%global commit8 b1d635f9271040ae57c999fe9436c44470484372
-%global shortcommit8 %(c=%{commit8}; echo ${c:0:7})
-
-# Git revision of lib_storage...
-%global commit9 57027c7d6c071f0d958576a530c7c0411d8d4274
-%global shortcommit9 %(c=%{commit9}; echo ${c:0:7})
-
-# Git revision of lib_tl...
-%global commit10 404c83d77e5edb8a39f8e9f56a6340960fe5070e
-%global shortcommit10 %(c=%{commit10}; echo ${c:0:7})
-
-# Git revision of lib_ui...
-%global commit11 3b6a44c4f8f407089a6e82adfcc2aa419a91c165
-%global shortcommit11 %(c=%{commit11}; echo ${c:0:7})
-
-# Git revision of codegen...
-%global commit12 d3cc394974bbaa48159261786edd2e543216c84b
-%global shortcommit12 %(c=%{commit12}; echo ${c:0:7})
-
 # Applying workaround to RHBZ#1559007...
 %if %{with clang}
 %global optflags %(echo %{optflags} | sed -e 's/-mcet//g' -e 's/-fcf-protection//g' -e 's/-fstack-clash-protection//g' -e 's/$/-Qunused-arguments -Wno-unknown-warning-option/')
@@ -79,28 +31,13 @@ Summary: Telegram Desktop official messaging app
 ExclusiveArch: x86_64
 
 # Source files...
-Source0: %{url}/archive/v%{version}/%{appname}-%{version}.tar.gz
-Source1: https://github.com/desktop-app/cmake_helpers/archive/%{commit1}/cmake_helpers-%{shortcommit1}.tar.gz
-Source2: https://github.com/desktop-app/rlottie/archive/%{commit2}/rlottie-%{shortcommit2}.tar.gz
-Source3: https://github.com/desktop-app/lib_crl/archive/%{commit3}/lib_crl-%{shortcommit3}.tar.gz
-Source4: https://github.com/desktop-app/lib_base/archive/%{commit4}/lib_base-%{shortcommit4}.tar.gz
-Source5: https://github.com/desktop-app/lib_lottie/archive/%{commit5}/lib_lottie-%{shortcommit5}.tar.gz
-Source6: https://github.com/desktop-app/lib_qr/archive/%{commit6}/lib_qr-%{shortcommit6}.tar.gz
-Source7: https://github.com/desktop-app/lib_rpl/archive/%{commit7}/lib_rpl-%{shortcommit7}.tar.gz
-Source8: https://github.com/desktop-app/lib_spellcheck/archive/%{commit8}/lib_spellcheck-%{shortcommit8}.tar.gz
-Source9: https://github.com/desktop-app/lib_storage/archive/%{commit9}/lib_storage-%{shortcommit9}.tar.gz
-Source10: https://github.com/desktop-app/lib_tl/archive/%{commit10}/lib_storage-%{shortcommit10}.tar.gz
-Source11: https://github.com/desktop-app/lib_ui/archive/%{commit11}/lib_ui-%{shortcommit11}.tar.gz
-Source12: https://github.com/desktop-app/codegen/archive/%{commit12}/codegen-%{shortcommit12}.tar.gz
+Source0: %{url}/releases/download/v%{version}/%{appname}-%{version}-full.tar.gz
 
 # Permanent downstream patches...
 Patch10: cmake_helpers-system-expected.patch
 Patch11: cmake_helpers-system-gsl.patch
 Patch12: cmake_helpers-system-qrcode.patch
 Patch13: cmake_helpers-system-variant.patch
-
-# https://github.com/telegramdesktop/tdesktop/pull/7046
-Patch100: %{name}-pr7046.patch
 
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 Requires: qt5-qtimageformats%{?_isa}
@@ -180,100 +117,11 @@ business messaging needs.
 
 %prep
 # Unpacking Telegram Desktop source archive...
-%setup -q -n %{appname}-%{version}
+%autosetup -n %{appname}-%{version}
 mkdir -p %{_target_platform}
 
-# Unpacking cmake_helpers...
-rm -rf cmake
-tar -xf %{SOURCE1}
-mv cmake_helpers-%{commit1} cmake
-
-# Unpacking patched rlottie...
-pushd Telegram/ThirdParty
-    rm -rf rlottie
-    tar -xf %{SOURCE2}
-    mv rlottie-%{commit2} rlottie
-popd
-
-# Unpacking lib_crl...
-pushd Telegram
-    rm -rf lib_crl
-    tar -xf %{SOURCE3}
-    mv lib_crl-%{commit3} lib_crl
-popd
-
-# Unpacking lib_base...
-pushd Telegram
-    rm -rf lib_base
-    tar -xf %{SOURCE4}
-    mv lib_base-%{commit4} lib_base
-popd
-
-# Unpacking lib_lottie...
-pushd Telegram
-    rm -rf lib_lottie
-    tar -xf %{SOURCE5}
-    mv lib_lottie-%{commit5} lib_lottie
-popd
-
-# Unpacking lib_qr...
-pushd Telegram
-    rm -rf lib_qr
-    tar -xf %{SOURCE6}
-    mv lib_qr-%{commit6} lib_qr
-popd
-
-# Unpacking lib_rpl...
-pushd Telegram
-    rm -rf lib_rpl
-    tar -xf %{SOURCE7}
-    mv lib_rpl-%{commit7} lib_rpl
-popd
-
-# Unpacking lib_spellcheck...
-pushd Telegram
-    rm -rf lib_spellcheck
-    tar -xf %{SOURCE8}
-    mv lib_spellcheck-%{commit8} lib_spellcheck
-popd
-
-# Unpacking lib_storage...
-pushd Telegram
-    rm -rf lib_storage
-    tar -xf %{SOURCE9}
-    mv lib_storage-%{commit9} lib_storage
-popd
-
-# Unpacking lib_tl...
-pushd Telegram
-    rm -rf lib_tl
-    tar -xf %{SOURCE10}
-    mv lib_tl-%{commit10} lib_tl
-popd
-
-# Unpacking lib_ui...
-pushd Telegram
-    rm -rf lib_ui
-    tar -xf %{SOURCE11}
-    mv lib_ui-%{commit11} lib_ui
-    rm -f lib_ui/qt_conf/linux.qrc
-popd
-
-# Unpacking codegen...
-pushd Telegram
-    rm -rf codegen
-    tar -xf %{SOURCE12}
-    mv codegen-%{commit12} codegen
-popd
-
-# Applying patches for build system...
-%patch10 -d cmake -p1 -b .system-expected
-%patch11 -d cmake -p1 -b .system-gsl
-%patch12 -d cmake -p1 -b .system-qrcode
-%patch13 -d cmake -p1 -b .system-variant
-
-# # Applying patches for core project...
-%patch100 -p1 -b .cmake-install
+# Unbundling libraries...
+rm -rf Telegram/ThirdParty/{Catch,GSL,QR,SPMediaKeyTap,expected,libtgvoip,lz4,minizip,variant,xxHash}
 
 # Patching default desktop file...
 desktop-file-edit --set-key=Exec --set-value=%{_bindir}/%{name} --copy-name-to-generic-name lib/xdg/telegramdesktop.desktop

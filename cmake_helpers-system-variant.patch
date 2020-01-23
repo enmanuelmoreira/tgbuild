@@ -7,10 +7,10 @@ Subject: [PATCH 4/4] Use packaged version of mapbox-variant library.
  external/variant/CMakeLists.txt | 13 +++++++++----
  1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/external/variant/CMakeLists.txt b/external/variant/CMakeLists.txt
+diff --git a/cmake/external/variant/CMakeLists.txt b/cmake/external/variant/CMakeLists.txt
 index 5b5beef..b0fb6cb 100644
---- a/external/variant/CMakeLists.txt
-+++ b/external/variant/CMakeLists.txt
+--- a/cmake/external/variant/CMakeLists.txt
++++ b/cmake/external/variant/CMakeLists.txt
 @@ -7,7 +7,12 @@
  add_library(external_variant INTERFACE IMPORTED GLOBAL)
  add_library(desktop-app::external_variant ALIAS external_variant)
