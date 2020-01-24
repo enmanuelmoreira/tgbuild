@@ -7,6 +7,7 @@
 %endif
 %bcond_with spellcheck
 %bcond_without fonts
+%bcond_with ipo
 
 # Telegram Desktop's constants...
 %global appname tdesktop
@@ -147,6 +148,9 @@ pushd %{_target_platform}
 %endif
 %if %{without fonts}
     -DDESKTOP_APP_USE_PACKAGED_FONTS:BOOL=OFF \
+%endif
+%if %{with ipo}
+    -DDESKTOP_APP_ENABLE_IPO_OPTIMIZATIONS:BOOL=ON \
 %endif
 %if %{with clang}
     -DCMAKE_C_COMPILER=clang \
