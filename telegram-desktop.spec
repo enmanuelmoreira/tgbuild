@@ -1,13 +1,13 @@
-# Build conditionals...
+# Build conditionals (with - OFF, without - ON)...
 %bcond_with gtk3
 %if 0%{?fedora} && %{?fedora} >= 32
 %bcond_without clang
 %else
 %bcond_with clang
 %endif
-%bcond_with spellcheck
+%bcond_without spellcheck
 %bcond_without fonts
-%bcond_with ipo
+%bcond_without ipo
 
 # Telegram Desktop's constants...
 %global appname tdesktop
@@ -197,6 +197,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{launcher}.desktop
 %changelog
 * Fri Jan 24 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.8-1
 - Updated to version 1.9.8.
+- Enabled LTO and spellcheck.
 
 * Thu Jan 23 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.7-2
 - Fixed desktop launcher. Regression introduced in previous build.
