@@ -23,8 +23,8 @@
 %endif
 
 Name: telegram-desktop
-Version: 1.9.7
-Release: 2%{?dist}
+Version: 1.9.8
+Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
 # * Telegram Desktop - GPLv3+ with OpenSSL exception -- main tarball;
@@ -43,9 +43,6 @@ Patch10: cmake_helpers-system-expected.patch
 Patch11: cmake_helpers-system-gsl.patch
 Patch12: cmake_helpers-system-qrcode.patch
 Patch13: cmake_helpers-system-variant.patch
-
-# https://github.com/telegramdesktop/tdesktop/pull/7066
-Patch100: telegram-desktop-pr7066.patch
 
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 Requires: qt5-qtimageformats%{?_isa}
@@ -194,6 +191,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{launcher}.desktop
 %{_metainfodir}/%{launcher}.appdata.xml
 
 %changelog
+* Fri Jan 24 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.8-1
+- Updated to version 1.9.8.
+
 * Thu Jan 23 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.7-2
 - Fixed desktop launcher. Regression introduced in previous build.
 
