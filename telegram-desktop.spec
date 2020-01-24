@@ -67,6 +67,7 @@ BuildRequires: qt5-qtbase-private-devel
 BuildRequires: libtgvoip-devel >= 2.4.4
 BuildRequires: range-v3-devel >= 0.10.0
 BuildRequires: libqrcodegencpp-devel
+BuildRequires: minizip-compat-devel
 BuildRequires: ffmpeg-devel >= 3.1
 BuildRequires: openal-soft-devel
 BuildRequires: qt5-qtbase-devel
@@ -103,12 +104,6 @@ BuildRequires: llvm
 
 %if %{with fonts}
 Requires: open-sans-fonts
-%endif
-
-%if 0%{?fedora} && 0%{?fedora} >= 30
-BuildRequires: minizip-compat-devel
-%else
-BuildRequires: minizip-devel
 %endif
 
 %description
@@ -149,7 +144,7 @@ pushd %{_target_platform}
 %if %{without fonts}
     -DDESKTOP_APP_USE_PACKAGED_FONTS:BOOL=OFF \
 %endif
-%if %{with ipo}
+%if %{with ipo} && %{without clang}
     -DDESKTOP_APP_ENABLE_IPO_OPTIMIZATIONS:BOOL=ON \
 %endif
 %if %{with clang}
