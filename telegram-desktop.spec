@@ -1,6 +1,10 @@
 # Build conditionals...
 %bcond_with gtk3
+%if 0%{?fedora} && %{?fedora} >= 32
+%bcond_without clang
+%else
 %bcond_with clang
+%endif
 %bcond_with spellcheck
 %bcond_without fonts
 
@@ -39,6 +43,9 @@ Patch10: cmake_helpers-system-expected.patch
 Patch11: cmake_helpers-system-gsl.patch
 Patch12: cmake_helpers-system-qrcode.patch
 Patch13: cmake_helpers-system-variant.patch
+
+# https://github.com/telegramdesktop/tdesktop/pull/7066
+Patch100: telegram-desktop-pr7066.patch
 
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 Requires: qt5-qtimageformats%{?_isa}

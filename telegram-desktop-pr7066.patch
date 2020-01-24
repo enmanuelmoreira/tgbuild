@@ -1,0 +1,22 @@
+From 50f328a5a802572adaacf25b35f064992a89ce0a Mon Sep 17 00:00:00 2001
+From: Vitaly Zaitsev <vitaly@easycoding.org>
+Date: Fri, 24 Jan 2020 13:26:32 +0100
+Subject: [PATCH] Added missing Qt header. Fixed clang build.
+
+Signed-off-by: Vitaly Zaitsev <vitaly@easycoding.org>
+---
+ .../SourceFiles/platform/linux/notifications_manager_linux.cpp   | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Telegram/SourceFiles/platform/linux/notifications_manager_linux.cpp b/Telegram/SourceFiles/platform/linux/notifications_manager_linux.cpp
+index 505bfaec4b..fa36d1d55c 100644
+--- a/Telegram/SourceFiles/platform/linux/notifications_manager_linux.cpp
++++ b/Telegram/SourceFiles/platform/linux/notifications_manager_linux.cpp
+@@ -14,6 +14,7 @@ For license and copyright information please follow this link:
+ #include <QtCore/QBuffer>
+ 
+ #ifndef TDESKTOP_DISABLE_DBUS_INTEGRATION
++#include <QtCore/QVersionNumber>
+ #include <QtDBus/QDBusConnection>
+ #include <QtDBus/QDBusReply>
+ #include <QtDBus/QDBusMetaType>
