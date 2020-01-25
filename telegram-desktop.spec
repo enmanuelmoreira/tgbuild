@@ -7,7 +7,7 @@
 %endif
 %bcond_without spellcheck
 %bcond_without fonts
-%bcond_with ipo
+%bcond_without ipo
 %bcond_without mindbg
 
 # Telegram Desktop's constants...
