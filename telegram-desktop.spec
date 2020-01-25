@@ -8,6 +8,7 @@
 %bcond_without spellcheck
 %bcond_without fonts
 %bcond_with ipo
+%bcond_without mindbg
 
 # Telegram Desktop's constants...
 %global appname tdesktop
@@ -21,6 +22,11 @@
 # Applying workaround to RHBZ#1559007...
 %if %{with clang}
 %global optflags %(echo %{optflags} | sed -e 's/-mcet//g' -e 's/-fcf-protection//g' -e 's/-fstack-clash-protection//g' -e 's/$/-Qunused-arguments -Wno-unknown-warning-option/')
+%endif
+
+# Decrease debuginfo verbosity to reduce memory consumption...
+%if %{with mindbg}
+%global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
 %endif
 
 Name: telegram-desktop
@@ -144,7 +150,7 @@ pushd %{_target_platform}
 %if %{without fonts}
     -DDESKTOP_APP_USE_PACKAGED_FONTS:BOOL=OFF \
 %endif
-%if %{with ipo} && %{without clang}
+%if %{with ipo} && %{with mindbg} && %{without clang}
     -DDESKTOP_APP_ENABLE_IPO_OPTIMIZATIONS:BOOL=ON \
 %endif
 %if %{with clang}
