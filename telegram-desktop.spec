@@ -195,6 +195,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{launcher}.desktop
 %changelog
 * Wed Jan 29 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.9-1
 - Updated to version 1.9.9.
+- Enabled LTO for all supported releases.
 
 * Fri Jan 24 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.8-1
 - Updated to version 1.9.8.
