@@ -1,9 +1,5 @@
-# Use clang on Fedora 30+...
-%if 0%{?fedora} && 0%{?fedora} >= 30
-%bcond_without clang
-%else
 %bcond_with clang
-%endif
+%bcond_without mindbg
 
 # Applying workaround to RHBZ#1559007...
 %if %{with clang}
