@@ -1,9 +1,15 @@
+# Build conditionals (with - OFF, without - ON)...
 %bcond_with clang
 %bcond_without mindbg
 
 # Applying workaround to RHBZ#1559007...
 %if %{with clang}
 %global optflags %(echo %{optflags} | sed -e 's/-mcet//g' -e 's/-fcf-protection//g' -e 's/-fstack-clash-protection//g' -e 's/$/-Qunused-arguments -Wno-unknown-warning-option/')
+%endif
+
+# Decrease debuginfo verbosity to reduce memory consumption...
+%if %{with mindbg}
+%global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
 %endif
 
 Name: tdlib
