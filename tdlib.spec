@@ -68,6 +68,8 @@ mkdir -p %{_target_platform}
 %build
 pushd %{_target_platform}
     %cmake -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_LIBDIR=%{_lib} \
 %if %{with clang}
     -DCMAKE_C_COMPILER=clang \
     -DCMAKE_CXX_COMPILER=clang++ \
@@ -81,8 +83,6 @@ pushd %{_target_platform}
     -DCMAKE_RANLIB=%{_bindir}/gcc-ranlib \
     -DCMAKE_NM=%{_bindir}/gcc-nm \
 %endif
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_LIBDIR=%{_lib} \
     -DTD_ENABLE_JNI:BOOL=OFF \
     -DTD_ENABLE_DOTNET:BOOL=OFF \
     -DTD_ENABLE_LTO:BOOL=OFF \
