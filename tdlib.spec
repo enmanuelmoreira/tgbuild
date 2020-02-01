@@ -1,5 +1,6 @@
 # Build conditionals (with - OFF, without - ON)...
 %bcond_with clang
+%bcond_with ipo
 %bcond_without mindbg
 
 # Applying workaround to RHBZ#1559007...
@@ -83,9 +84,13 @@ pushd %{_target_platform}
     -DCMAKE_RANLIB=%{_bindir}/gcc-ranlib \
     -DCMAKE_NM=%{_bindir}/gcc-nm \
 %endif
+%if %{with ipo} && %{with mindbg}
+    -DTD_ENABLE_LTO:BOOL=ON \
+%else
+    -DTD_ENABLE_LTO:BOOL=OFF \
+%endif
     -DTD_ENABLE_JNI:BOOL=OFF \
     -DTD_ENABLE_DOTNET:BOOL=OFF \
-    -DTD_ENABLE_LTO:BOOL=OFF \
     ..
 popd
 %ninja_build -C %{_target_platform}
