@@ -65,10 +65,6 @@ Requires: %{name}-devel%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 %autosetup -n td-%{version} -p1
 mkdir -p %{_target_platform}
 
-# Patching LIBDIR path...
-sed -e 's@DESTINATION lib@DESTINATION %{_lib}@g' -e 's@lib/@%{_lib}/@g' -i CMakeLists.txt
-sed -i 's@DESTINATION lib@DESTINATION %{_lib}@g' {sqlite,tdactor,tddb,tdnet,tdutils}/CMakeLists.txt
-
 %build
 pushd %{_target_platform}
     %cmake -G Ninja \
@@ -86,9 +82,10 @@ pushd %{_target_platform}
     -DCMAKE_NM=%{_bindir}/gcc-nm \
 %endif
     -DCMAKE_BUILD_TYPE=Release \
-    -DTD_ENABLE_JNI=OFF \
-    -DTD_ENABLE_DOTNET=OFF \
-    -DTD_ENABLE_LTO=OFF \
+    -DCMAKE_INSTALL_LIBDIR=%{_lib} \
+    -DTD_ENABLE_JNI:BOOL=OFF \
+    -DTD_ENABLE_DOTNET:BOOL=OFF \
+    -DTD_ENABLE_LTO:BOOL=OFF \
     ..
 popd
 %ninja_build -C %{_target_platform}
