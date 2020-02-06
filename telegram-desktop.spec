@@ -68,6 +68,7 @@ BuildRequires: range-v3-devel >= 0.10.0
 BuildRequires: libqrcodegencpp-devel
 BuildRequires: minizip-compat-devel
 BuildRequires: ffmpeg-devel >= 3.1
+BuildRequires: dbusmenu-qt5-devel
 BuildRequires: openal-soft-devel
 BuildRequires: qt5-qtbase-devel
 BuildRequires: libstdc++-devel
