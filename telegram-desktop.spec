@@ -52,6 +52,10 @@ Requires: hicolor-icon-theme
 # Pull Request pending: https://github.com/Samsung/rlottie/pull/252
 Provides: bundled(rlottie) = 0~git
 
+# Telegram Desktop require patched version of lxqt-qtplugin.
+# Pull Request pending: https://github.com/lxqt/lxqt-qtplugin/pull/52
+Provides: bundled(lxqt-qtplugin) = 0.14.0~git
+
 # Compilers and tools...
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
