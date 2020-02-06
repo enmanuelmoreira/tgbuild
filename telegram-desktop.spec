@@ -42,10 +42,7 @@ ExclusiveArch: x86_64
 Source0: %{url}/releases/download/v%{version}/%{appname}-%{version}%{tarsuffix}.tar.gz
 
 # Permanent downstream patches...
-Patch10: cmake_helpers-system-expected.patch
-Patch11: cmake_helpers-system-gsl.patch
-Patch12: cmake_helpers-system-qrcode.patch
-Patch13: cmake_helpers-system-variant.patch
+Patch10: cmake_helpers-system-qrcode.patch
 
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 Requires: qt5-qtimageformats%{?_isa}
