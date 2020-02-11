@@ -27,7 +27,7 @@
 %endif
 
 Name: telegram-desktop
-Version: 1.9.10
+Version: 1.9.12
 Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
@@ -209,12 +209,12 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{launcher}.desktop
 %{_metainfodir}/%{launcher}.appdata.xml
 
 %changelog
+* Tue Feb 11 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.12-1
+- Updated to version 1.9.12.
+
 * Thu Feb 06 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.10-1
 - Updated to version 1.9.10 (beta).
 
 * Wed Jan 29 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.9-1
 - Updated to version 1.9.9.
 - Enabled LTO for all supported releases.
-
-* Fri Jan 24 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.9.8-1
-- Updated to version 1.9.8.
