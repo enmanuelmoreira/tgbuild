@@ -1,4 +1,5 @@
 # Build conditionals (with - OFF, without - ON)...
+%bcond_with rlottie
 %bcond_with gtk3
 %bcond_with clang
 %bcond_without spellcheck
@@ -51,7 +52,11 @@ Requires: hicolor-icon-theme
 
 # Telegram Desktop require patched version of rlottie since 1.8.0.
 # Pull Request pending: https://github.com/Samsung/rlottie/pull/252
+%if %{with rlottie}
+BuildRequires: rlottie-devel
+%else
 Provides: bundled(rlottie) = 0~git
+%endif
 
 # Telegram Desktop require patched version of lxqt-qtplugin.
 # Pull Request pending: https://github.com/lxqt/lxqt-qtplugin/pull/52
@@ -153,6 +158,11 @@ pushd %{_target_platform}
 %if %{with ipo} && %{with mindbg} && %{without clang}
     -DDESKTOP_APP_ENABLE_IPO_OPTIMIZATIONS:BOOL=ON \
 %endif
+%if %{with rlottie}
+    -DDESKTOP_APP_USE_PACKAGED_RLOTTIE:BOOL=ON \
+%else
+    -DDESKTOP_APP_USE_PACKAGED_RLOTTIE:BOOL=OFF \
+%endif
 %if %{with clang}
     -DCMAKE_C_COMPILER=clang \
     -DCMAKE_CXX_COMPILER=clang++ \
@@ -169,7 +179,6 @@ pushd %{_target_platform}
     -DTDESKTOP_API_ID=%{apiid} \
     -DTDESKTOP_API_HASH=%{apihash} \
     -DDESKTOP_APP_USE_PACKAGED:BOOL=ON \
-    -DDESKTOP_APP_USE_PACKAGED_RLOTTIE:BOOL=OFF \
     -DDESKTOP_APP_USE_PACKAGED_EXPECTED:BOOL=ON \
     -DDESKTOP_APP_USE_PACKAGED_VARIANT:BOOL=ON \
     -DDESKTOP_APP_USE_GLIBC_WRAPS:BOOL=OFF \
