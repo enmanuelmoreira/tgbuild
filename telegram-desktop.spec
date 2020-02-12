@@ -157,6 +157,7 @@ pushd %{_target_platform}
 %endif
 %if %{with rlottie}
     -DDESKTOP_APP_USE_PACKAGED_RLOTTIE:BOOL=ON \
+    -DDESKTOP_APP_LOTTIE_USE_CACHE:BOOL=OFF \
 %else
     -DDESKTOP_APP_USE_PACKAGED_RLOTTIE:BOOL=OFF \
 %endif
