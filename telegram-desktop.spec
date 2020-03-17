@@ -100,7 +100,6 @@ Requires: gtk3%{?_isa}
 %if %{with spellcheck}
 BuildRequires: hunspell-devel
 BuildRequires: glib2-devel
-Requires: hunspell%{?_isa}
 %endif
 
 %if %{with clang}
