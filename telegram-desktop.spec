@@ -98,9 +98,8 @@ Requires: gtk3%{?_isa}
 %endif
 
 %if %{with spellcheck}
-BuildRequires: enchant2-devel
+BuildRequires: hunspell-devel
 BuildRequires: glib2-devel
-Requires: enchant2%{?_isa}
 Requires: hunspell%{?_isa}
 %endif
 
