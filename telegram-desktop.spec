@@ -32,6 +32,7 @@
 %else
 %global optflags %(echo %{optflags} | sed 's/-g /-g2 /')
 %endif
+%endif
 
 Name: telegram-desktop
 Version: 1.9.21
