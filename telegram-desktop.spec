@@ -49,18 +49,6 @@ ExclusiveArch: x86_64
 # Source files...
 Source0: %{url}/releases/download/v%{version}/%{appname}-%{version}%{tarsuffix}.tar.gz
 
-# https://github.com/telegramdesktop/tdesktop/commit/d2291f5b17e0c169083a34e51053a99546207ec8
-Patch100: %{name}-d2291f5.patch
-
-# https://github.com/telegramdesktop/tdesktop/commit/ea854e5be3c89157c282f7e224bee2e14791208a
-Patch101: %{name}-ea854e5.patch
-
-# https://github.com/telegramdesktop/tdesktop/commit/6c46194009a0bf26c1f383060a9d14378efa4ded
-Patch102: %{name}-6c46194.patch
-
-# https://github.com/telegramdesktop/tdesktop/commit/13e8b60d6c396b128cfd7338656d91ffbec8d170
-Patch103: %{name}-13e8b60.patch
-
 # Telegram Desktop require exact version of Qt due to Qt private API usage.
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 Requires: qt5-qtimageformats%{?_isa}
