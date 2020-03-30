@@ -5,7 +5,11 @@
 %bcond_without spellcheck
 %bcond_without fonts
 %bcond_without mindbg
+%ifarch x86_64
 %bcond_without ipo
+%else
+%bcond_with ipo
+%endif
 
 # Telegram Desktop's constants...
 %global appname tdesktop
@@ -23,7 +27,10 @@
 
 # Decrease debuginfo verbosity to reduce memory consumption...
 %if %{with mindbg}
+%ifarch x86_64
 %global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
+%else
+%global optflags %(echo %{optflags} | sed 's/-g /-g2 /')
 %endif
 
 Name: telegram-desktop
