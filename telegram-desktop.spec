@@ -16,10 +16,6 @@
 %global launcher telegramdesktop
 %global tarsuffix -full
 
-# Telegram API tokens...
-%global apiid 208164
-%global apihash dfbe1bc42dc9d20507e17d1814cc2f0a
-
 # Applying workaround to RHBZ#1559007...
 %if %{with clang}
 %global optflags %(echo %{optflags} | sed -e 's/-mcet//g' -e 's/-fcf-protection//g' -e 's/-fstack-clash-protection//g' -e 's/$/-Qunused-arguments -Wno-unknown-warning-option/')
@@ -168,8 +164,8 @@ pushd %{_target_platform}
     -DDESKTOP_APP_USE_PACKAGED_RLOTTIE:BOOL=OFF \
 %endif
 %if %{with clang}
-    -DCMAKE_C_COMPILER=clang \
-    -DCMAKE_CXX_COMPILER=clang++ \
+    -DCMAKE_C_COMPILER=%{_bindir}/clang \
+    -DCMAKE_CXX_COMPILER=%{_bindir}/clang++ \
     -DCMAKE_AR=%{_bindir}/llvm-ar \
     -DCMAKE_RANLIB=%{_bindir}/llvm-ranlib \
     -DCMAKE_LINKER=%{_bindir}/llvm-ld \
@@ -180,8 +176,8 @@ pushd %{_target_platform}
     -DCMAKE_RANLIB=%{_bindir}/gcc-ranlib \
     -DCMAKE_NM=%{_bindir}/gcc-nm \
 %endif
-    -DTDESKTOP_API_ID=%{apiid} \
-    -DTDESKTOP_API_HASH=%{apihash} \
+    -DTDESKTOP_API_ID=611335 \
+    -DTDESKTOP_API_HASH=d524b414d21f4d37f08684c1df41ac9c \
     -DDESKTOP_APP_USE_PACKAGED:BOOL=ON \
     -DDESKTOP_APP_USE_PACKAGED_GSL:BOOL=ON \
     -DDESKTOP_APP_USE_PACKAGED_EXPECTED:BOOL=ON \
