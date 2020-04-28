@@ -1,19 +1,21 @@
 # Build conditionals (with - OFF, without - ON)...
 %bcond_with gtk3
-%bcond_with clang
 %bcond_with rlottie
-%bcond_with gsl
+%bcond_without gsl
 %bcond_without spellcheck
 %bcond_without fonts
 %bcond_without mindbg
+
 %if 0%{?fedora} && 0%{?fedora} >= 32
-%bcond_with ipo
+%bcond_without clang
 %else
+%bcond_with clang
+%endif
+
 %ifarch x86_64
 %bcond_without ipo
 %else
 %bcond_with ipo
-%endif
 %endif
 
 # Telegram Desktop's constants...
