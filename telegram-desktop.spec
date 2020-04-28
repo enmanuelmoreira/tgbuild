@@ -1,7 +1,7 @@
 # Build conditionals (with - OFF, without - ON)...
 %bcond_with gtk3
-%bcond_with rlottie
-%bcond_without gsl
+%bcond_with gsl
+%bcond_without rlottie
 %bcond_without spellcheck
 %bcond_without fonts
 %bcond_without mindbg
