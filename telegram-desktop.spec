@@ -50,9 +50,6 @@ ExclusiveArch: x86_64
 # Source files...
 Source0: %{url}/releases/download/v%{version}/%{appname}-%{version}%{tarsuffix}.tar.gz
 
-# https://github.com/desktop-app/lib_base/commit/eedb8afcf5f1709f3e02db9b06b977bb57aca182
-Patch100: lib_base-eedb8af.patch
-
 # Telegram Desktop require exact version of Qt due to Qt private API usage.
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 Requires: qt5-qtimageformats%{?_isa}
