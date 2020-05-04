@@ -1,5 +1,4 @@
 # Build conditionals (with - OFF, without - ON)...
-%bcond_with gtk3
 %bcond_without rlottie
 %bcond_without spellcheck
 %bcond_without fonts
@@ -99,14 +98,6 @@ BuildRequires: lz4-devel
 BuildRequires: xz-devel
 BuildRequires: python3
 
-%if %{with gtk3}
-BuildRequires: libappindicator-gtk3-devel
-BuildRequires: glib2-devel
-BuildRequires: gtk3-devel
-Recommends: libappindicator-gtk3%{?_isa}
-Requires: gtk3%{?_isa}
-%endif
-
 %if %{with spellcheck}
 BuildRequires: hunspell-devel
 BuildRequires: glib2-devel
@@ -155,9 +146,6 @@ desktop-file-edit --set-key=Exec --set-value="%{_bindir}/%{name} -- %u" --copy-n
 pushd %{_target_platform}
     %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
-%if %{without gtk3}
-    -DTDESKTOP_DISABLE_GTK_INTEGRATION:BOOL=ON \
-%endif
 %if %{without spellcheck}
     -DDESKTOP_APP_DISABLE_SPELLCHECK:BOOL=ON \
 %endif
@@ -196,6 +184,7 @@ pushd %{_target_platform}
     -DDESKTOP_APP_USE_GLIBC_WRAPS:BOOL=OFF \
     -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
     -DTDESKTOP_USE_PACKAGED_TGVOIP:BOOL=ON \
+    -DTDESKTOP_DISABLE_GTK_INTEGRATION:BOOL=ON \
     -DTDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME:BOOL=ON \
     -DTDESKTOP_DISABLE_DESKTOP_FILE_GENERATION:BOOL=ON \
     -DTDESKTOP_USE_FONTCONFIG_FALLBACK:BOOL=OFF \
