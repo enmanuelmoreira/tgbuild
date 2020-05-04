@@ -1,6 +1,5 @@
 # Build conditionals (with - OFF, without - ON)...
 %bcond_without rlottie
-%bcond_without spellcheck
 %bcond_without fonts
 %bcond_without mindbg
 
@@ -89,19 +88,16 @@ BuildRequires: openal-soft-devel
 BuildRequires: qt5-qtbase-devel
 BuildRequires: libstdc++-devel
 BuildRequires: expected-devel
+BuildRequires: hunspell-devel
 BuildRequires: openssl-devel
 BuildRequires: xxhash-devel
 BuildRequires: json11-devel
 BuildRequires: ninja-build
+BuildRequires: glib2-devel
 BuildRequires: opus-devel
 BuildRequires: lz4-devel
 BuildRequires: xz-devel
 BuildRequires: python3
-
-%if %{with spellcheck}
-BuildRequires: hunspell-devel
-BuildRequires: glib2-devel
-%endif
 
 %if %{with clang}
 BuildRequires: compiler-rt
@@ -146,9 +142,6 @@ desktop-file-edit --set-key=Exec --set-value="%{_bindir}/%{name} -- %u" --copy-n
 pushd %{_target_platform}
     %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
-%if %{without spellcheck}
-    -DDESKTOP_APP_DISABLE_SPELLCHECK:BOOL=ON \
-%endif
 %if %{without fonts}
     -DDESKTOP_APP_USE_PACKAGED_FONTS:BOOL=OFF \
 %endif
