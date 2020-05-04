@@ -1,6 +1,5 @@
 # Build conditionals (with - OFF, without - ON)...
 %bcond_without rlottie
-%bcond_without fonts
 %bcond_without mindbg
 
 %if 0%{?fedora} && 0%{?fedora} >= 32
@@ -54,6 +53,7 @@ Source0: %{url}/releases/download/v%{version}/%{appname}-%{version}%{tarsuffix}.
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
 Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
+Requires: open-sans-fonts
 
 # Telegram Desktop require patched version of rlottie since 1.8.0.
 # Pull Request pending: https://github.com/Samsung/rlottie/pull/252
@@ -105,10 +105,6 @@ BuildRequires: clang
 BuildRequires: llvm
 %endif
 
-%if %{with fonts}
-Requires: open-sans-fonts
-%endif
-
 %description
 Telegram is a messaging app with a focus on speed and security, it’s super
 fast, simple and free. You can use Telegram on all your devices at the same
@@ -142,9 +138,6 @@ desktop-file-edit --set-key=Exec --set-value="%{_bindir}/%{name} -- %u" --copy-n
 pushd %{_target_platform}
     %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
-%if %{without fonts}
-    -DDESKTOP_APP_USE_PACKAGED_FONTS:BOOL=OFF \
-%endif
 %if %{with ipo} && %{with mindbg} && %{without clang}
     -DDESKTOP_APP_ENABLE_IPO_OPTIMIZATIONS:BOOL=ON \
 %endif
@@ -174,6 +167,7 @@ pushd %{_target_platform}
     -DDESKTOP_APP_USE_PACKAGED_EXPECTED:BOOL=ON \
     -DDESKTOP_APP_USE_PACKAGED_VARIANT:BOOL=ON \
     -DDESKTOP_APP_USE_PACKAGED_QRCODE:BOOL=ON \
+    -DDESKTOP_APP_USE_PACKAGED_FONTS:BOOL=ON \
     -DDESKTOP_APP_USE_GLIBC_WRAPS:BOOL=OFF \
     -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
     -DTDESKTOP_USE_PACKAGED_TGVOIP:BOOL=ON \
