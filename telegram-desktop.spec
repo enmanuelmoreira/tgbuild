@@ -54,6 +54,9 @@ Requires: qt5-qtimageformats%{?_isa}
 Requires: hicolor-icon-theme
 Requires: open-sans-fonts
 
+# Short alias for the main package...
+Provides: telegram%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+
 # Telegram Desktop require patched version of rlottie since 1.8.0.
 # Pull Request pending: https://github.com/Samsung/rlottie/pull/252
 %if %{with rlottie}
