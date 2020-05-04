@@ -17,7 +17,6 @@
 # Telegram Desktop's constants...
 %global appname tdesktop
 %global launcher telegramdesktop
-%global tarsuffix -full
 
 # Applying workaround to RHBZ#1559007...
 %if %{with clang}
@@ -47,7 +46,7 @@ Summary: Telegram Desktop official messaging app
 ExclusiveArch: x86_64
 
 # Source files...
-Source0: %{url}/releases/download/v%{version}/%{appname}-%{version}%{tarsuffix}.tar.gz
+Source0: %{url}/releases/download/v%{version}/%{appname}-%{version}-full.tar.gz
 
 # Telegram Desktop require exact version of Qt due to Qt private API usage.
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
@@ -126,6 +125,7 @@ mkdir -p %{_target_platform}
 # Unbundling libraries...
 rm -rf Telegram/ThirdParty/{Catch,GSL,QR,SPMediaKeyTap,expected,hunspell,libdbusmenu-qt,libtgvoip,lz4,minizip,variant,xxHash}
 
+# Unbundling rlottie if build against packaged version...
 %if %{with rlottie}
 rm -rf Telegram/ThirdParty/rlottie
 %endif
