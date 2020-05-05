@@ -126,7 +126,7 @@ business messaging needs.
 mkdir -p %{_target_platform}
 
 # Unbundling libraries...
-rm -rf Telegram/ThirdParty/{Catch,GSL,QR,SPMediaKeyTap,expected,hunspell,libdbusmenu-qt,libtgvoip,lz4,minizip,variant,xxHash}
+rm -rf Telegram/ThirdParty/{Catch,GSL,QR,SPMediaKeyTap,expected,fcitx-qt5,hime,hunspell,libdbusmenu-qt,libqtxdg,libtgvoip,lxqt-qtplugin,lz4,materialdecoration,minizip,nimf,qt5ct,range-v3,variant,xxHash}
 
 # Unbundling rlottie if build against packaged version...
 %if %{with rlottie}
