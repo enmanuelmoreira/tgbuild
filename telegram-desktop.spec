@@ -33,7 +33,7 @@
 %endif
 
 Name: telegram-desktop
-Version: 2.1.1
+Version: 2.1.2
 Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
@@ -122,7 +122,7 @@ business messaging needs.
 
 %prep
 # Unpacking Telegram Desktop source archive...
-%autosetup -n %{appname}-%{version}%{tarsuffix} -p1
+%autosetup -n %{appname}-%{version}-full -p1
 mkdir -p %{_target_platform}
 
 # Unbundling libraries...
@@ -132,9 +132,6 @@ rm -rf Telegram/ThirdParty/{Catch,GSL,QR,SPMediaKeyTap,expected,fcitx-qt5,hime,h
 %if %{with rlottie}
 rm -rf Telegram/ThirdParty/rlottie
 %endif
-
-# Patching default desktop file...
-desktop-file-edit --set-key=Exec --set-value="%{_bindir}/%{name} -- %u" --copy-name-to-generic-name lib/xdg/telegramdesktop.desktop
 
 %build
 # Building Telegram Desktop using cmake...
@@ -199,11 +196,11 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{launcher}.desktop
 %{_metainfodir}/%{launcher}.appdata.xml
 
 %changelog
+* Tue May 05 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.1.2-1
+- Updated to version 2.1.2.
+
 * Fri May 01 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.1.1-1
 - Updated to version 2.1.1.
 
 * Tue Apr 28 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.1.0-1
 - Updated to version 2.1.0.
-
-* Tue Mar 31 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.0.1-1
-- Updated to version 2.0.1.
