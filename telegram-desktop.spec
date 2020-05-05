@@ -1,17 +1,11 @@
 # Build conditionals (with - OFF, without - ON)...
 %bcond_without rlottie
-%bcond_without mindbg
+%bcond_without ipo
 
 %if 0%{?fedora} && 0%{?fedora} >= 32
 %bcond_without clang
 %else
 %bcond_with clang
-%endif
-
-%ifarch x86_64
-%bcond_without ipo
-%else
-%bcond_with ipo
 %endif
 
 # Telegram Desktop's constants...
@@ -24,12 +18,10 @@
 %endif
 
 # Decrease debuginfo verbosity to reduce memory consumption...
-%if %{with mindbg}
 %ifarch x86_64
 %global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
 %else
 %global optflags %(echo %{optflags} | sed 's/-g /-g2 /')
-%endif
 %endif
 
 Name: telegram-desktop
@@ -138,8 +130,10 @@ rm -rf Telegram/ThirdParty/rlottie
 pushd %{_target_platform}
     %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
-%if %{with ipo} && %{with mindbg} && %{without clang}
+%ifarch x86_64
+%if %{with ipo} && %{without clang}
     -DDESKTOP_APP_ENABLE_IPO_OPTIMIZATIONS:BOOL=ON \
+%endif
 %endif
 %if %{with rlottie}
     -DDESKTOP_APP_USE_PACKAGED_RLOTTIE:BOOL=ON \
