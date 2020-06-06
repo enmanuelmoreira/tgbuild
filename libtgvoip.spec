@@ -1,10 +1,10 @@
-%global commit0 c5651ffc728336e56d8567f5c6c179e8a5d4fe55
+%global commit0 8682c5c22e9c3a28ee3aacfd1d529db07ea914bf
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global date 20200123
+%global date 20200521
 
 Name: libtgvoip
 Version: 2.4.4
-Release: 4.%{date}git%{shortcommit0}%{?dist}
+Release: 5.%{date}git%{shortcommit0}%{?dist}
 
 # Libtgvoip shared library - Public Domain.
 # Bundled webrtc library - BSD with patented echo cancellation algorithms.
@@ -60,11 +60,11 @@ rm -f %{buildroot}%{_libdir}/*.la
 %{_libdir}/pkgconfig/tgvoip.pc
 
 %changelog
+* Sat Jun 06 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.4-5.20200521git8682c5c
+- Updated to latest Git snapshot.
+
 * Fri Jan 24 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.4-4.20200123gitc5651ff
 - Updated to latest Git snapshot.
 
 * Thu Jan 09 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.4-3.20191230git88b47b6
 - Switched to supported fork.
-
-* Fri Aug 09 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.4.4-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
