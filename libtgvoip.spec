@@ -13,6 +13,7 @@ URL: https://github.com/telegramdesktop/%{name}
 Summary: VoIP library for Telegram clients
 Source0: %{url}/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
 Patch0: %{name}-system-json11.patch
+Patch100: %{name}-cxx-std-version.patch
 
 Provides: bundled(webrtc-audio-processing) = 0.3
 
