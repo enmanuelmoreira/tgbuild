@@ -41,6 +41,7 @@ Requires: hicolor-icon-theme
 Requires: open-sans-fonts
 
 # Short alias for the main package...
+Provides: telegram = %{?epoch:%{epoch}:}%{version}-%{release}
 Provides: telegram%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 # Telegram Desktop require patched version of rlottie since 1.8.0.
