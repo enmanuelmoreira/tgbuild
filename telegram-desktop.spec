@@ -1,6 +1,7 @@
 # Build conditionals (with - OFF, without - ON)...
 %bcond_without rlottie
 %bcond_without ipo
+%bcond_with gtk3
 %bcond_with clang
 
 # Telegram Desktop's constants...
@@ -92,6 +93,11 @@ BuildRequires: clang
 BuildRequires: llvm
 %endif
 
+%if %{with gtk3}
+BuildRequires: gtk3-devel
+Requires: gtk3%{?_isa}
+%endif
+
 %description
 Telegram is a messaging app with a focus on speed and security, it’s super
 fast, simple and free. You can use Telegram on all your devices at the same
@@ -158,7 +164,11 @@ pushd %{_target_platform}
     -DDESKTOP_APP_USE_GLIBC_WRAPS:BOOL=OFF \
     -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
     -DTDESKTOP_USE_PACKAGED_TGVOIP:BOOL=ON \
+%if %{with gtk3}
+    -DTDESKTOP_DISABLE_GTK_INTEGRATION:BOOL=OFF \
+%else
     -DTDESKTOP_DISABLE_GTK_INTEGRATION:BOOL=ON \
+%endif
     -DTDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME:BOOL=ON \
     -DTDESKTOP_DISABLE_DESKTOP_FILE_GENERATION:BOOL=ON \
     -DTDESKTOP_USE_FONTCONFIG_FALLBACK:BOOL=OFF \
