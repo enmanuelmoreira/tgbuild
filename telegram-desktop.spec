@@ -21,8 +21,8 @@
 %endif
 
 Name: telegram-desktop
-Version: 2.1.11
-Release: 2%{?dist}
+Version: 2.1.12
+Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
 # * Telegram Desktop - GPLv3+ with OpenSSL exception -- main tarball;
@@ -193,11 +193,11 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{launcher}.desktop
 %{_metainfodir}/%{launcher}.appdata.xml
 
 %changelog
+* Thu Jun 18 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.1.12-1
+- Updated to version 2.1.12.
+
 * Mon Jun 15 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.1.11-2
 - Rebuilt due to Qt 5.14.2 update.
 
 * Mon Jun 08 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.1.11-1
 - Updated to version 2.1.11.
-
-* Sat Jun 06 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.1.10-1
-- Updated to version 2.1.10.
