@@ -118,7 +118,6 @@ business messaging needs.
 %prep
 # Unpacking Telegram Desktop source archive...
 %autosetup -n %{appname}-%{version}-full -p1
-mkdir -p %{_target_platform}
 
 # Unbundling libraries...
 rm -rf Telegram/ThirdParty/{Catch,GSL,QR,SPMediaKeyTap,expected,fcitx-qt5,fcitx5-qt,hime,hunspell,libdbusmenu-qt,libqtxdg,libtgvoip,lxqt-qtplugin,lz4,materialdecoration,minizip,nimf,qt5ct,range-v3,variant,xxHash}
@@ -130,8 +129,7 @@ rm -rf Telegram/ThirdParty/rlottie
 
 %build
 # Building Telegram Desktop using cmake...
-pushd %{_target_platform}
-    %cmake -G Ninja \
+%cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
 %ifarch x86_64
 %if %{with ipo} && %{without clang}
@@ -176,13 +174,11 @@ pushd %{_target_platform}
     -DTDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME:BOOL=ON \
     -DTDESKTOP_DISABLE_DESKTOP_FILE_GENERATION:BOOL=ON \
     -DTDESKTOP_USE_FONTCONFIG_FALLBACK:BOOL=OFF \
-    -DTDESKTOP_LAUNCHER_BASENAME=%{launcher} \
-    ..
-popd
-%ninja_build -C %{_target_platform}
+    -DTDESKTOP_LAUNCHER_BASENAME=%{launcher}
+%cmake_build
 
 %install
-%ninja_install -C %{_target_platform}
+%cmake_install
 
 %check
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{launcher}.appdata.xml
