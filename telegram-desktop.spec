@@ -74,6 +74,7 @@ BuildRequires: libtgvoip-devel >= 2.4.4
 BuildRequires: range-v3-devel >= 0.10.0
 BuildRequires: libqrcodegencpp-devel
 BuildRequires: minizip-compat-devel
+BuildRequires: qt5-qtwayland-devel
 BuildRequires: ffmpeg-devel >= 3.1
 BuildRequires: dbusmenu-qt5-devel
 BuildRequires: openal-soft-devel
