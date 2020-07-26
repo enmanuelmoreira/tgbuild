@@ -1,3 +1,6 @@
+%undefine __cmake_in_source_build
+%define _lto_cflags %{nil}
+
 # Build conditionals (with - OFF, without - ON)...
 %bcond_without rlottie
 %bcond_without ipo
