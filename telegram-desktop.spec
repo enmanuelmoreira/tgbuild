@@ -83,6 +83,7 @@ BuildRequires: libstdc++-devel
 BuildRequires: expected-devel
 BuildRequires: hunspell-devel
 BuildRequires: openssl-devel
+BuildRequires: wayland-devel
 BuildRequires: xxhash-devel
 BuildRequires: json11-devel
 BuildRequires: ninja-build
