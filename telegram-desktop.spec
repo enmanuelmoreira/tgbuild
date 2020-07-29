@@ -92,6 +92,7 @@ BuildRequires: json11-devel
 BuildRequires: ninja-build
 BuildRequires: glib2-devel
 BuildRequires: opus-devel
+BuildRequires: libatomic
 BuildRequires: lz4-devel
 BuildRequires: xz-devel
 BuildRequires: python3
