@@ -78,6 +78,7 @@ BuildRequires: qt5-qtwayland-devel
 BuildRequires: ffmpeg-devel >= 3.1
 BuildRequires: dbusmenu-qt5-devel
 BuildRequires: openal-soft-devel
+BuildRequires: qt5-qtbase-static
 BuildRequires: qt5-qtbase-devel
 BuildRequires: libstdc++-devel
 BuildRequires: expected-devel
