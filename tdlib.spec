@@ -1,3 +1,5 @@
+%undefine __cmake_in_source_build
+
 # Build conditionals (with - OFF, without - ON)...
 %bcond_with clang
 %bcond_with ipo
@@ -5,7 +7,7 @@
 
 # Applying workaround to RHBZ#1559007...
 %if %{with clang}
-%global optflags %(echo %{optflags} | sed -e 's/-mcet//g' -e 's/-fcf-protection//g' -e 's/-fstack-clash-protection//g' -e 's/$/ -Qunused-arguments -Wno-unknown-warning-option/')
+%global optflags %(echo %{optflags} | sed -e 's/-mcet//g' -e 's/-fcf-protection//g' -e 's/-fstack-clash-protection//g' -e 's/$/-Qunused-arguments -Wno-unknown-warning-option/')
 %endif
 
 # Decrease debuginfo verbosity to reduce memory consumption...
@@ -15,7 +17,7 @@
 
 Name: tdlib
 Version: 1.6.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Cross-platform library for building Telegram clients
 
 License: Boost
@@ -64,11 +66,9 @@ Requires: %{name}-devel%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %prep
 %autosetup -n td-%{version} -p1
-mkdir -p %{_target_platform}
 
 %build
-pushd %{_target_platform}
-    %cmake -G Ninja \
+%cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_LIBDIR=%{_lib} \
 %if %{with clang}
@@ -90,13 +90,11 @@ pushd %{_target_platform}
     -DTD_ENABLE_LTO:BOOL=OFF \
 %endif
     -DTD_ENABLE_JNI:BOOL=OFF \
-    -DTD_ENABLE_DOTNET:BOOL=OFF \
-    ..
-popd
-%ninja_build -C %{_target_platform}
+    -DTD_ENABLE_DOTNET:BOOL=OFF
+%cmake_build
 
 %install
-%ninja_install -C %{_target_platform}
+%cmake_install
 
 %files
 %license LICENSE_1_0.txt
@@ -112,6 +110,9 @@ popd
 %{_libdir}/libtd*.a
 
 %changelog
+* Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.6.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
+
 * Sat Feb 01 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.6.0-1
 - Updated to version 1.6.0.
 
