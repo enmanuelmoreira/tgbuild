@@ -4,6 +4,7 @@
 # Build conditionals (with - OFF, without - ON)...
 %bcond_without rlottie
 %bcond_without ipo
+%bcond_with webrtc
 %bcond_with gtk3
 %bcond_with clang
 
@@ -153,6 +154,11 @@ rm -rf Telegram/ThirdParty/rlottie
     -DDESKTOP_APP_LOTTIE_USE_CACHE:BOOL=OFF \
 %else
     -DDESKTOP_APP_USE_PACKAGED_RLOTTIE:BOOL=OFF \
+%endif
+%if %{with webrtc}
+    -DDESKTOP_APP_DISABLE_WEBRTC_INTEGRATION:BOOL=OFF \
+%else
+    -DDESKTOP_APP_DISABLE_WEBRTC_INTEGRATION:BOOL=ON \
 %endif
 %if %{with clang}
     -DCMAKE_C_COMPILER=%{_bindir}/clang \
