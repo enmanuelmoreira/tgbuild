@@ -199,6 +199,24 @@ rm -rf Telegram/ThirdParty/variant
 pushd tg_owt
 %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
+%ifarch x86_64
+%if %{with ipo} && %{without clang}
+    -DCMAKE_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \
+%endif
+%endif
+%if %{with clang}
+    -DCMAKE_C_COMPILER=%{_bindir}/clang \
+    -DCMAKE_CXX_COMPILER=%{_bindir}/clang++ \
+    -DCMAKE_AR=%{_bindir}/llvm-ar \
+    -DCMAKE_RANLIB=%{_bindir}/llvm-ranlib \
+    -DCMAKE_LINKER=%{_bindir}/llvm-ld \
+    -DCMAKE_OBJDUMP=%{_bindir}/llvm-objdump \
+    -DCMAKE_NM=%{_bindir}/llvm-nm \
+%else
+    -DCMAKE_AR=%{_bindir}/gcc-ar \
+    -DCMAKE_RANLIB=%{_bindir}/gcc-ranlib \
+    -DCMAKE_NM=%{_bindir}/gcc-nm \
+%endif
     -DTG_OWT_PACKAGED_BUILD:BOOL=ON
 %cmake_build
 popd
