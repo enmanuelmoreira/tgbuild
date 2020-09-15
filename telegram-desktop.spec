@@ -8,6 +8,12 @@
 %bcond_with gtk3
 %bcond_with clang
 
+%if 0%{?fedora} && 0%{?fedora} >= 33
+%bcond_with mapbox
+%else
+%bcond_without mapbox
+%endif
+
 # Telegram Desktop's constants...
 %global appname tdesktop
 %global launcher telegramdesktop
@@ -72,6 +78,13 @@ BuildRequires: rlottie-devel
 Provides: bundled(rlottie) = 0~git
 %endif
 
+# Breaking API changes in version 1.2.0.
+%if %{with mapbox}
+BuildRequires: mapbox-variant-devel < 1.2.0
+%else
+Provides: bundled(mapbox-variant) = 1.1.6
+%endif
+
 # Telegram Desktop require patched version of lxqt-qtplugin.
 # Pull Request pending: https://github.com/lxqt/lxqt-qtplugin/pull/52
 Provides: bundled(lxqt-qtplugin) = 0.14.0~git
@@ -85,7 +98,6 @@ BuildRequires: gcc
 
 # Development packages for Telegram Desktop...
 BuildRequires: guidelines-support-library-devel >= 3.0.1
-BuildRequires: mapbox-variant-devel >= 0.3.6
 BuildRequires: qt5-qtbase-private-devel
 BuildRequires: libtgvoip-devel >= 2.4.4
 BuildRequires: range-v3-devel >= 0.10.0
@@ -166,11 +178,16 @@ mv tg_owt-%{commit1} tg_owt
 %endif
 
 # Unbundling libraries...
-rm -rf Telegram/ThirdParty/{Catch,GSL,QR,SPMediaKeyTap,expected,fcitx-qt5,fcitx5-qt,hime,hunspell,libdbusmenu-qt,libqtxdg,libtgvoip,lxqt-qtplugin,lz4,materialdecoration,minizip,nimf,qt5ct,range-v3,variant,xxHash}
+rm -rf Telegram/ThirdParty/{Catch,GSL,QR,SPMediaKeyTap,expected,fcitx-qt5,fcitx5-qt,hime,hunspell,libdbusmenu-qt,libqtxdg,libtgvoip,lxqt-qtplugin,lz4,materialdecoration,minizip,nimf,qt5ct,range-v3,xxHash}
 
 # Unbundling rlottie if build against packaged version...
 %if %{with rlottie}
 rm -rf Telegram/ThirdParty/rlottie
+%endif
+
+# Unbundling mapbox-variant if build against packaged version...
+%if %{with mapbox}
+rm -rf Telegram/ThirdParty/variant
 %endif
 
 %build
