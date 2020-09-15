@@ -50,7 +50,6 @@ Release: 1%{?dist}
 License: GPLv3+ and LGPLv2+ and LGPLv3
 URL: https://github.com/telegramdesktop/%{appname}
 Summary: Telegram Desktop official messaging app
-ExclusiveArch: x86_64
 
 Source0: %{url}/releases/download/v%{version}/%{appname}-%{version}-full.tar.gz
 Source1: https://github.com/desktop-app/tg_owt/archive/%{commit1}/owt-%{shortcommit1}.tar.gz
@@ -59,6 +58,10 @@ Source1: https://github.com/desktop-app/tg_owt/archive/%{commit1}/owt-%{shortcom
 Patch100: %{name}-webrtc-packaged.patch
 # https://github.com/desktop-app/tg_owt/pull/25
 Patch101: tg_owt-dlopen-linkage.patch
+
+# Telegram Desktop require more than 8 GB of RAM on linking stage.
+# Disabling all low-memory architectures.
+ExclusiveArch: x86_64
 
 # Telegram Desktop require exact version of Qt due to Qt private API usage.
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
@@ -206,14 +209,11 @@ popd
     -DCMAKE_BUILD_TYPE=Release \
 %ifarch x86_64
 %if %{with ipo} && %{without clang}
-    -DDESKTOP_APP_ENABLE_IPO_OPTIMIZATIONS:BOOL=ON \
+    -DCMAKE_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \
 %endif
 %endif
 %if %{with rlottie}
-    -DDESKTOP_APP_USE_PACKAGED_RLOTTIE:BOOL=ON \
     -DDESKTOP_APP_LOTTIE_USE_CACHE:BOOL=OFF \
-%else
-    -DDESKTOP_APP_USE_PACKAGED_RLOTTIE:BOOL=OFF \
 %endif
 %if %{with webrtc}
     -DDESKTOP_APP_DISABLE_WEBRTC_INTEGRATION:BOOL=OFF \
@@ -237,22 +237,15 @@ popd
     -DTDESKTOP_API_ID=611335 \
     -DTDESKTOP_API_HASH=d524b414d21f4d37f08684c1df41ac9c \
     -DDESKTOP_APP_USE_PACKAGED:BOOL=ON \
-    -DDESKTOP_APP_USE_PACKAGED_GSL:BOOL=ON \
-    -DDESKTOP_APP_USE_PACKAGED_EXPECTED:BOOL=ON \
-    -DDESKTOP_APP_USE_PACKAGED_VARIANT:BOOL=ON \
-    -DDESKTOP_APP_USE_PACKAGED_QRCODE:BOOL=ON \
     -DDESKTOP_APP_USE_PACKAGED_FONTS:BOOL=ON \
     -DDESKTOP_APP_USE_GLIBC_WRAPS:BOOL=OFF \
     -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
-    -DTDESKTOP_USE_PACKAGED_TGVOIP:BOOL=ON \
 %if %{with gtk3}
     -DTDESKTOP_DISABLE_GTK_INTEGRATION:BOOL=OFF \
 %else
     -DTDESKTOP_DISABLE_GTK_INTEGRATION:BOOL=ON \
 %endif
     -DTDESKTOP_DISABLE_REGISTER_CUSTOM_SCHEME:BOOL=ON \
-    -DTDESKTOP_DISABLE_DESKTOP_FILE_GENERATION:BOOL=ON \
-    -DTDESKTOP_USE_FONTCONFIG_FALLBACK:BOOL=OFF \
     -DTDESKTOP_LAUNCHER_BASENAME=%{launcher}
 %cmake_build
 
