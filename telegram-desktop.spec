@@ -2,15 +2,19 @@
 %define _lto_cflags %{nil}
 
 # Build conditionals (with - OFF, without - ON)...
-%bcond_without rlottie
+%bcond_with rlottie
 %bcond_without ipo
-%bcond_with webrtc
+%bcond_without webrtc
 %bcond_with gtk3
 %bcond_with clang
 
 # Telegram Desktop's constants...
 %global appname tdesktop
 %global launcher telegramdesktop
+
+# Git revision of WebRTC...
+%global commit1 a80383535367dd8961f55f960938d943d6975808
+%global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
 
 # Applying workaround to RHBZ#1559007...
 %if %{with clang}
@@ -34,17 +38,21 @@ Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
 # * Telegram Desktop - GPLv3+ with OpenSSL exception -- main tarball;
+# * tg_owt - BSD -- static dependency;
 # * rlottie - LGPLv2+ -- static dependency;
 # * qt_functions.cpp - LGPLv3 -- build-time dependency.
 License: GPLv3+ and LGPLv2+ and LGPLv3
 URL: https://github.com/telegramdesktop/%{appname}
 Summary: Telegram Desktop official messaging app
-Source0: %{url}/releases/download/v%{version}/%{appname}-%{version}-full.tar.gz
 ExclusiveArch: x86_64
 
-# Upstream patches...
-Patch100: %{name}-fix-night-theme.patch
-Patch101: %{name}-libatomic-linkage.patch
+Source0: %{url}/releases/download/v%{version}/%{appname}-%{version}-full.tar.gz
+Source1: https://github.com/desktop-app/tg_owt/archive/%{commit1}/owt-%{shortcommit1}.tar.gz
+
+# https://github.com/desktop-app/cmake_helpers/commit/d955882cb4d4c94f61a9b1df62b7f93d3c5bff7d
+Patch100: %{name}-webrtc-packaged.patch
+# https://github.com/desktop-app/tg_owt/pull/25
+Patch101: tg_owt-dlopen-linkage.patch
 
 # Telegram Desktop require exact version of Qt due to Qt private API usage.
 %{?_qt5:Requires: %{_qt5}%{?_isa} = %{_qt5_version}}
@@ -104,6 +112,23 @@ BuildRequires: lz4-devel
 BuildRequires: xz-devel
 BuildRequires: python3
 
+%if %{with webrtc}
+BuildRequires: pulseaudio-libs-devel
+BuildRequires: libjpeg-turbo-devel
+BuildRequires: alsa-lib-devel
+BuildRequires: yasm
+
+Provides: bundled(tg_owt) = 0~git
+Provides: bundled(openh264) = 0~git
+Provides: bundled(abseil-cpp) = 0~git
+Provides: bundled(libsrtp) = 0~git
+Provides: bundled(libvpx) = 0~git
+Provides: bundled(libyuv) = 0~git
+Provides: bundled(pffft) = 0~git
+Provides: bundled(rnnoise) = 0~git
+Provides: bundled(usrsctp) = 0~git
+%endif
+
 %if %{with clang}
 BuildRequires: compiler-rt
 BuildRequires: clang
@@ -130,7 +155,15 @@ business messaging needs.
 
 %prep
 # Unpacking Telegram Desktop source archive...
-%autosetup -n %{appname}-%{version}-full -p1
+%setup -q -n %{appname}-%{version}-full
+%patch100 -p1
+
+# Unpacking WebRTC...
+%if %{with webrtc}
+tar -xf %{SOURCE1}
+mv tg_owt-%{commit1} tg_owt
+%patch101 -p1
+%endif
 
 # Unbundling libraries...
 rm -rf Telegram/ThirdParty/{Catch,GSL,QR,SPMediaKeyTap,expected,fcitx-qt5,fcitx5-qt,hime,hunspell,libdbusmenu-qt,libqtxdg,libtgvoip,lxqt-qtplugin,lz4,materialdecoration,minizip,nimf,qt5ct,range-v3,variant,xxHash}
@@ -141,6 +174,16 @@ rm -rf Telegram/ThirdParty/rlottie
 %endif
 
 %build
+# Building WebRTC using cmake...
+%if %{with webrtc}
+pushd tg_owt
+%cmake -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DTG_OWT_PACKAGED_BUILD:BOOL=ON
+%cmake_build
+popd
+%endif
+
 # Building Telegram Desktop using cmake...
 %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
@@ -157,6 +200,7 @@ rm -rf Telegram/ThirdParty/rlottie
 %endif
 %if %{with webrtc}
     -DDESKTOP_APP_DISABLE_WEBRTC_INTEGRATION:BOOL=OFF \
+    -Dtg_owt_DIR:PATH=%{_builddir}/%{appname}-%{version}-full/tg_owt/%_vpath_builddir \
 %else
     -DDESKTOP_APP_DISABLE_WEBRTC_INTEGRATION:BOOL=ON \
 %endif
