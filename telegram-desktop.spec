@@ -297,6 +297,3 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{launcher}.desktop
 
 * Tue Aug 18 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.2.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
-
-* Sun Jul 26 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.2.0-1
-- Updated to version 2.2.0.
