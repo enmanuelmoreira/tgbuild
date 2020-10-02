@@ -19,7 +19,7 @@
 %global launcher telegramdesktop
 
 # Git revision of WebRTC...
-%global commit1 a80383535367dd8961f55f960938d943d6975808
+%global commit1 7a9d4bd6d9a147d15e3c8fa818a716c31f65606a
 %global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
 
 # Applying workaround to RHBZ#1559007...
