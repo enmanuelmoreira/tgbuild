@@ -121,7 +121,7 @@ BuildRequires: libjpeg-turbo-devel
 BuildRequires: alsa-lib-devel
 BuildRequires: yasm
 
-Provides: bundled(tg_owt) = 0~git
+Provides: bundled(tg_owt) = 0~git%{shortcommit1}
 Provides: bundled(openh264) = 0~git
 Provides: bundled(abseil-cpp) = 0~git
 Provides: bundled(libsrtp) = 0~git
