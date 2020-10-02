@@ -7,12 +7,6 @@
 %bcond_with gtk3
 %bcond_with clang
 
-%if 0%{?fedora} && 0%{?fedora} >= 33
-%bcond_with mapbox
-%else
-%bcond_without mapbox
-%endif
-
 # F33+ has some issues with LTO: https://bugzilla.redhat.com/show_bug.cgi?id=1880290
 %if 0%{?fedora} && 0%{?fedora} >= 33
 %bcond_with ipo
@@ -85,13 +79,6 @@ Provides: telegram%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 BuildRequires: rlottie-devel
 %else
 Provides: bundled(rlottie) = 0~git
-%endif
-
-# Breaking API changes in version 1.2.0.
-%if %{with mapbox}
-BuildRequires: mapbox-variant-devel < 1.2.0
-%else
-Provides: bundled(mapbox-variant) = 1.1.6
 %endif
 
 # Telegram Desktop require patched version of lxqt-qtplugin.
@@ -192,11 +179,6 @@ rm -rf Telegram/ThirdParty/{Catch,GSL,QR,SPMediaKeyTap,expected,fcitx-qt5,fcitx5
 # Unbundling rlottie if build against packaged version...
 %if %{with rlottie}
 rm -rf Telegram/ThirdParty/rlottie
-%endif
-
-# Unbundling mapbox-variant if build against packaged version...
-%if %{with mapbox}
-rm -rf Telegram/ThirdParty/variant
 %endif
 
 %build
