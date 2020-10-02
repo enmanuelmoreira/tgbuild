@@ -54,11 +54,6 @@ Summary: Telegram Desktop official messaging app
 Source0: %{url}/releases/download/v%{version}/%{appname}-%{version}-full.tar.gz
 Source1: https://github.com/desktop-app/tg_owt/archive/%{commit1}/owt-%{shortcommit1}.tar.gz
 
-# https://github.com/desktop-app/cmake_helpers/commit/d955882cb4d4c94f61a9b1df62b7f93d3c5bff7d
-Patch100: %{name}-webrtc-packaged.patch
-# https://github.com/desktop-app/tg_owt/pull/25
-Patch101: tg_owt-dlopen-linkage.patch
-
 # Telegram Desktop require more than 8 GB of RAM on linking stage.
 # Disabling all low-memory architectures.
 ExclusiveArch: x86_64
@@ -163,14 +158,12 @@ business messaging needs.
 
 %prep
 # Unpacking Telegram Desktop source archive...
-%setup -q -n %{appname}-%{version}-full
-%patch100 -p1
+%autosetup -n %{appname}-%{version}-full -p1
 
 # Unpacking WebRTC...
 %if %{with webrtc}
 tar -xf %{SOURCE1}
 mv tg_owt-%{commit1} tg_owt
-%patch101 -p1
 %endif
 
 # Unbundling libraries...
