@@ -76,10 +76,6 @@ BuildRequires: rlottie-devel
 Provides: bundled(rlottie) = 0~git
 %endif
 
-# Telegram Desktop require patched version of lxqt-qtplugin.
-# Pull Request pending: https://github.com/lxqt/lxqt-qtplugin/pull/52
-Provides: bundled(lxqt-qtplugin) = 0.14.0~git
-
 # Compilers and tools...
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
@@ -167,7 +163,7 @@ mv tg_owt-%{commit1} tg_owt
 %endif
 
 # Unbundling libraries...
-rm -rf Telegram/ThirdParty/{Catch,GSL,QR,SPMediaKeyTap,expected,fcitx-qt5,fcitx5-qt,hime,hunspell,libdbusmenu-qt,libqtxdg,libtgvoip,lxqt-qtplugin,lz4,materialdecoration,minizip,nimf,qt5ct,range-v3,xxHash}
+rm -rf Telegram/ThirdParty/{Catch,GSL,QR,SPMediaKeyTap,expected,fcitx-qt5,fcitx5-qt,hime,hunspell,libdbusmenu-qt,libtgvoip,lz4,materialdecoration,minizip,nimf,qt5ct,range-v3,xxHash}
 
 # Unbundling rlottie if build against packaged version...
 %if %{with rlottie}
