@@ -1,5 +1,5 @@
 %undefine __cmake_in_source_build
-%define _lto_cflags %{nil}
+%global _lto_cflags %{nil}
 
 # Build conditionals (with - OFF, without - ON)...
 %bcond_with rlottie
@@ -39,7 +39,7 @@
 %endif
 
 Name: telegram-desktop
-Version: 2.4.3
+Version: 2.4.4
 Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
@@ -263,11 +263,11 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{launcher}.desktop
 %{_metainfodir}/%{launcher}.appdata.xml
 
 %changelog
+* Sat Oct 24 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.4-1
+- Updated to version 2.4.4.
+
 * Wed Oct 07 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.3-1
 - Updated to version 2.4.3.
 
 * Fri Oct 02 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.2-1
 - Updated to version 2.4.2.
-
-* Fri Oct 02 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.1-1
-- Updated to version 2.4.1.
