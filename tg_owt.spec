@@ -19,7 +19,7 @@ Release: 1.%{date}git%{shortcommit0}%{?dist}
 # rnnoise - BSD
 # usrsctp - BSD
 License: BSD and ASL 2.0
-Summary: WebRTC static library for the Telegram messenger
+Summary: WebRTC library for the Telegram messenger
 URL: https://github.com/desktop-app/%{name}
 Source0: %{url}/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
 
