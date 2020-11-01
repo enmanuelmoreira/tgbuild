@@ -5,13 +5,7 @@
 %bcond_with rlottie
 %bcond_with gtk3
 %bcond_with clang
-
-# F33+ has some issues with LTO: https://bugzilla.redhat.com/show_bug.cgi?id=1880290
-%if 0%{?fedora} && 0%{?fedora} >= 33
 %bcond_with ipo
-%else
-%bcond_without ipo
-%endif
 
 # Telegram Desktop's constants...
 %global appname tdesktop
@@ -145,7 +139,6 @@ rm -rf Telegram/ThirdParty/rlottie
 # Building Telegram Desktop using cmake...
 %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON \
 %ifarch x86_64
 %if %{with ipo} && %{without clang}
     -DCMAKE_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \

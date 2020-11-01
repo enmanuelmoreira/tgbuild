@@ -22,6 +22,12 @@ Summary: WebRTC library for the Telegram messenger
 URL: https://github.com/desktop-app/%{name}
 Source0: %{url}/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
 
+# https://github.com/desktop-app/tg_owt/pull/31
+Patch100: %{name}-fix-undefined.patch
+
+# # https://github.com/desktop-app/tg_owt/pull/32
+Patch101: %{name}-fix-eventlog-legacy.patch
+
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(libavcodec)
 BuildRequires: pkgconfig(libavformat)
@@ -32,6 +38,7 @@ BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libswscale)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(opus)
+BuildRequires: pkgconfig(protobuf)
 
 BuildRequires: cmake
 BuildRequires: gcc
@@ -129,6 +136,8 @@ cp -f -p src/rtc_base/third_party/sigslot/README.chromium legal/README.sigslot
 %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON \
+    -DCMAKE_INTERPROCEDURAL_OPTIMIZATION:BOOL=OFF \
+    -DTG_OWT_USE_PROTOBUF:BOOL=ON \
     -DTG_OWT_PACKAGED_BUILD:BOOL=ON
 %cmake_build
 
