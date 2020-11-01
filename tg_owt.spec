@@ -125,6 +125,7 @@ cp -f -p src/rtc_base/third_party/sigslot/LICENSE legal/LICENSE.sigslot
 cp -f -p src/rtc_base/third_party/sigslot/README.chromium legal/README.sigslot
 
 %build
+# CMAKE_BUILD_TYPE should always be Release due to some hardcoded checks.
 %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON \
