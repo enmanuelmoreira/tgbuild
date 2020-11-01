@@ -3,7 +3,6 @@
 
 # Build conditionals (with - OFF, without - ON)...
 %bcond_with rlottie
-%bcond_without webrtc
 %bcond_with gtk3
 %bcond_with clang
 
@@ -17,10 +16,6 @@
 # Telegram Desktop's constants...
 %global appname tdesktop
 %global launcher telegramdesktop
-
-# Git revision of WebRTC...
-%global commit1 c73a4718cbff7048373a63db32068482e5fd11ef
-%global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
 
 # Applying workaround to RHBZ#1559007...
 %if %{with clang}
@@ -50,9 +45,7 @@ Release: 1%{?dist}
 License: GPLv3+ and LGPLv2+ and LGPLv3
 URL: https://github.com/telegramdesktop/%{appname}
 Summary: Telegram Desktop official messaging app
-
 Source0: %{url}/releases/download/v%{version}/%{appname}-%{version}-full.tar.gz
-Source1: https://github.com/desktop-app/tg_owt/archive/%{commit1}/owt-%{shortcommit1}.tar.gz
 
 # Telegram Desktop require more than 8 GB of RAM on linking stage.
 # Disabling all low-memory architectures.
@@ -103,6 +96,7 @@ BuildRequires: openssl-devel
 BuildRequires: wayland-devel
 BuildRequires: xxhash-devel
 BuildRequires: json11-devel
+BuildRequires: tg_owt-devel
 BuildRequires: ninja-build
 BuildRequires: glib2-devel
 BuildRequires: opus-devel
@@ -110,23 +104,6 @@ BuildRequires: libatomic
 BuildRequires: lz4-devel
 BuildRequires: xz-devel
 BuildRequires: python3
-
-%if %{with webrtc}
-BuildRequires: pulseaudio-libs-devel
-BuildRequires: libjpeg-turbo-devel
-BuildRequires: alsa-lib-devel
-BuildRequires: yasm
-
-Provides: bundled(tg_owt) = 0~git%{shortcommit1}
-Provides: bundled(openh264) = 0~git
-Provides: bundled(abseil-cpp) = 0~git
-Provides: bundled(libsrtp) = 0~git
-Provides: bundled(libvpx) = 0~git
-Provides: bundled(libyuv) = 0~git
-Provides: bundled(pffft) = 0~git
-Provides: bundled(rnnoise) = 0~git
-Provides: bundled(usrsctp) = 0~git
-%endif
 
 %if %{with clang}
 BuildRequires: compiler-rt
@@ -156,12 +133,6 @@ business messaging needs.
 # Unpacking Telegram Desktop source archive...
 %autosetup -n %{appname}-%{version}-full -p1
 
-# Unpacking WebRTC...
-%if %{with webrtc}
-tar -xf %{SOURCE1}
-mv tg_owt-%{commit1} tg_owt
-%endif
-
 # Unbundling libraries...
 rm -rf Telegram/ThirdParty/{Catch,GSL,QR,SPMediaKeyTap,expected,fcitx-qt5,fcitx5-qt,hime,hunspell,libdbusmenu-qt,libtgvoip,lz4,materialdecoration,minizip,nimf,qt5ct,range-v3,xxHash}
 
@@ -171,37 +142,10 @@ rm -rf Telegram/ThirdParty/rlottie
 %endif
 
 %build
-# Building WebRTC using cmake...
-%if %{with webrtc}
-pushd tg_owt
-%cmake -G Ninja \
-    -DCMAKE_BUILD_TYPE=Release \
-%ifarch x86_64
-%if %{with ipo} && %{without clang}
-    -DCMAKE_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \
-%endif
-%endif
-%if %{with clang}
-    -DCMAKE_C_COMPILER=%{_bindir}/clang \
-    -DCMAKE_CXX_COMPILER=%{_bindir}/clang++ \
-    -DCMAKE_AR=%{_bindir}/llvm-ar \
-    -DCMAKE_RANLIB=%{_bindir}/llvm-ranlib \
-    -DCMAKE_LINKER=%{_bindir}/llvm-ld \
-    -DCMAKE_OBJDUMP=%{_bindir}/llvm-objdump \
-    -DCMAKE_NM=%{_bindir}/llvm-nm \
-%else
-    -DCMAKE_AR=%{_bindir}/gcc-ar \
-    -DCMAKE_RANLIB=%{_bindir}/gcc-ranlib \
-    -DCMAKE_NM=%{_bindir}/gcc-nm \
-%endif
-    -DTG_OWT_PACKAGED_BUILD:BOOL=ON
-%cmake_build
-popd
-%endif
-
 # Building Telegram Desktop using cmake...
 %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON \
 %ifarch x86_64
 %if %{with ipo} && %{without clang}
     -DCMAKE_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \
@@ -209,12 +153,6 @@ popd
 %endif
 %if %{with rlottie}
     -DDESKTOP_APP_LOTTIE_USE_CACHE:BOOL=OFF \
-%endif
-%if %{with webrtc}
-    -DDESKTOP_APP_DISABLE_WEBRTC_INTEGRATION:BOOL=OFF \
-    -Dtg_owt_DIR:PATH=%{_builddir}/%{appname}-%{version}-full/tg_owt/%_vpath_builddir \
-%else
-    -DDESKTOP_APP_DISABLE_WEBRTC_INTEGRATION:BOOL=ON \
 %endif
 %if %{with clang}
     -DCMAKE_C_COMPILER=%{_bindir}/clang \
@@ -235,6 +173,7 @@ popd
     -DDESKTOP_APP_USE_PACKAGED_FONTS:BOOL=ON \
     -DDESKTOP_APP_USE_GLIBC_WRAPS:BOOL=OFF \
     -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
+    -DDESKTOP_APP_DISABLE_WEBRTC_INTEGRATION:BOOL=OFF \
 %if %{with gtk3}
     -DTDESKTOP_DISABLE_GTK_INTEGRATION:BOOL=OFF \
 %else
