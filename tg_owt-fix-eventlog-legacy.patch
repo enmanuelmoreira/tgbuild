@@ -8,17 +8,20 @@
  
  if (NOT TG_OWT_SPECIAL_TARGET STREQUAL "osx")
      set(CMAKE_OSX_DEPLOYMENT_TARGET 10.12 CACHE STRING "Minimum OS X deployment version" FORCE)
-@@ -36,6 +37,9 @@ include(cmake/nice_target_sources.cmake)
- include(cmake/init_target.cmake)
- include(cmake/target_yasm_sources.cmake)
- include(cmake/external.cmake)
+@@ -52,6 +53,12 @@ if (APPLE)
+     include(cmake/libsdkmacos.cmake)
+ endif()
+ 
++# Use a separate subdirectory, because it will be exported as an INTERFACE
++# for the generated sources and headers.
 +if (TG_OWT_USE_PROTOBUF)
-+    include(cmake/protobuf.cmake)
++    add_subdirectory(cmake/protobuf)
 +endif()
- include(cmake/libabsl.cmake)
- include(cmake/libopenh264.cmake)
- include(cmake/libpffft.cmake)
-@@ -91,6 +95,13 @@ else()
++
+ add_library(tg_owt STATIC)
+ init_target(tg_owt)
+ 
+@@ -91,6 +98,13 @@ else()
      )
  endif()
  
@@ -32,7 +35,7 @@
  target_sources(tg_owt
  PRIVATE
      ${libvpx_yasm_objects}
-@@ -1548,6 +1559,8 @@ PRIVATE
+@@ -1548,6 +1562,8 @@ PRIVATE
      logging/rtc_event_log/encoder/blob_encoding.cc
      logging/rtc_event_log/encoder/delta_encoding.cc
      logging/rtc_event_log/encoder/rtc_event_log_encoder_common.cc
@@ -41,7 +44,7 @@
      logging/rtc_event_log/encoder/var_int.cc
      logging/rtc_event_log/events/rtc_event_alr_state.cc
      logging/rtc_event_log/events/rtc_event_audio_network_adaptation.cc
-@@ -1728,6 +1741,13 @@ PRIVATE
+@@ -1728,6 +1744,13 @@ PRIVATE
      stats/rtcstats_objects.cc
  )
  
@@ -55,12 +58,12 @@
  if (NOT WIN32)
      remove_target_sources(tg_owt ${webrtc_loc}
          rtc_base/win32.cc
-diff --git a/cmake/protobuf.cmake b/cmake/protobuf.cmake
+diff --git a/cmake/protobuf/CMakeLists.txt b/cmake/protobuf/CMakeLists.txt
 new file mode 100644
-index 0000000..81361a6
+index 0000000..0ef0f21
 --- /dev/null
-+++ b/cmake/protobuf.cmake
-@@ -0,0 +1,36 @@
++++ b/cmake/protobuf/CMakeLists.txt
+@@ -0,0 +1,40 @@
 +find_package(Protobuf REQUIRED)
 +
 +add_library(proto OBJECT)
@@ -86,6 +89,10 @@ index 0000000..81361a6
 +    ${proto_sources}
 +)
 +
++# CMAKE_CURRENT_BINARY_DIR is always used by protobuf_generate_cpp
++# to place the generated files. It cannot be changed or overridden.
++# We have to push it to the main project because the generated sources
++# and headers will be used as include files.
 +target_include_directories(proto
 +INTERFACE
 +    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
