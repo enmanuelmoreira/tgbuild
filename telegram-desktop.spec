@@ -32,7 +32,6 @@ Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
 # * Telegram Desktop - GPLv3+ with OpenSSL exception -- main tarball;
-# * tg_owt - BSD -- static dependency;
 # * rlottie - LGPLv2+ -- static dependency;
 # * qt_functions.cpp - LGPLv3 -- build-time dependency.
 License: GPLv3+ and LGPLv2+ and LGPLv3
