@@ -5,7 +5,6 @@
 %bcond_with rlottie
 %bcond_with gtk3
 %bcond_with clang
-%bcond_with ipo
 
 # Telegram Desktop's constants...
 %global appname tdesktop
@@ -139,11 +138,6 @@ rm -rf Telegram/ThirdParty/rlottie
 # Building Telegram Desktop using cmake...
 %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
-%ifarch x86_64
-%if %{with ipo} && %{without clang}
-    -DCMAKE_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \
-%endif
-%endif
 %if %{with rlottie}
     -DDESKTOP_APP_LOTTIE_USE_CACHE:BOOL=OFF \
 %endif
