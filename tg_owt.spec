@@ -1,8 +1,8 @@
 %undefine __cmake_in_source_build
 
-%global commit0 1d4f7d74ff1a627db6e45682efd0e3b85738e426
+%global commit0 e8fcae73947445db3d418fb7c20b964b59e14706
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global date 20201030
+%global date 20201102
 
 Name: tg_owt
 Version: 0
@@ -21,12 +21,6 @@ License: BSD and ASL 2.0
 Summary: WebRTC library for the Telegram messenger
 URL: https://github.com/desktop-app/%{name}
 Source0: %{url}/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
-
-# https://github.com/desktop-app/tg_owt/pull/31
-Patch100: %{name}-fix-undefined.patch
-
-# # https://github.com/desktop-app/tg_owt/pull/32
-Patch101: %{name}-fix-eventlog-legacy.patch
 
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(libavcodec)
@@ -155,5 +149,5 @@ cp -f -p src/rtc_base/third_party/sigslot/README.chromium legal/README.sigslot
 %{_libdir}/lib%{name}.so
 
 %changelog
-* Sat Oct 31 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 0-1.20201030git1d4f7d7
+* Mon Nov 02 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 0-2.20201102gite8fcae7
 - Initial SPEC release.
