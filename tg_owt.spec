@@ -1,12 +1,12 @@
 %undefine __cmake_in_source_build
 
-%global commit0 e8fcae73947445db3d418fb7c20b964b59e14706
+%global commit0 12f4a27f2f02f9dd40f9891d8ec6e58bc1ff5263
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global date 20201102
+%global date 20201105
 
 Name: tg_owt
 Version: 0
-Release: 1.%{date}git%{shortcommit0}%{?dist}
+Release: 2.%{date}git%{shortcommit0}%{?dist}
 
 # Main project - BSD
 # abseil-cpp - ASL 2.0
@@ -21,6 +21,9 @@ License: BSD and ASL 2.0
 Summary: WebRTC library for the Telegram messenger
 URL: https://github.com/desktop-app/%{name}
 Source0: %{url}/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
+
+# https://github.com/desktop-app/tg_owt/pull/37
+Patch100: %{name}-add-missing-sources.patch
 
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(libavcodec)
@@ -59,6 +62,9 @@ Provides: bundled(sigslot) = 0~git
 Provides: bundled(spl_sqrt_floor) = 0~git
 Provides: bundled(usrsctp) = 1.0.0~gitbee946a
 
+# Disabling all low-memory architectures.
+ExclusiveArch: x86_64
+
 %description
 Special fork of the OpenWebRTC library for the Telegram messenger.
 
@@ -81,8 +87,6 @@ Requires: pkgconfig(opus)
 
 %prep
 %autosetup -n %{name}-%{commit0} -p1
-sed -e 's/STATIC/SHARED/g' -i CMakeLists.txt
-echo 'set_target_properties(tg_owt PROPERTIES SOVERSION 0 VERSION 0.0.0)' >> CMakeLists.txt
 
 mkdir legal
 cp -f -p src/third_party/abseil-cpp/LICENSE legal/LICENSE.abseil-cpp
@@ -148,5 +152,8 @@ cp -f -p src/rtc_base/third_party/sigslot/README.chromium legal/README.sigslot
 %{_libdir}/lib%{name}.so
 
 %changelog
+* Thu Nov 12 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 0-2.20201105git12f4a27
+- Updated to latest Git snapshot.
+
 * Mon Nov 02 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 0-2.20201102gite8fcae7
 - Initial SPEC release.
