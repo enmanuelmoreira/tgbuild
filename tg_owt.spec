@@ -1,12 +1,12 @@
 %undefine __cmake_in_source_build
 
-%global commit0 12f4a27f2f02f9dd40f9891d8ec6e58bc1ff5263
+%global commit0 10b988aa9111fd25358443ac34d0d422b5108029
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global date 20201105
+%global date 20201112
 
 Name: tg_owt
 Version: 0
-Release: 2.%{date}git%{shortcommit0}%{?dist}
+Release: 3.%{date}git%{shortcommit0}%{?dist}
 
 # Main project - BSD
 # abseil-cpp - ASL 2.0
@@ -21,9 +21,6 @@ License: BSD and ASL 2.0
 Summary: WebRTC library for the Telegram messenger
 URL: https://github.com/desktop-app/%{name}
 Source0: %{url}/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
-
-# https://github.com/desktop-app/tg_owt/pull/37
-Patch100: %{name}-add-missing-sources.patch
 
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(libavcodec)
@@ -152,6 +149,9 @@ cp -f -p src/rtc_base/third_party/sigslot/README.chromium legal/README.sigslot
 %{_libdir}/lib%{name}.so
 
 %changelog
+* Fri Nov 20 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 0-3.20201112git10b988a
+- Updated to latest Git snapshot.
+
 * Thu Nov 12 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 0-2.20201105git12f4a27
 - Updated to latest Git snapshot.
 
