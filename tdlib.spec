@@ -66,6 +66,7 @@ sed -e 's/"DEFAULT"/"PROFILE=SYSTEM"/g' -i tdnet/td/net/SslStream.cpp
 %{_includedir}/td
 %{_libdir}/libtd*.so
 %{_libdir}/cmake/Td
+%{_libdir}/pkgconfig/td*.pc
 
 %files static
 %{_libdir}/libtd*.a
