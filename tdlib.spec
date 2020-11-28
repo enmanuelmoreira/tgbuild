@@ -16,8 +16,8 @@
 %endif
 
 Name: tdlib
-Version: 1.6.0
-Release: 2%{?dist}
+Version: 1.7.0
+Release: 1%{?dist}
 Summary: Cross-platform library for building Telegram clients
 
 License: Boost
@@ -110,32 +110,8 @@ Requires: %{name}-devel%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 %{_libdir}/libtd*.a
 
 %changelog
+* Sat Nov 28 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.7.0-1
+- Updated to version 1.7.0.
+
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.6.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
-
-* Sat Feb 01 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.6.0-1
-- Updated to version 1.6.0.
-
-* Fri Jan 31 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.5.0-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
-
-* Tue Sep 10 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.5.0-1
-- Updated to version 1.5.0.
-
-* Sat Jul 27 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.0-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
-
-* Thu May 02 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.4.0-1
-- Updated to version 1.4.0.
-
-* Mon Feb 04 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3.0-4
-- Switched to clang on Fedora 30+.
-
-* Sun Feb 03 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.0-3
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
-
-* Sun Sep 16 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3.0-2
-- Fixed issue with crypto policies.
-
-* Sat Sep 15 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3.0-1
-- Initial SPEC release.
