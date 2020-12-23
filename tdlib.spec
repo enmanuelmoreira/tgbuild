@@ -1,29 +1,13 @@
 %undefine __cmake_in_source_build
 
-# Build conditionals (with - OFF, without - ON)...
-%bcond_with clang
-%bcond_with ipo
-%bcond_without mindbg
-
-# Applying workaround to RHBZ#1559007...
-%if %{with clang}
-%global optflags %(echo %{optflags} | sed -e 's/-mcet//g' -e 's/-fcf-protection//g' -e 's/-fstack-clash-protection//g' -e 's/$/-Qunused-arguments -Wno-unknown-warning-option/')
-%endif
-
-# Decrease debuginfo verbosity to reduce memory consumption...
-%if %{with mindbg}
-%global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
-%endif
-
 Name: tdlib
-Version: 1.6.0
-Release: 2%{?dist}
-Summary: Cross-platform library for building Telegram clients
+Version: 1.7.0
+Release: 1%{?dist}
 
 License: Boost
 URL: https://github.com/%{name}/td
-Source0: %{url}/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
-Patch0: %{name}-system-crypto.patch
+Summary: Cross-platform library for building Telegram clients
+Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires: gperftools-devel
 BuildRequires: openssl-devel
@@ -33,12 +17,6 @@ BuildRequires: gcc-c++
 BuildRequires: gperf
 BuildRequires: cmake
 BuildRequires: gcc
-
-%if %{with clang}
-BuildRequires: compiler-rt
-BuildRequires: clang
-BuildRequires: llvm
-%endif
 
 # Building with default settings require at least 16 GB of free RAM.
 # Builds on ARM and other low-memory architectures are failing.
@@ -66,29 +44,12 @@ Requires: %{name}-devel%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %prep
 %autosetup -n td-%{version} -p1
+sed -e 's/"DEFAULT"/"PROFILE=SYSTEM"/g' -i tdnet/td/net/SslStream.cpp
 
 %build
 %cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_LIBDIR=%{_lib} \
-%if %{with clang}
-    -DCMAKE_C_COMPILER=clang \
-    -DCMAKE_CXX_COMPILER=clang++ \
-    -DCMAKE_AR=%{_bindir}/llvm-ar \
-    -DCMAKE_RANLIB=%{_bindir}/llvm-ranlib \
-    -DCMAKE_LINKER=%{_bindir}/llvm-ld \
-    -DCMAKE_OBJDUMP=%{_bindir}/llvm-objdump \
-    -DCMAKE_NM=%{_bindir}/llvm-nm \
-%else
-    -DCMAKE_AR=%{_bindir}/gcc-ar \
-    -DCMAKE_RANLIB=%{_bindir}/gcc-ranlib \
-    -DCMAKE_NM=%{_bindir}/gcc-nm \
-%endif
-%if %{with ipo} && %{with mindbg}
-    -DTD_ENABLE_LTO:BOOL=ON \
-%else
-    -DTD_ENABLE_LTO:BOOL=OFF \
-%endif
     -DTD_ENABLE_JNI:BOOL=OFF \
     -DTD_ENABLE_DOTNET:BOOL=OFF
 %cmake_build
@@ -105,37 +66,14 @@ Requires: %{name}-devel%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 %{_includedir}/td
 %{_libdir}/libtd*.so
 %{_libdir}/cmake/Td
+%{_libdir}/pkgconfig/td*.pc
 
 %files static
 %{_libdir}/libtd*.a
 
 %changelog
+* Sat Nov 28 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.7.0-1
+- Updated to version 1.7.0.
+
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.6.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
-
-* Sat Feb 01 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.6.0-1
-- Updated to version 1.6.0.
-
-* Fri Jan 31 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.5.0-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
-
-* Tue Sep 10 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.5.0-1
-- Updated to version 1.5.0.
-
-* Sat Jul 27 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.0-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
-
-* Thu May 02 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.4.0-1
-- Updated to version 1.4.0.
-
-* Mon Feb 04 2019 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3.0-4
-- Switched to clang on Fedora 30+.
-
-* Sun Feb 03 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.0-3
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
-
-* Sun Sep 16 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3.0-2
-- Fixed issue with crypto policies.
-
-* Sat Sep 15 2018 Vitaly Zaitsev <vitaly@easycoding.org> - 1.3.0-1
-- Initial SPEC release.

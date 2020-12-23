@@ -5,6 +5,7 @@
 %bcond_with rlottie
 %bcond_with gtk3
 %bcond_with clang
+%bcond_with libtgvoip
 
 # Telegram Desktop's constants...
 %global appname tdesktop
@@ -27,7 +28,7 @@
 %endif
 
 Name: telegram-desktop
-Version: 2.4.7
+Version: 2.5.1
 Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
@@ -61,6 +62,12 @@ BuildRequires: rlottie-devel
 Provides: bundled(rlottie) = 0~git
 %endif
 
+%if %{with libtgvoip}
+BuildRequires: libtgvoip-devel >= 2.4.4
+%else
+Provides: bundled(libtgvoip) = 2.4.4
+%endif
+
 # Compilers and tools...
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
@@ -71,8 +78,8 @@ BuildRequires: gcc
 # Development packages for Telegram Desktop...
 BuildRequires: guidelines-support-library-devel >= 3.0.1
 BuildRequires: qt5-qtbase-private-devel
-BuildRequires: libtgvoip-devel >= 2.4.4
 BuildRequires: range-v3-devel >= 0.10.0
+BuildRequires: xcb-util-keysyms-devel
 BuildRequires: libqrcodegencpp-devel
 BuildRequires: minizip-compat-devel
 BuildRequires: qt5-qtwayland-devel
@@ -86,6 +93,7 @@ BuildRequires: expected-devel
 BuildRequires: hunspell-devel
 BuildRequires: openssl-devel
 BuildRequires: wayland-devel
+BuildRequires: libxcb-devel
 BuildRequires: xxhash-devel
 BuildRequires: json11-devel
 BuildRequires: tg_owt-devel
@@ -126,11 +134,16 @@ business messaging needs.
 %autosetup -n %{appname}-%{version}-full -p1
 
 # Unbundling libraries...
-rm -rf Telegram/ThirdParty/{Catch,GSL,QR,SPMediaKeyTap,expected,fcitx-qt5,fcitx5-qt,hime,hunspell,libdbusmenu-qt,libtgvoip,lz4,materialdecoration,minizip,nimf,qt5ct,range-v3,xxHash}
+rm -rf Telegram/ThirdParty/{Catch,GSL,QR,SPMediaKeyTap,expected,fcitx-qt5,fcitx5-qt,hime,hunspell,libdbusmenu-qt,lz4,materialdecoration,minizip,nimf,qt5ct,range-v3,xxHash}
 
 # Unbundling rlottie if build against packaged version...
 %if %{with rlottie}
 rm -rf Telegram/ThirdParty/rlottie
+%endif
+
+# Unbundling libtgvoip if build against packaged version...
+%if %{with libtgvoip}
+rm -rf Telegram/ThirdParty/libtgvoip
 %endif
 
 %build
@@ -184,11 +197,11 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{launcher}.desktop
 %{_metainfodir}/%{launcher}.appdata.xml
 
 %changelog
-* Thu Nov 05 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.7-1
-- Updated to version 2.4.7.
+* Wed Dec 23 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.5.1-1
+- Updated to version 2.5.1.
 
-* Mon Nov 02 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.6-1
-- Updated to version 2.4.6.
+* Mon Nov 30 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.7-4
+- Rebuilt due to Qt 5.15.2 update.
 
-* Sun Nov 01 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.5-1
-- Updated to version 2.4.5.
+* Fri Nov 20 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.7-3
+- Backported upstream patches with startup hangs fixes.

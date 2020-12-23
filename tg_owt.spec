@@ -1,12 +1,20 @@
 %undefine __cmake_in_source_build
 
-%global commit0 e8fcae73947445db3d418fb7c20b964b59e14706
+%global commit0 6eaebec41b34a0a0d98f02892d0cfe6bbcbc0a39
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global date 20201102
+%global date 20201218
+
+# Git revision of libvpx...
+%global commit1 5b63f0f821e94f8072eb483014cfc33b05978bb9
+%global shortcommit1 %(c=%{commit1}; echo ${c:0:7})
+
+# Git revision of libyuv...
+%global commit2 ad890067f661dc747a975bc55ba3767fe30d4452
+%global shortcommit2 %(c=%{commit2}; echo ${c:0:7})
 
 Name: tg_owt
 Version: 0
-Release: 1.%{date}git%{shortcommit0}%{?dist}
+Release: 4.%{date}git%{shortcommit0}%{?dist}
 
 # Main project - BSD
 # abseil-cpp - ASL 2.0
@@ -20,7 +28,10 @@ Release: 1.%{date}git%{shortcommit0}%{?dist}
 License: BSD and ASL 2.0
 Summary: WebRTC library for the Telegram messenger
 URL: https://github.com/desktop-app/%{name}
+
 Source0: %{url}/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
+Source1: https://chromium.googlesource.com/webm/libvpx/+archive/%{commit1}.tar.gz#/libvpx-%{shortcommit1}.tar.gz
+Source2: https://chromium.googlesource.com/libyuv/libyuv/+archive/%{commit2}.tar.gz#/libyuv-%{shortcommit2}.tar.gz
 
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(libavcodec)
@@ -48,9 +59,9 @@ Provides: bundled(g711) = 0~git
 Provides: bundled(g722) = 0~git
 Provides: bundled(libevent) = 1.4.15
 Provides: bundled(libsrtp) = 2.2.0~git94ac00d
-Provides: bundled(libvpx) = 1.8.2~git667138e
+Provides: bundled(libvpx) = 1.8.2~git%{shortcommit1}
 Provides: bundled(libwebm) = 0~git
-Provides: bundled(libyuv) = 0~svn1741
+Provides: bundled(libyuv) = 0~git%{shortcommit2}
 Provides: bundled(openh264) = 1.10.0~git6f26bce
 Provides: bundled(pffft) = 0~git483453d
 Provides: bundled(portaudio) = 0~git
@@ -58,6 +69,9 @@ Provides: bundled(rnnoise) = 0~git91ef40
 Provides: bundled(sigslot) = 0~git
 Provides: bundled(spl_sqrt_floor) = 0~git
 Provides: bundled(usrsctp) = 1.0.0~gitbee946a
+
+# Disabling all low-memory architectures.
+ExclusiveArch: x86_64
 
 %description
 Special fork of the OpenWebRTC library for the Telegram messenger.
@@ -81,8 +95,8 @@ Requires: pkgconfig(opus)
 
 %prep
 %autosetup -n %{name}-%{commit0} -p1
-sed -e 's/STATIC/SHARED/g' -i CMakeLists.txt
-echo 'set_target_properties(tg_owt PROPERTIES SOVERSION 0 VERSION 0.0.0)' >> CMakeLists.txt
+tar -xf %{SOURCE1} -C src/third_party/libvpx/source/libvpx
+tar -xf %{SOURCE2} -C src/third_party/libyuv
 
 mkdir legal
 cp -f -p src/third_party/abseil-cpp/LICENSE legal/LICENSE.abseil-cpp
@@ -148,5 +162,14 @@ cp -f -p src/rtc_base/third_party/sigslot/README.chromium legal/README.sigslot
 %{_libdir}/lib%{name}.so
 
 %changelog
+* Wed Dec 23 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 0-4.20201218git6eaebec
+- Updated to latest Git snapshot.
+
+* Fri Nov 20 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 0-3.20201112git10b988a
+- Updated to latest Git snapshot.
+
+* Thu Nov 12 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 0-2.20201105git12f4a27
+- Updated to latest Git snapshot.
+
 * Mon Nov 02 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 0-2.20201102gite8fcae7
 - Initial SPEC release.
