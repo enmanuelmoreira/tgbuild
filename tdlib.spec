@@ -2,7 +2,7 @@
 
 Name: tdlib
 Version: 1.7.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 License: Boost
 URL: https://github.com/%{name}/td
@@ -72,6 +72,9 @@ sed -e 's/"DEFAULT"/"PROFILE=SYSTEM"/g' -i tdnet/td/net/SslStream.cpp
 %{_libdir}/libtd*.a
 
 %changelog
+* Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.7.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Sat Nov 28 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 1.7.0-1
 - Updated to version 1.7.0.
 
