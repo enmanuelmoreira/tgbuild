@@ -33,6 +33,9 @@ Source0: %{url}/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
 Source1: https://chromium.googlesource.com/webm/libvpx/+archive/%{commit1}.tar.gz#/libvpx-%{shortcommit1}.tar.gz
 Source2: https://chromium.googlesource.com/libyuv/libyuv/+archive/%{commit2}.tar.gz#/libyuv-%{shortcommit2}.tar.gz
 
+# https://github.com/desktop-app/tg_owt/pull/47
+Patch100: %{name}-shared-fixes.patch
+
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(libavcodec)
 BuildRequires: pkgconfig(libavformat)
@@ -44,6 +47,8 @@ BuildRequires: pkgconfig(libswscale)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(opus)
 BuildRequires: pkgconfig(protobuf)
+BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(xtst)
 
 BuildRequires: cmake
 BuildRequires: gcc
@@ -89,6 +94,8 @@ Requires: pkgconfig(libpulse)
 Requires: pkgconfig(libswscale)
 Requires: pkgconfig(openssl)
 Requires: pkgconfig(opus)
+Requires: pkgconfig(x11)
+Requires: pkgconfig(xtst)
 
 %description devel
 %{summary}.
