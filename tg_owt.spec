@@ -1,8 +1,8 @@
 %undefine __cmake_in_source_build
 
-%global commit0 6eaebec41b34a0a0d98f02892d0cfe6bbcbc0a39
+%global commit0 be23804afce3bb2e80a1d57a7c1318c71b82b7de
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global date 20201218
+%global date 20210124
 
 # Git revision of libvpx...
 %global commit1 5b63f0f821e94f8072eb483014cfc33b05978bb9
@@ -14,7 +14,7 @@
 
 Name: tg_owt
 Version: 0
-Release: 4.%{date}git%{shortcommit0}%{?dist}
+Release: 5.%{date}git%{shortcommit0}%{?dist}
 
 # Main project - BSD
 # abseil-cpp - ASL 2.0
@@ -54,7 +54,6 @@ BuildRequires: yasm
 Provides: bundled(abseil-cpp) = 0~gitfba8a31
 Provides: bundled(base64) = 0~git
 Provides: bundled(fft) = 0~git
-Provides: bundled(fft4g) = 0~git
 Provides: bundled(g711) = 0~git
 Provides: bundled(g722) = 0~git
 Provides: bundled(libevent) = 1.4.15
@@ -62,6 +61,7 @@ Provides: bundled(libsrtp) = 2.2.0~git94ac00d
 Provides: bundled(libvpx) = 1.8.2~git%{shortcommit1}
 Provides: bundled(libwebm) = 0~git
 Provides: bundled(libyuv) = 0~git%{shortcommit2}
+Provides: bundled(ooura) = 0~git
 Provides: bundled(openh264) = 1.10.0~git6f26bce
 Provides: bundled(pffft) = 0~git483453d
 Provides: bundled(portaudio) = 0~git
@@ -122,8 +122,8 @@ cp -f -p src/third_party/libvpx/source/libvpx/third_party/libwebm/PATENTS.TXT le
 cp -f -p src/third_party/libvpx/source/libvpx/third_party/libwebm/README.libvpx legal/README.libwebm
 cp -f -p src/base/third_party/libevent/LICENSE legal/LICENSE.libevent
 cp -f -p src/base/third_party/libevent/README.chromium legal/README.libevent
-cp -f -p src/common_audio/third_party/fft4g/LICENSE legal/LICENSE.fft4g
-cp -f -p src/common_audio/third_party/fft4g/README.chromium legal/README.fft4g
+cp -f -p src/common_audio/third_party/ooura/LICENSE legal/LICENSE.ooura
+cp -f -p src/common_audio/third_party/ooura/README.chromium legal/README.ooura
 cp -f -p src/common_audio/third_party/spl_sqrt_floor/LICENSE legal/LICENSE.spl_sqrt_floor
 cp -f -p src/common_audio/third_party/spl_sqrt_floor/README.chromium legal/README.spl_sqrt_floor
 cp -f -p src/modules/third_party/fft/LICENSE legal/LICENSE.fft
@@ -162,6 +162,9 @@ cp -f -p src/rtc_base/third_party/sigslot/README.chromium legal/README.sigslot
 %{_libdir}/lib%{name}.so
 
 %changelog
+* Sun Jan 31 2021 Vitaly Zaitsev <vitaly@easycoding.org> - 0-5.20210124gitbe23804
+- Updated to latest Git snapshot.
+
 * Wed Dec 23 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 0-4.20201218git6eaebec
 - Updated to latest Git snapshot.
 
