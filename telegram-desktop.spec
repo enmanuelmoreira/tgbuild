@@ -28,8 +28,8 @@
 %endif
 
 Name: telegram-desktop
-Version: 2.5.1
-Release: 2%{?dist}
+Version: 2.5.8
+Release: 1%{?dist}
 
 # Application and 3rd-party modules licensing:
 # * Telegram Desktop - GPLv3+ with OpenSSL exception -- main tarball;
@@ -76,6 +76,7 @@ BuildRequires: cmake
 BuildRequires: gcc
 
 # Development packages for Telegram Desktop...
+BuildRequires: cmake(KF5Wayland)
 BuildRequires: guidelines-support-library-devel >= 3.0.1
 BuildRequires: qt5-qtbase-private-devel
 BuildRequires: range-v3-devel >= 0.10.0
@@ -197,14 +198,11 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{launcher}.desktop
 %{_metainfodir}/%{launcher}.appdata.xml
 
 %changelog
+* Sun Jan 31 2021 Vitaly Zaitsev <vitaly@easycoding.org> - 2.5.8-1
+- Updated to version 2.5.8.
+
 * Fri Jan  1 2021 Leigh Scott <leigh123linux@gmail.com> - 2.5.1-2
 - Rebuilt for new ffmpeg snapshot
 
 * Wed Dec 23 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.5.1-1
 - Updated to version 2.5.1.
-
-* Mon Nov 30 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.7-4
-- Rebuilt due to Qt 5.15.2 update.
-
-* Fri Nov 20 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.4.7-3
-- Backported upstream patches with startup hangs fixes.
