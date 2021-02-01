@@ -6,7 +6,7 @@
 %bcond_with gtk3
 %bcond_with libtgvoip
 %bcond_with rlottie
-%bcond_without wayland
+%bcond_with wayland
 
 # Telegram Desktop's constants...
 %global appname tdesktop
