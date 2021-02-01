@@ -2,10 +2,10 @@
 %global _lto_cflags %{nil}
 
 # Build conditionals (with - OFF, without - ON)...
-%bcond_with rlottie
-%bcond_with gtk3
 %bcond_with clang
+%bcond_with gtk3
 %bcond_with libtgvoip
+%bcond_with rlottie
 %bcond_without wayland
 
 # Telegram Desktop's constants...
@@ -87,13 +87,6 @@ BuildRequires: ninja-build
 BuildRequires: python3
 BuildRequires: qt5-qtbase-private-devel
 
-%if %{with wayland}
-BuildRequires: cmake(KF5Wayland)
-BuildRequires: cmake(Qt5WaylandClient)
-BuildRequires: pkgconfig(wayland-client)
-BuildRequires: qt5-qtbase-static
-%endif
-
 %if %{with clang}
 BuildRequires: compiler-rt
 BuildRequires: clang
@@ -105,16 +98,23 @@ BuildRequires: pkgconfig(gtk+-3.0)
 Requires: gtk3%{?_isa}
 %endif
 
+%if %{with libtgvoip}
+BuildRequires: pkgconfig(tgvoip) >= 2.4.4
+%else
+Provides: bundled(libtgvoip) = 2.4.4
+%endif
+
 %if %{with rlottie}
 BuildRequires: cmake(rlottie)
 %else
 Provides: bundled(rlottie) = 0~git
 %endif
 
-%if %{with libtgvoip}
-BuildRequires: pkgconfig(tgvoip) >= 2.4.4
-%else
-Provides: bundled(libtgvoip) = 2.4.4
+%if %{with wayland}
+BuildRequires: cmake(KF5Wayland)
+BuildRequires: cmake(Qt5WaylandClient)
+BuildRequires: pkgconfig(wayland-client)
+BuildRequires: qt5-qtbase-static
 %endif
 
 # Telegram Desktop require exact version of Qt due to Qt private API usage.
@@ -213,10 +213,10 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{launcher}.desktop
 %{_metainfodir}/%{launcher}.appdata.xml
 
 %changelog
-* Sun Jan 31 2021 Vitaly Zaitsev <vitaly@easycoding.org> - 2.5.8-1
+* Mon Feb 01 2021 Vitaly Zaitsev <vitaly@easycoding.org> - 2.5.8-1
 - Updated to version 2.5.8.
 
-* Fri Jan  1 2021 Leigh Scott <leigh123linux@gmail.com> - 2.5.1-2
+* Fri Jan 01 2021 Leigh Scott <leigh123linux@gmail.com> - 2.5.1-2
 - Rebuilt for new ffmpeg snapshot
 
 * Wed Dec 23 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 2.5.1-1

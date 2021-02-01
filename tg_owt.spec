@@ -169,7 +169,7 @@ cp -f -p src/rtc_base/third_party/sigslot/README.chromium legal/README.sigslot
 %{_libdir}/lib%{name}.so
 
 %changelog
-* Sun Jan 31 2021 Vitaly Zaitsev <vitaly@easycoding.org> - 0-5.20210124gitbe23804
+* Mon Feb 01 2021 Vitaly Zaitsev <vitaly@easycoding.org> - 0-5.20210124gitbe23804
 - Updated to latest Git snapshot.
 
 * Wed Dec 23 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 0-4.20201218git6eaebec
