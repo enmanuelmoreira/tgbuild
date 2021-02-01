@@ -177,9 +177,3 @@ cp -f -p src/rtc_base/third_party/sigslot/README.chromium legal/README.sigslot
 
 * Fri Nov 20 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 0-3.20201112git10b988a
 - Updated to latest Git snapshot.
-
-* Thu Nov 12 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 0-2.20201105git12f4a27
-- Updated to latest Git snapshot.
-
-* Mon Nov 02 2020 Vitaly Zaitsev <vitaly@easycoding.org> - 0-2.20201102gite8fcae7
-- Initial SPEC release.
