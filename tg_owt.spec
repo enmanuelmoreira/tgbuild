@@ -14,7 +14,7 @@
 
 Name: tg_owt
 Version: 0
-Release: 5.%{date}git%{shortcommit0}%{?dist}
+Release: 6.%{date}git%{shortcommit0}%{?dist}
 
 # Main project - BSD
 # abseil-cpp - ASL 2.0
@@ -169,6 +169,9 @@ cp -f -p src/rtc_base/third_party/sigslot/README.chromium legal/README.sigslot
 %{_libdir}/lib%{name}.so
 
 %changelog
+* Thu Feb 04 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 0-6.20210124gitbe23804
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Mon Feb 01 2021 Vitaly Zaitsev <vitaly@easycoding.org> - 0-5.20210124gitbe23804
 - Updated to latest Git snapshot.
 
